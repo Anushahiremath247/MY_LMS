@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Bot, SendHorizonal, Sparkles } from "lucide-react";
 import { Button } from "./ui/button";
 
@@ -10,45 +10,97 @@ type Message = {
   content: string;
 };
 
-const starterMessages: Message[] = [
-  {
-    id: "welcome",
-    role: "assistant",
-    content: "I can explain this lesson, recap key ideas, or turn it into quiz questions."
-  }
-];
+type AIChatPanelProps = {
+  courseTitle?: string;
+  lessonTitle?: string;
+  lessonDescription?: string;
+};
 
-export const AIChatPanel = () => {
-  const [messages, setMessages] = useState<Message[]>(starterMessages);
+export const AIChatPanel = ({
+  courseTitle,
+  lessonTitle,
+  lessonDescription
+}: AIChatPanelProps) => {
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      id: "welcome",
+      role: "assistant",
+      content: `I am ready to help with ${lessonTitle ?? "this lesson"}. Ask me to explain a concept, summarize it, or quiz you.`
+    }
+  ]);
   const [input, setInput] = useState("");
   const [isOpen, setIsOpen] = useState(true);
   const [isTyping, setIsTyping] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    containerRef.current?.scrollTo({
+      top: containerRef.current.scrollHeight,
+      behavior: "smooth"
+    });
+  }, [messages, isTyping]);
 
   const sendMessage = async () => {
-    if (!input.trim()) return;
+    if (!input.trim() || isTyping) return;
 
     const nextUserMessage: Message = {
       id: crypto.randomUUID(),
       role: "user",
-      content: input
+      content: input.trim()
     };
+
+    const historyForRequest = [...messages, nextUserMessage];
 
     setMessages((current) => [...current, nextUserMessage]);
     setInput("");
     setIsTyping(true);
+    setError(null);
 
-    setTimeout(() => {
+    try {
+      const response = await fetch("/api/ai/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          question: nextUserMessage.content,
+          courseTitle,
+          lessonTitle,
+          lessonDescription,
+          messages: historyForRequest
+        })
+      });
+
+      const payload = (await response.json()) as { answer?: string; message?: string };
+
+      if (!response.ok) {
+        throw new Error(payload.message || "The tutor could not answer right now.");
+      }
+
       setMessages((current) => [
         ...current,
         {
           id: crypto.randomUUID(),
           role: "assistant",
-          content:
-            "Here’s the quick version: focus on the main concept, then try to restate it in your own words before moving to the next lesson."
+          content: payload.answer || "I understood the question, but I do not have a useful answer yet."
         }
       ]);
+    } catch (requestError) {
+      const message =
+        requestError instanceof Error ? requestError.message : "The tutor could not answer right now.";
+      setError(message);
+      setMessages((current) => [
+        ...current,
+        {
+          id: crypto.randomUUID(),
+          role: "assistant",
+          content: message
+        }
+      ]);
+    } finally {
       setIsTyping(false);
-    }, 900);
+    }
   };
 
   return (
@@ -69,11 +121,11 @@ export const AIChatPanel = () => {
               Hide
             </button>
           </div>
-          <div className="mb-4 flex max-h-[360px] flex-col gap-3 overflow-y-auto pr-1">
+          <div ref={containerRef} className="mb-4 flex max-h-[360px] flex-col gap-3 overflow-y-auto pr-1">
             {messages.map((message) => (
               <div
                 key={message.id}
-                className={`max-w-[85%] rounded-3xl px-4 py-3 text-sm leading-6 ${
+                className={`max-w-[85%] whitespace-pre-wrap rounded-3xl px-4 py-3 text-sm leading-6 ${
                   message.role === "assistant"
                     ? "bg-white text-slate-700 shadow-soft"
                     : "ml-auto bg-primary text-white"
@@ -89,14 +141,21 @@ export const AIChatPanel = () => {
               </div>
             ) : null}
           </div>
+          {error ? <p className="mb-3 text-xs text-rose-500">{error}</p> : null}
           <div className="flex gap-2">
             <input
               value={input}
               onChange={(event) => setInput(event.target.value)}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" && !event.shiftKey) {
+                  event.preventDefault();
+                  void sendMessage();
+                }
+              }}
               placeholder="Ask about this lesson..."
               className="h-12 flex-1 rounded-full border border-slate-200 bg-white px-4 text-sm outline-none transition focus:border-primary/50 focus:ring-4 focus:ring-primary/10"
             />
-            <Button className="h-12 w-12 rounded-full px-0" onClick={sendMessage}>
+            <Button className="h-12 w-12 rounded-full px-0" onClick={() => void sendMessage()} disabled={isTyping}>
               <SendHorizonal className="h-4 w-4" />
             </Button>
           </div>
@@ -109,4 +168,3 @@ export const AIChatPanel = () => {
     </div>
   );
 };
-

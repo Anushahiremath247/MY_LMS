@@ -12,8 +12,9 @@ const envSchema = z.object({
   CLIENT_URL: z.string().url(),
   SERVER_URL: z.string().url(),
   COOKIE_DOMAIN: z.string().default("localhost"),
+  OPENAI_API_KEY: z.string().optional().default(""),
+  OPENAI_MODEL: z.string().optional().default("gpt-5-mini"),
   HUGGINGFACE_API_KEY: z.string().optional().default("")
 });
 
 export const env = envSchema.parse(process.env);
-

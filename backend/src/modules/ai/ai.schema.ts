@@ -3,8 +3,18 @@ import { z } from "zod";
 export const aiChatSchema = z.object({
   body: z.object({
     question: z.string().min(4),
+    courseTitle: z.string().optional(),
     lessonTitle: z.string().optional(),
-    context: z.string().optional()
+    lessonDescription: z.string().optional(),
+    context: z.string().optional(),
+    messages: z
+      .array(
+        z.object({
+          role: z.enum(["user", "assistant"]),
+          content: z.string()
+        })
+      )
+      .optional()
   })
 });
 
@@ -20,4 +30,3 @@ export const aiQuizSchema = z.object({
     difficulty: z.enum(["beginner", "intermediate", "advanced"]).default("beginner")
   })
 });
-

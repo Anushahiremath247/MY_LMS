@@ -56,6 +56,10 @@ During the first Render Blueprint setup, provide values for:
 
 - `NEXT_PUBLIC_API_URL`
   Set this to your backend public URL plus `/api`
+- `OPENAI_API_KEY`
+  Required for the ChatGPT-style AI tutor on the deployed frontend
+- `OPENAI_MODEL`
+  Optional, defaults to `gpt-5-mini`
 - `CLIENT_URL`
   Set this to your frontend public URL
 - `SERVER_URL`
@@ -74,6 +78,12 @@ npm run prisma:seed --workspace backend
 ### Vercel Frontend
 
 If you prefer Vercel for the frontend, import the GitHub repo and set the project root directory to `frontend`, then add `NEXT_PUBLIC_API_URL` in the Vercel dashboard.
+
+For the AI tutor on Vercel, also add:
+
+- `OPENAI_API_KEY`
+- `OPENAI_MODEL`
+  Optional, defaults to `gpt-5-mini`
 
 ## Core Pages
 

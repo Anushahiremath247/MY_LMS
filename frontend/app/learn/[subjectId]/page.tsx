@@ -91,8 +91,11 @@ export default async function LearnPage({
           </div>
         </div>
       </section>
-      <AIChatPanel />
+      <AIChatPanel
+        courseTitle={course.title}
+        lessonTitle={currentLesson?.title}
+        lessonDescription={currentLesson?.description}
+      />
     </main>
   );
 }
-
