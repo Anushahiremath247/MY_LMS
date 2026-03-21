@@ -29,14 +29,25 @@ export interface ButtonProps
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, onMouseMove, asChild, children, ...props }, ref) => {
     const classes = cn(buttonVariants({ variant }), className);
+    const handleMouseMove = (event: React.MouseEvent<HTMLElement>) => {
+      const rect = event.currentTarget.getBoundingClientRect();
+      event.currentTarget.style.setProperty("--x", `${event.clientX - rect.left}px`);
+      event.currentTarget.style.setProperty("--y", `${event.clientY - rect.top}px`);
+      onMouseMove?.(event as React.MouseEvent<HTMLButtonElement>);
+    };
 
     if (asChild && React.isValidElement(children)) {
-      return React.cloneElement(children, {
-        className: cn(classes, (children.props as { className?: string }).className),
+      const child = children as React.ReactElement<{
+        className?: string;
+        onMouseMove?: (event: React.MouseEvent<HTMLElement>) => void;
+      }>;
+
+      return React.cloneElement(child, {
+        ...(props as Record<string, unknown>),
+        className: cn(classes, child.props.className),
         onMouseMove: (event: React.MouseEvent<HTMLElement>) => {
-          const rect = event.currentTarget.getBoundingClientRect();
-          event.currentTarget.style.setProperty("--x", `${event.clientX - rect.left}px`);
-          event.currentTarget.style.setProperty("--y", `${event.clientY - rect.top}px`);
+          handleMouseMove(event);
+          child.props.onMouseMove?.(event);
         }
       });
     }
@@ -45,12 +56,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       <button
         ref={ref}
         className={classes}
-        onMouseMove={(event) => {
-          const rect = event.currentTarget.getBoundingClientRect();
-          event.currentTarget.style.setProperty("--x", `${event.clientX - rect.left}px`);
-          event.currentTarget.style.setProperty("--y", `${event.clientY - rect.top}px`);
-          onMouseMove?.(event);
-        }}
+        onMouseMove={handleMouseMove}
         {...props}
       >
         {children}

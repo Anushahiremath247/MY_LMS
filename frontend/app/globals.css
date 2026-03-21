@@ -8,12 +8,31 @@
   color-scheme: light;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   @apply bg-surface bg-glow text-ink font-sans antialiased;
+  min-height: 100vh;
+  background-attachment: fixed;
 }
 
 * {
   @apply border-line;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(148, 163, 184, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(circle at center, black 40%, transparent 85%);
+  opacity: 0.35;
 }
 
 .glass-panel {
@@ -53,3 +72,6 @@ body {
   text-wrap: balance;
 }
 
+::selection {
+  background: rgba(56, 103, 255, 0.18);
+}
