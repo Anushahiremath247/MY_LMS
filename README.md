@@ -81,9 +81,20 @@ If you prefer Vercel for the frontend, import the GitHub repo and set the projec
 
 For the AI tutor on Vercel, also add:
 
+- `HUGGINGFACE_API_KEY`
+  Recommended if you want to use Hugging Face Inference Providers for the tutor
+- `HUGGINGFACE_MODEL`
+  Optional, defaults to `meta-llama/Llama-3.1-8B-Instruct`
 - `OPENAI_API_KEY`
 - `OPENAI_MODEL`
   Optional, defaults to `gpt-5-mini`
+
+The deployed tutor route now supports either provider:
+
+- Hugging Face via the OpenAI-compatible chat endpoint
+- OpenAI via the Responses API
+
+If both are missing, the tutor will show a configuration error instead of pretending to answer.
 
 ## Core Pages
 

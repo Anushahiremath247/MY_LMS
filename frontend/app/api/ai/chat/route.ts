@@ -9,6 +9,13 @@ type ChatMessage = {
 const openai = process.env.OPENAI_API_KEY
   ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
   : null;
+const huggingFaceToken = process.env.HUGGINGFACE_API_KEY || process.env.HF_TOKEN || "";
+const huggingFace = huggingFaceToken
+  ? new OpenAI({
+      baseURL: "https://router.huggingface.co/v1",
+      apiKey: huggingFaceToken
+    })
+  : null;
 
 const sanitizeMessages = (messages: unknown): ChatMessage[] => {
   if (!Array.isArray(messages)) {
@@ -50,11 +57,11 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: "Please enter a question for the tutor." }, { status: 400 });
     }
 
-    if (!openai) {
+    if (!huggingFace && !openai) {
       return NextResponse.json(
         {
           message:
-            "AI tutor is not configured yet. Add OPENAI_API_KEY to the frontend deployment environment."
+            "AI tutor is not configured yet. Add HUGGINGFACE_API_KEY or OPENAI_API_KEY to the frontend deployment environment."
         },
         { status: 503 }
       );
@@ -80,7 +87,31 @@ Lesson: ${body.lessonTitle ?? "Unknown lesson"}
 Lesson description: ${body.lessonDescription ?? "No lesson description provided"}
     `.trim();
 
-    const response = await openai.responses.create({
+    if (huggingFace) {
+      const completion = await huggingFace.chat.completions.create({
+        model: process.env.HUGGINGFACE_MODEL ?? "meta-llama/Llama-3.1-8B-Instruct",
+        messages: [
+          {
+            role: "system",
+            content: instructions
+          },
+          ...messages,
+          {
+            role: "user",
+            content: question
+          }
+        ],
+        temperature: 0.4
+      });
+
+      return NextResponse.json({
+        answer:
+          completion.choices[0]?.message?.content?.trim() ||
+          "I understood the question, but I could not generate a response."
+      });
+    }
+
+    const response = await openai!.responses.create({
       model: process.env.OPENAI_MODEL ?? "gpt-5-mini",
       reasoning: { effort: "low" },
       instructions,
