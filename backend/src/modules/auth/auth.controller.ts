@@ -12,7 +12,7 @@ import {
 
 const refreshCookieOptions = {
   httpOnly: true,
-  sameSite: "lax" as const,
+  sameSite: (env.NODE_ENV === "production" ? "none" : "lax") as "none" | "lax",
   secure: env.NODE_ENV === "production",
   maxAge: env.JWT_REFRESH_EXPIRES_DAYS * 24 * 60 * 60 * 1000
 };
@@ -44,7 +44,7 @@ export const refresh = asyncHandler(async (request: Request, response: Response)
 
 export const logout = asyncHandler(async (request: Request, response: Response) => {
   await logoutUser(request.cookies.refreshToken);
-  response.clearCookie("refreshToken");
+  response.clearCookie("refreshToken", refreshCookieOptions);
   response.status(StatusCodes.OK).json({ message: "Logged out successfully" });
 });
 
@@ -52,4 +52,3 @@ export const me = asyncHandler(async (request: Request, response: Response) => {
   const user = await getCurrentUser(request.user!.sub);
   response.status(StatusCodes.OK).json(user);
 });
-

@@ -175,17 +175,15 @@ const buildGeneratedResources = () => {
 };
 
 async function main() {
-  await prisma.videoProgress.deleteMany();
-  await prisma.refreshToken.deleteMany();
-  await prisma.enrollment.deleteMany();
-  await prisma.video.deleteMany();
-  await prisma.section.deleteMany();
-  await prisma.subject.deleteMany();
-  await prisma.learningResource.deleteMany();
-  await prisma.user.deleteMany();
-
-  const demoUser = await prisma.user.create({
-    data: {
+  const demoUser = await prisma.user.upsert({
+    where: {
+      email: "aarav@example.com"
+    },
+    update: {
+      name: "Aarav Sharma",
+      avatar: "https://api.dicebear.com/9.x/thumbs/svg?seed=LazyLearning"
+    },
+    create: {
       name: "Aarav Sharma",
       email: "aarav@example.com",
       passwordHash: await bcrypt.hash("password123", 10),
@@ -194,35 +192,48 @@ async function main() {
   });
 
   for (const subject of subjects) {
-    await prisma.subject.create({
-      data: {
-        slug: subject.slug,
-        title: subject.title,
-        shortDescription: subject.shortDescription,
-        description: subject.description,
-        thumbnail: subject.thumbnail,
-        instructor: subject.instructor,
-        duration: subject.duration,
-        rating: subject.rating,
-        category: subject.category,
-        lessonsCount: subject.lessonsCount,
+    const existingSubject = await prisma.subject.findUnique({
+      where: { slug: subject.slug },
+      include: {
         sections: {
-          create: subject.sections.map((section) => ({
-            title: section.title,
-            orderIndex: section.orderIndex,
-            videos: {
-              create: section.videos.map(([title, description, youtubeId], index) => ({
-                title,
-                description,
-                youtubeId,
-                durationSeconds: 900 + index * 120,
-                orderIndex: index + 1
-              }))
-            }
-          }))
+          include: {
+            videos: true
+          }
         }
       }
     });
+
+    if (!existingSubject) {
+      await prisma.subject.create({
+        data: {
+          slug: subject.slug,
+          title: subject.title,
+          shortDescription: subject.shortDescription,
+          description: subject.description,
+          thumbnail: subject.thumbnail,
+          instructor: subject.instructor,
+          duration: subject.duration,
+          rating: subject.rating,
+          category: subject.category,
+          lessonsCount: subject.lessonsCount,
+          sections: {
+            create: subject.sections.map((section) => ({
+              title: section.title,
+              orderIndex: section.orderIndex,
+              videos: {
+                create: section.videos.map(([title, description, youtubeId], index) => ({
+                  title,
+                  description,
+                  youtubeId,
+                  durationSeconds: 900 + index * 120,
+                  orderIndex: index + 1
+                }))
+              }
+            }))
+          }
+        }
+      });
+    }
   }
 
   const allSubjects = await prisma.subject.findMany({
@@ -236,8 +247,15 @@ async function main() {
   });
 
   for (const subject of allSubjects.slice(0, 2)) {
-    await prisma.enrollment.create({
-      data: {
+    await prisma.enrollment.upsert({
+      where: {
+        userId_subjectId: {
+          userId: demoUser.id,
+          subjectId: subject.id
+        }
+      },
+      update: {},
+      create: {
         userId: demoUser.id,
         subjectId: subject.id
       }
@@ -245,8 +263,19 @@ async function main() {
 
     const firstTwoVideos = subject.sections.flatMap((section) => section.videos).slice(0, 2);
     for (const video of firstTwoVideos) {
-      await prisma.videoProgress.create({
-        data: {
+      await prisma.videoProgress.upsert({
+        where: {
+          userId_videoId: {
+            userId: demoUser.id,
+            videoId: video.id
+          }
+        },
+        update: {
+          isCompleted: true,
+          completedAt: new Date(),
+          lastPositionSeconds: video.durationSeconds
+        },
+        create: {
           userId: demoUser.id,
           videoId: video.id,
           isCompleted: true,
@@ -276,10 +305,12 @@ async function main() {
 
   const expandedResources = buildGeneratedResources();
 
-  await prisma.learningResource.createMany({
-    data: [...mandatoryResources, ...expandedResources],
-    skipDuplicates: true
-  });
+  const existingResourceCount = await prisma.learningResource.count();
+  if (existingResourceCount === 0) {
+    await prisma.learningResource.createMany({
+      data: [...mandatoryResources, ...expandedResources]
+    });
+  }
 
   const totalResources = await prisma.learningResource.count();
 

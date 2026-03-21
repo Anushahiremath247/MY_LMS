@@ -42,6 +42,39 @@ npm run dev:backend
 npm run dev:frontend
 ```
 
+## Deploy
+
+### Render Blueprint
+
+This repo now includes `render.yaml` for a full-stack Render deployment:
+
+- `lazy-learning-frontend`: Next.js frontend
+- `lazy-learning-api`: Express + Prisma backend
+- `lazy-learning-db`: PostgreSQL database
+
+During the first Render Blueprint setup, provide values for:
+
+- `NEXT_PUBLIC_API_URL`
+  Set this to your backend public URL plus `/api`
+- `CLIENT_URL`
+  Set this to your frontend public URL
+- `SERVER_URL`
+  Set this to your backend public URL
+- `COOKIE_DOMAIN`
+  Optional for your production domain strategy
+- `HUGGINGFACE_API_KEY`
+  Optional unless you want live AI responses
+
+The backend deploy uses `prisma db push` automatically before start. The seed script is now non-destructive, so you can run it manually after the database is live:
+
+```bash
+npm run prisma:seed --workspace backend
+```
+
+### Vercel Frontend
+
+If you prefer Vercel for the frontend, import the GitHub repo and set the project root directory to `frontend`, then add `NEXT_PUBLIC_API_URL` in the Vercel dashboard.
+
 ## Core Pages
 
 - `/`: public landing page
