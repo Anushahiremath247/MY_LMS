@@ -1,0 +1,65 @@
+<svg width="960" height="260" viewBox="0 0 960 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g transform="translate(0 0) scale(0.43)">
+    <circle cx="150" cy="118" r="72" fill="#111111" />
+    <circle cx="362" cy="118" r="72" fill="#111111" />
+    <path
+      d="M256 88C345.47 88 414 156.978 414 248C414 358.234 344.126 432 256 432C167.874 432 98 358.234 98 248C98 156.978 166.53 88 256 88Z"
+      fill="white"
+      stroke="#111111"
+      stroke-width="22"
+    />
+    <ellipse cx="186" cy="242" rx="54" ry="67" transform="rotate(-18 186 242)" fill="#111111" />
+    <ellipse cx="326" cy="242" rx="54" ry="67" transform="rotate(18 326 242)" fill="#111111" />
+    <circle cx="202" cy="246" r="18" fill="white" />
+    <circle cx="310" cy="246" r="18" fill="white" />
+    <circle cx="203" cy="247" r="8" fill="#111111" />
+    <circle cx="309" cy="247" r="8" fill="#111111" />
+    <circle cx="210" cy="238" r="4" fill="white" />
+    <circle cx="316" cy="238" r="4" fill="white" />
+    <path
+      d="M228 317C228 297.118 240.998 282 256 282C271.002 282 284 297.118 284 317C284 337.268 271.002 352 256 352C240.998 352 228 337.268 228 317Z"
+      fill="#111111"
+    />
+    <path
+      d="M221 368C232.062 381.677 244.085 388.5 256 388.5C267.915 388.5 279.938 381.677 291 368"
+      stroke="#111111"
+      stroke-width="20"
+      stroke-linecap="round"
+    />
+  </g>
+  <g transform="translate(250 34)">
+    <text
+      x="0"
+      y="76"
+      fill="#111111"
+      font-family="Poppins, Inter, 'Segoe UI', Arial, sans-serif"
+      font-size="82"
+      font-weight="700"
+      letter-spacing="-0.04em"
+    >
+      Lazy
+    </text>
+    <text
+      x="0"
+      y="156"
+      fill="#111111"
+      font-family="Poppins, Inter, 'Segoe UI', Arial, sans-serif"
+      font-size="82"
+      font-weight="700"
+      letter-spacing="-0.04em"
+    >
+      Learning
+    </text>
+    <text
+      x="2"
+      y="200"
+      fill="#6B7280"
+      font-family="Inter, 'Segoe UI', Arial, sans-serif"
+      font-size="20"
+      font-weight="600"
+      letter-spacing="0.28em"
+    >
+      CALM LEARNING, SERIOUS PROGRESS
+    </text>
+  </g>
+</svg>
