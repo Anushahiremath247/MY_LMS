@@ -17,7 +17,8 @@ const buildFallbackUser = (input: { name?: string; email: string }): AuthUser =>
     id: `local-${input.email}`,
     name: fallbackName,
     email: input.email,
-    avatar: `https://api.dicebear.com/9.x/thumbs/svg?seed=${encodeURIComponent(fallbackName)}`
+    avatar: `https://api.dicebear.com/9.x/thumbs/svg?seed=${encodeURIComponent(fallbackName)}`,
+    role: "student"
   };
 };
 

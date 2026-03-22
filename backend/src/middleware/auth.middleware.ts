@@ -2,6 +2,7 @@ import { StatusCodes } from "http-status-codes";
 import type { NextFunction, Request, Response } from "express";
 import { AppError } from "../utils/app-error.js";
 import { verifyAccessToken } from "../utils/jwt.js";
+import { prisma } from "../lib/prisma.js";
 
 export const requireAuth = (request: Request, _response: Response, next: NextFunction) => {
   const authHeader = request.headers.authorization;
@@ -19,3 +20,21 @@ export const requireAuth = (request: Request, _response: Response, next: NextFun
   }
 };
 
+export const requireRole =
+  (...roles: Array<"student" | "admin">) =>
+  async (request: Request, _response: Response, next: NextFunction) => {
+    if (!request.user?.sub) {
+      return next(new AppError("Authentication required", StatusCodes.UNAUTHORIZED));
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { id: request.user.sub },
+      select: { role: true }
+    });
+
+    if (!user || !roles.includes(user.role)) {
+      return next(new AppError("You do not have permission to access this resource", StatusCodes.FORBIDDEN));
+    }
+
+    next();
+  };

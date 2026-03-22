@@ -6,7 +6,10 @@ import {
   getCurrentUser,
   loginUser,
   logoutUser,
+  logoutAllSessions,
+  requestPasswordReset,
   registerUser,
+  resetPassword,
   rotateRefreshToken
 } from "./auth.service.js";
 
@@ -48,7 +51,23 @@ export const logout = asyncHandler(async (request: Request, response: Response) 
   response.status(StatusCodes.OK).json({ message: "Logged out successfully" });
 });
 
+export const logoutAll = asyncHandler(async (request: Request, response: Response) => {
+  await logoutAllSessions(request.user!.sub);
+  response.clearCookie("refreshToken", refreshCookieOptions);
+  response.status(StatusCodes.OK).json({ message: "Logged out from all devices successfully" });
+});
+
 export const me = asyncHandler(async (request: Request, response: Response) => {
   const user = await getCurrentUser(request.user!.sub);
   response.status(StatusCodes.OK).json(user);
+});
+
+export const forgotPassword = asyncHandler(async (request: Request, response: Response) => {
+  const result = await requestPasswordReset(request.body.email);
+  response.status(StatusCodes.OK).json(result);
+});
+
+export const resetPasswordController = asyncHandler(async (request: Request, response: Response) => {
+  await resetPassword(request.body);
+  response.status(StatusCodes.OK).json({ message: "Password reset successfully" });
 });

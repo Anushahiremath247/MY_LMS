@@ -8,6 +8,7 @@ import { env } from "./config/env.js";
 import { errorMiddleware } from "./middleware/error.middleware.js";
 import { aiRouter } from "./modules/ai/ai.routes.js";
 import { authRouter } from "./modules/auth/auth.routes.js";
+import { accountRouter, profileRouter } from "./modules/profile/profile.routes.js";
 import { progressRouter } from "./modules/progress/progress.routes.js";
 import { resourcesRouter } from "./modules/resources/resources.routes.js";
 import { enrollmentRouter, subjectsRouter } from "./modules/subjects/subjects.routes.js";
@@ -32,6 +33,8 @@ app.get("/api/health", (_request, response) => {
 });
 
 app.use("/api/auth", authRouter);
+app.use("/api/profile", profileRouter);
+app.use("/api/account", accountRouter);
 app.use("/api/subjects", subjectsRouter);
 app.use("/api/enroll", enrollmentRouter);
 app.use("/api/progress", progressRouter);

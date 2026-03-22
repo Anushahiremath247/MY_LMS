@@ -56,10 +56,67 @@ export type AuthUser = {
   name: string;
   email: string;
   avatar?: string | null;
+  role?: "student" | "admin";
   createdAt?: string;
 };
 
 export type AuthSession = {
   accessToken: string;
   user: AuthUser;
+};
+
+export type PrivacySettings = {
+  profileVisibility: "public" | "private";
+  showEmail: boolean;
+  showPhone: boolean;
+  showBio: boolean;
+};
+
+export type NotificationSettings = {
+  emailNotifications: boolean;
+  courseUpdates: boolean;
+  newContentAlerts: boolean;
+};
+
+export type ActivityItem = {
+  id: string;
+  title: string;
+  description: string;
+  type: "profile" | "security" | "course" | "system";
+  timestamp: string;
+};
+
+export type DeviceSession = {
+  id: string;
+  label: string;
+  location: string;
+  lastActiveAt: string;
+  current?: boolean;
+};
+
+export type Certificate = {
+  id: string;
+  title: string;
+  courseTitle: string;
+  issuedAt: string;
+  status: "earned" | "in-progress";
+};
+
+export type UserProfile = {
+  userId: string;
+  fullName: string;
+  username: string;
+  email: string;
+  phone: string;
+  bio: string;
+  skills: string[];
+  avatar: string;
+  role: "student" | "admin";
+  privacy: PrivacySettings;
+  notifications: NotificationSettings;
+  activity: ActivityItem[];
+  sessions: DeviceSession[];
+  lastLoginAt: string;
+  accountStatus: "active" | "deactivated";
+  passwordUpdatedAt: string;
 };
