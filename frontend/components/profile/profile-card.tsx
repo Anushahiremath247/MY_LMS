@@ -1,6 +1,6 @@
 "use client";
 
-import { Award, BookCopy, Mail, Sparkles, UserRound } from "lucide-react";
+import { Mail, UserRound } from "lucide-react";
 import type { Course } from "@/types";
 import { calculateProfileCompletion, timeAgoLabel } from "@/lib/profile-utils";
 import { useProfileStore } from "@/store/profile-store";
@@ -56,29 +56,18 @@ export const ProfileCard = ({ courses }: { courses: Course[] }) => {
       </aside>
 
       <div className="space-y-6">
-        <div className="grid gap-4 sm:grid-cols-2 2xl:grid-cols-4">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
           {[
-            { label: "Enrolled Courses", value: enrolledCourses.length, icon: BookCopy, valueClassName: "text-[2.8rem] sm:text-5xl" },
-            { label: "Progress Summary", value: `${averageProgress}%`, icon: Sparkles, valueClassName: "text-[2.8rem] sm:text-5xl" },
-            { label: "Certificates", value: certificates, icon: Award, valueClassName: "text-[2.8rem] sm:text-5xl" },
-            { label: "Last Login", value: timeAgoLabel(profile.lastLoginAt), icon: UserRound, valueClassName: "text-[2.2rem] sm:text-[2.8rem]" }
+            { label: "Enrolled Courses", value: enrolledCourses.length, valueClassName: "text-4xl" },
+            { label: "Progress Summary", value: `${averageProgress}%`, valueClassName: "text-4xl" },
+            { label: "Certificates", value: certificates, valueClassName: "text-4xl" },
+            { label: "Last Login", value: timeAgoLabel(profile.lastLoginAt), valueClassName: "text-3xl" }
           ].map((stat) => (
-            <div key={stat.label} className="bubble-card min-h-[190px] px-6 py-6">
-              <div className="relative z-10 flex h-full flex-col">
-                <div className="flex items-start justify-between gap-4">
-                  <p className="max-w-[12rem] text-base leading-7 text-slate-500 sm:text-lg">
-                    {stat.label}
-                  </p>
-                  <span className="bubble-bar flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl text-white">
-                    <stat.icon className="h-4 w-4" />
-                  </span>
-                </div>
-                <p
-                  className={`mt-auto font-display font-bold leading-[0.9] tracking-[-0.05em] text-primary ${stat.valueClassName}`}
-                >
-                  {stat.value}
-                </p>
-              </div>
+            <div key={stat.label} className="rounded-[1.5rem] bg-white p-6 shadow-md">
+              <p className="text-sm font-medium text-slate-500">{stat.label}</p>
+              <p className={`mt-3 font-display font-bold tracking-[-0.04em] text-primary ${stat.valueClassName}`}>
+                {stat.value}
+              </p>
             </div>
           ))}
         </div>
