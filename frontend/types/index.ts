@@ -8,11 +8,43 @@ export type Course = {
   duration: string;
   rating: number;
   category: string;
+  level: "Beginner" | "Intermediate" | "Advanced";
+  accessType: "free" | "paid" | "subscription";
+  price: number;
+  listPrice?: number;
+  subscriptionPlanIds?: string[];
+  previewLessonsCount?: number;
   lessonsCount: number;
   thumbnail: string;
   progress?: number;
   isEnrolled?: boolean;
+  purchased?: boolean;
+  hasActiveSubscription?: boolean;
+  canAccess?: boolean;
+  primaryAction?: "start" | "enroll" | "buy" | "subscribe";
   sections: CourseSection[];
+};
+
+export type CourseListItem = Omit<Course, "sections">;
+
+export type CourseCatalogSummary = {
+  totalCourses: number;
+  enrolledCourses: number;
+  totalLessons: number;
+  freeCourses: number;
+  paidCourses: number;
+  subscriptionCourses: number;
+};
+
+export type PaginatedCoursesResponse = {
+  courses: CourseListItem[];
+  total: number;
+  hasMore: boolean;
+  nextPage: number | null;
+  page: number;
+  limit: number;
+  categories: string[];
+  summary: CourseCatalogSummary;
 };
 
 export type CourseSection = {
@@ -27,6 +59,9 @@ export type Lesson = {
   title: string;
   description: string;
   youtubeId: string;
+  youtubeUrl?: string;
+  embedUrl?: string;
+  thumbnailUrl?: string;
   durationSeconds: number;
   orderIndex: number;
   locked?: boolean;
@@ -102,6 +137,67 @@ export type Certificate = {
   status: "earned" | "in-progress";
 };
 
+export type SubscriptionPlan = {
+  id: string;
+  name: string;
+  tagline: string;
+  description: string;
+  priceMonthly: number;
+  priceYearly: number;
+  features: string[];
+  recommended?: boolean;
+};
+
+export type PaymentHistoryItem = {
+  id: string;
+  type: "course_purchase" | "subscription";
+  courseId?: string;
+  courseTitle?: string;
+  subscriptionPlanId?: string;
+  subscriptionPlanName?: string;
+  amount: number;
+  currency: string;
+  status: "pending" | "succeeded" | "failed";
+  method: "upi" | "card" | "bank_transfer";
+  reference: string;
+  createdAt: string;
+};
+
+export type PurchasedCourse = {
+  courseId: string;
+  purchasedAt: string;
+  orderId: string;
+  paymentId: string;
+};
+
+export type ActiveSubscription = {
+  planId: string;
+  planName: string;
+  startedAt: string;
+  expiresAt: string;
+  billingCycle: "monthly" | "yearly";
+  status: "active" | "expired" | "canceled";
+};
+
+export type WatchHistoryItem = {
+  id: string;
+  courseId: string;
+  lessonId?: string;
+  title: string;
+  subtitle?: string;
+  watchedAt: string;
+  progressSeconds?: number;
+};
+
+export type CourseAccessState = {
+  enrolled: boolean;
+  purchased: boolean;
+  subscribed: boolean;
+  canAccess: boolean;
+  cta: "start" | "enroll" | "buy" | "subscribe";
+  label: string;
+};
+
 export type UserProfile = {
   userId: string;
   fullName: string;
@@ -119,4 +215,8 @@ export type UserProfile = {
   lastLoginAt: string;
   accountStatus: "active" | "deactivated";
   passwordUpdatedAt: string;
+  purchasedCourses: PurchasedCourse[];
+  paymentHistory: PaymentHistoryItem[];
+  activeSubscription: ActiveSubscription | null;
+  watchHistory: WatchHistoryItem[];
 };

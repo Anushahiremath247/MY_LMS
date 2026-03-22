@@ -8,10 +8,12 @@ import { env } from "./config/env.js";
 import { errorMiddleware } from "./middleware/error.middleware.js";
 import { aiRouter } from "./modules/ai/ai.routes.js";
 import { authRouter } from "./modules/auth/auth.routes.js";
+import { coursesRouter, subscriptionRouter } from "./modules/courses/courses.routes.js";
 import { accountRouter, profileRouter } from "./modules/profile/profile.routes.js";
 import { progressRouter } from "./modules/progress/progress.routes.js";
 import { resourcesRouter } from "./modules/resources/resources.routes.js";
 import { enrollmentRouter, subjectsRouter } from "./modules/subjects/subjects.routes.js";
+import { userCommerceRouter } from "./modules/user/user-commerce.routes.js";
 import { videosRouter } from "./modules/videos/videos.routes.js";
 
 export const app = express();
@@ -35,6 +37,9 @@ app.get("/api/health", (_request, response) => {
 app.use("/api/auth", authRouter);
 app.use("/api/profile", profileRouter);
 app.use("/api/account", accountRouter);
+app.use("/api/courses", coursesRouter);
+app.use("/api/subscription", subscriptionRouter);
+app.use("/api/user", userCommerceRouter);
 app.use("/api/subjects", subjectsRouter);
 app.use("/api/enroll", enrollmentRouter);
 app.use("/api/progress", progressRouter);

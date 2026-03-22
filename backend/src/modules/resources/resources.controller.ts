@@ -9,6 +9,6 @@ export const getResources = asyncHandler(async (request: Request, response: Resp
     search: typeof request.query.search === "string" ? request.query.search : undefined
   });
 
+  response.setHeader("Cache-Control", "public, max-age=120, s-maxage=120, stale-while-revalidate=600");
   response.status(StatusCodes.OK).json(resources);
 });
-

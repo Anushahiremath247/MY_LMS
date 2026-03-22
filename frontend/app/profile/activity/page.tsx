@@ -1,8 +1,8 @@
 import { ProfileActivityView } from "@/components/profile/profile-activity-view";
-import { getCourses } from "@/lib/api";
+import { getCoursesPage } from "@/lib/api";
 
 export default async function ProfileActivityPage() {
-  const courses = await getCourses();
+  const catalog = await getCoursesPage({ page: 1, limit: 12 });
 
-  return <ProfileActivityView courses={courses} />;
+  return <ProfileActivityView courses={catalog.courses} />;
 }

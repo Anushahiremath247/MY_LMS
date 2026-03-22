@@ -1,0 +1,776 @@
+[
+  {
+    "pool": "python",
+    "title": "Python setup and tooling",
+    "description": "Lesson focus: python setup and tooling with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=rfscVS0vtbw"
+  },
+  {
+    "pool": "python",
+    "title": "Variables and primitive types",
+    "description": "Lesson focus: variables and primitive types with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=kqtD5dpn9C8"
+  },
+  {
+    "pool": "python",
+    "title": "Control flow with conditions",
+    "description": "Lesson focus: control flow with conditions with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=_uQrJ0TkZlc"
+  },
+  {
+    "pool": "python",
+    "title": "Loops and iteration patterns",
+    "description": "Lesson focus: loops and iteration patterns with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=ix9cRaBkVe0"
+  },
+  {
+    "pool": "python",
+    "title": "Functions and reusable logic",
+    "description": "Lesson focus: functions and reusable logic with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=eWRfhZUzrAc"
+  },
+  {
+    "pool": "python",
+    "title": "Collections in practice",
+    "description": "Lesson focus: collections in practice with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=YYXdXT2l-Gg"
+  },
+  {
+    "pool": "python",
+    "title": "Strings and formatting",
+    "description": "Lesson focus: strings and formatting with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=HGOBQPFzWKo"
+  },
+  {
+    "pool": "python",
+    "title": "Files and input handling",
+    "description": "Lesson focus: files and input handling with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=DLn3jOsNRVE"
+  },
+  {
+    "pool": "python",
+    "title": "Error handling basics",
+    "description": "Lesson focus: error handling basics with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Z1Yd7upQsXY"
+  },
+  {
+    "pool": "python",
+    "title": "Object oriented Python",
+    "description": "Lesson focus: object oriented python with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=0Lt9w-BxKFQ"
+  },
+  {
+    "pool": "python",
+    "title": "Modules and packages",
+    "description": "Lesson focus: modules and packages with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=nsbmZ6v5vN0"
+  },
+  {
+    "pool": "python",
+    "title": "Virtual environments",
+    "description": "Lesson focus: virtual environments with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=8DvywoWv6fI"
+  },
+  {
+    "pool": "python",
+    "title": "Working with APIs",
+    "description": "Lesson focus: working with apis with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=7lmCu8wz8ro"
+  },
+  {
+    "pool": "python",
+    "title": "Automation scripts",
+    "description": "Lesson focus: automation scripts with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=VchuKL44s6E"
+  },
+  {
+    "pool": "python",
+    "title": "Data parsing workflows",
+    "description": "Lesson focus: data parsing workflows with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=E8NijUYfyus"
+  },
+  {
+    "pool": "python",
+    "title": "Comprehensions and generators",
+    "description": "Lesson focus: comprehensions and generators with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=xdv9A0mS9y8"
+  },
+  {
+    "pool": "python",
+    "title": "Testing and debugging",
+    "description": "Lesson focus: testing and debugging with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=G2q6OqjXvIY"
+  },
+  {
+    "pool": "python",
+    "title": "Command line utilities",
+    "description": "Lesson focus: command line utilities with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=4F2m91eKmts"
+  },
+  {
+    "pool": "python",
+    "title": "Intro to data analysis",
+    "description": "Lesson focus: intro to data analysis with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=7eh4d6sabA0"
+  },
+  {
+    "pool": "python",
+    "title": "Web scraping basics",
+    "description": "Lesson focus: web scraping basics with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Qk0zUZW-U_M"
+  },
+  {
+    "pool": "python",
+    "title": "Async foundations",
+    "description": "Lesson focus: async foundations with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=tt4q9b6n3i0"
+  },
+  {
+    "pool": "python",
+    "title": "Project structuring",
+    "description": "Lesson focus: project structuring with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=2Fp1N6dof0Y"
+  },
+  {
+    "pool": "python",
+    "title": "Interview patterns",
+    "description": "Lesson focus: interview patterns with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=V7R5h7Xc8K0"
+  },
+  {
+    "pool": "python",
+    "title": "Mini app walkthrough",
+    "description": "Lesson focus: mini app walkthrough with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=3Xz6G7X9p5Y"
+  },
+  {
+    "pool": "java",
+    "title": "Java setup and first program",
+    "description": "Lesson focus: java setup and first program with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=eIrMbAQSU34"
+  },
+  {
+    "pool": "java",
+    "title": "Data types and variables",
+    "description": "Lesson focus: data types and variables with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=A74TOX803D0"
+  },
+  {
+    "pool": "java",
+    "title": "Conditionals and loops",
+    "description": "Lesson focus: conditionals and loops with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=grEKMHGYyns"
+  },
+  {
+    "pool": "java",
+    "title": "Methods and parameters",
+    "description": "Lesson focus: methods and parameters with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=UmnCZ7-9yDY"
+  },
+  {
+    "pool": "java",
+    "title": "Arrays and collections",
+    "description": "Lesson focus: arrays and collections with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=GoXwIVyNvX0"
+  },
+  {
+    "pool": "java",
+    "title": "Object oriented design",
+    "description": "Lesson focus: object oriented design with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=H2Y8XCe7F9E"
+  },
+  {
+    "pool": "java",
+    "title": "Classes and constructors",
+    "description": "Lesson focus: classes and constructors with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=TBWX97e1E9g"
+  },
+  {
+    "pool": "java",
+    "title": "Encapsulation patterns",
+    "description": "Lesson focus: encapsulation patterns with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=l9AzO1FMgM8"
+  },
+  {
+    "pool": "java",
+    "title": "Inheritance and interfaces",
+    "description": "Lesson focus: inheritance and interfaces with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=5YzjG4JzS0k"
+  },
+  {
+    "pool": "java",
+    "title": "Exception handling",
+    "description": "Lesson focus: exception handling with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=FvOqQnR1y9k"
+  },
+  {
+    "pool": "java",
+    "title": "Java streams basics",
+    "description": "Lesson focus: java streams basics with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=U7L2s6D7h8g"
+  },
+  {
+    "pool": "java",
+    "title": "File handling",
+    "description": "Lesson focus: file handling with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=5pY3N0f0M0g"
+  },
+  {
+    "pool": "java",
+    "title": "Debugging in Java",
+    "description": "Lesson focus: debugging in java with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=9oJ5Zk1z5mM"
+  },
+  {
+    "pool": "java",
+    "title": "Testing fundamentals",
+    "description": "Lesson focus: testing fundamentals with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Yv_2lJ6p3u8"
+  },
+  {
+    "pool": "java",
+    "title": "Package organization",
+    "description": "Lesson focus: package organization with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=3Yh8k5F5j0I"
+  },
+  {
+    "pool": "java",
+    "title": "JDBC foundations",
+    "description": "Lesson focus: jdbc foundations with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=3pA4Ff5rX3c"
+  },
+  {
+    "pool": "java",
+    "title": "Spring-ready thinking",
+    "description": "Lesson focus: spring-ready thinking with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=9L7zKX9r3qE"
+  },
+  {
+    "pool": "java",
+    "title": "Concurrency basics",
+    "description": "Lesson focus: concurrency basics with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=5L8gM2kX2sA"
+  },
+  {
+    "pool": "java",
+    "title": "Performance awareness",
+    "description": "Lesson focus: performance awareness with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=8Z4g1tY3b4E"
+  },
+  {
+    "pool": "java",
+    "title": "Problem solving patterns",
+    "description": "Lesson focus: problem solving patterns with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=2Q1b6F2n3hA"
+  },
+  {
+    "pool": "java",
+    "title": "Interview coding practice",
+    "description": "Lesson focus: interview coding practice with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=7S3g2X1k9rY"
+  },
+  {
+    "pool": "java",
+    "title": "Build tools intro",
+    "description": "Lesson focus: build tools intro with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=6H4d3J5k1nA"
+  },
+  {
+    "pool": "java",
+    "title": "REST API concepts",
+    "description": "Lesson focus: rest api concepts with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=9A3b2F1k7dE"
+  },
+  {
+    "pool": "java",
+    "title": "Project walkthrough",
+    "description": "Lesson focus: project walkthrough with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=4G5h6J2k8nM"
+  },
+  {
+    "pool": "java",
+    "title": "Production habits",
+    "description": "Lesson focus: production habits with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=1K2l3M4n5B6"
+  },
+  {
+    "pool": "sql",
+    "title": "Relational database foundations",
+    "description": "Lesson focus: relational database foundations with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=HXV3zeQKqGY"
+  },
+  {
+    "pool": "sql",
+    "title": "SELECT queries and filters",
+    "description": "Lesson focus: select queries and filters with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=OT1RErkfLNQ"
+  },
+  {
+    "pool": "sql",
+    "title": "Sorting and limiting results",
+    "description": "Lesson focus: sorting and limiting results with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=7S_tz1z_5bA"
+  },
+  {
+    "pool": "sql",
+    "title": "Aggregate functions",
+    "description": "Lesson focus: aggregate functions with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=-fW2X7fh7Yg"
+  },
+  {
+    "pool": "sql",
+    "title": "Grouping data with GROUP BY",
+    "description": "Lesson focus: grouping data with group by with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=9Pzj7Aj25lw"
+  },
+  {
+    "pool": "sql",
+    "title": "JOIN fundamentals",
+    "description": "Lesson focus: join fundamentals with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=F1rjM3JrR8Q"
+  },
+  {
+    "pool": "sql",
+    "title": "Subqueries in practice",
+    "description": "Lesson focus: subqueries in practice with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=5hzZtqCNQKk"
+  },
+  {
+    "pool": "sql",
+    "title": "CASE statements and logic",
+    "description": "Lesson focus: case statements and logic with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=O7vP6T4P8d8"
+  },
+  {
+    "pool": "sql",
+    "title": "Window functions",
+    "description": "Lesson focus: window functions with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=2A0H9a6bJ5E"
+  },
+  {
+    "pool": "sql",
+    "title": "Common table expressions",
+    "description": "Lesson focus: common table expressions with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=0e0lTz6d8Kk"
+  },
+  {
+    "pool": "sql",
+    "title": "Schema design basics",
+    "description": "Lesson focus: schema design basics with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Yz2bX2f0p3g"
+  },
+  {
+    "pool": "sql",
+    "title": "Normalization overview",
+    "description": "Lesson focus: normalization overview with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=6K5d0E8j8M4"
+  },
+  {
+    "pool": "sql",
+    "title": "Indexes and performance",
+    "description": "Lesson focus: indexes and performance with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=9L7h3K0p2Jg"
+  },
+  {
+    "pool": "sql",
+    "title": "Transactions and ACID",
+    "description": "Lesson focus: transactions and acid with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=5P6f0L2p9X8"
+  },
+  {
+    "pool": "sql",
+    "title": "Views and stored logic",
+    "description": "Lesson focus: views and stored logic with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=2Q1d7P3m4X5"
+  },
+  {
+    "pool": "sql",
+    "title": "Reporting queries",
+    "description": "Lesson focus: reporting queries with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=7X8n9K0p1J2"
+  },
+  {
+    "pool": "sql",
+    "title": "Data cleanup workflows",
+    "description": "Lesson focus: data cleanup workflows with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=3Y4K5M6P7Q8"
+  },
+  {
+    "pool": "sql",
+    "title": "SQL for analytics",
+    "description": "Lesson focus: sql for analytics with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=8K2J5L9X3M1"
+  },
+  {
+    "pool": "sql",
+    "title": "Interview query practice",
+    "description": "Lesson focus: interview query practice with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=6P7M3K2L1J0"
+  },
+  {
+    "pool": "sql",
+    "title": "Database project review",
+    "description": "Lesson focus: database project review with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=5K3M1J7P2L9"
+  },
+  {
+    "pool": "web",
+    "title": "HTML structure essentials",
+    "description": "Lesson focus: html structure essentials with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=G3e-cpL7ofc"
+  },
+  {
+    "pool": "web",
+    "title": "Semantic markup",
+    "description": "Lesson focus: semantic markup with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=pQN-pnXPaVg"
+  },
+  {
+    "pool": "web",
+    "title": "CSS layout systems",
+    "description": "Lesson focus: css layout systems with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=a_iQb1lnAEQ"
+  },
+  {
+    "pool": "web",
+    "title": "Responsive design basics",
+    "description": "Lesson focus: responsive design basics with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=3JluqTojuME"
+  },
+  {
+    "pool": "web",
+    "title": "Flexbox and grid",
+    "description": "Lesson focus: flexbox and grid with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=UB1O30fR-EE"
+  },
+  {
+    "pool": "web",
+    "title": "JavaScript syntax refresh",
+    "description": "Lesson focus: javascript syntax refresh with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=1Rs2ND1ryYc"
+  },
+  {
+    "pool": "web",
+    "title": "DOM interactions",
+    "description": "Lesson focus: dom interactions with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=PkZNo7MFNFg"
+  },
+  {
+    "pool": "web",
+    "title": "Forms and validation",
+    "description": "Lesson focus: forms and validation with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=1PnVor36_40"
+  },
+  {
+    "pool": "web",
+    "title": "Reusable UI components",
+    "description": "Lesson focus: reusable ui components with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Q33KBiDriJY"
+  },
+  {
+    "pool": "web",
+    "title": "State and events",
+    "description": "Lesson focus: state and events with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=5fb2aPlgoys"
+  },
+  {
+    "pool": "web",
+    "title": "Accessibility basics",
+    "description": "Lesson focus: accessibility basics with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Y3nZ1n9Hh1M"
+  },
+  {
+    "pool": "web",
+    "title": "Performance fundamentals",
+    "description": "Lesson focus: performance fundamentals with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=0ik6X4DJKCc"
+  },
+  {
+    "pool": "web",
+    "title": "API integration",
+    "description": "Lesson focus: api integration with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Z1Yd7upQsXY"
+  },
+  {
+    "pool": "web",
+    "title": "Modern tooling intro",
+    "description": "Lesson focus: modern tooling intro with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=2Ji-clqUYnA"
+  },
+  {
+    "pool": "web",
+    "title": "Frontend architecture",
+    "description": "Lesson focus: frontend architecture with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Ukg_U3CnJWI"
+  },
+  {
+    "pool": "web",
+    "title": "Project organization",
+    "description": "Lesson focus: project organization with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=3gYpY2l9V9Y"
+  },
+  {
+    "pool": "web",
+    "title": "Deployment basics",
+    "description": "Lesson focus: deployment basics with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=KJgsSFOSQv0"
+  },
+  {
+    "pool": "web",
+    "title": "Portfolio project build",
+    "description": "Lesson focus: portfolio project build with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=FazgJVnrVuI"
+  },
+  {
+    "pool": "web",
+    "title": "Full stack awareness",
+    "description": "Lesson focus: full stack awareness with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=tbC5k2Y3r8g"
+  },
+  {
+    "pool": "web",
+    "title": "Career portfolio polish",
+    "description": "Lesson focus: career portfolio polish with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=7r4xVDI2vho"
+  },
+  {
+    "pool": "react",
+    "title": "React mental model",
+    "description": "Lesson focus: react mental model with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=x4rFhThSX04"
+  },
+  {
+    "pool": "react",
+    "title": "JSX and rendering",
+    "description": "Lesson focus: jsx and rendering with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=bMknfKXIFA8"
+  },
+  {
+    "pool": "react",
+    "title": "Props and composition",
+    "description": "Lesson focus: props and composition with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Ke90Tje7VS0"
+  },
+  {
+    "pool": "react",
+    "title": "State with hooks",
+    "description": "Lesson focus: state with hooks with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=SqcY0GlETPk"
+  },
+  {
+    "pool": "react",
+    "title": "Effects and side effects",
+    "description": "Lesson focus: effects and side effects with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=w7ejDZ8SWv8"
+  },
+  {
+    "pool": "react",
+    "title": "Lists and keys",
+    "description": "Lesson focus: lists and keys with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=DLX62G4lc44"
+  },
+  {
+    "pool": "react",
+    "title": "Forms in React",
+    "description": "Lesson focus: forms in react with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=9j8g9N8h5uM"
+  },
+  {
+    "pool": "react",
+    "title": "Context patterns",
+    "description": "Lesson focus: context patterns with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=2LhoCfjm8R4"
+  },
+  {
+    "pool": "react",
+    "title": "Routing foundations",
+    "description": "Lesson focus: routing foundations with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=V1p33H5aXzY"
+  },
+  {
+    "pool": "react",
+    "title": "Fetching server data",
+    "description": "Lesson focus: fetching server data with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Z1Yd7upQsXY"
+  },
+  {
+    "pool": "react",
+    "title": "Component architecture",
+    "description": "Lesson focus: component architecture with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Q33KBiDriJY"
+  },
+  {
+    "pool": "react",
+    "title": "Reusable UI systems",
+    "description": "Lesson focus: reusable ui systems with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=5fb2aPlgoys"
+  },
+  {
+    "pool": "react",
+    "title": "Performance basics",
+    "description": "Lesson focus: performance basics with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Y3nZ1n9Hh1M"
+  },
+  {
+    "pool": "react",
+    "title": "State management options",
+    "description": "Lesson focus: state management options with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=0ik6X4DJKCc"
+  },
+  {
+    "pool": "react",
+    "title": "Testing React apps",
+    "description": "Lesson focus: testing react apps with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=2Ji-clqUYnA"
+  },
+  {
+    "pool": "react",
+    "title": "Animation and polish",
+    "description": "Lesson focus: animation and polish with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Ukg_U3CnJWI"
+  },
+  {
+    "pool": "react",
+    "title": "Project build workflow",
+    "description": "Lesson focus: project build workflow with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=3gYpY2l9V9Y"
+  },
+  {
+    "pool": "react",
+    "title": "Authentication flow",
+    "description": "Lesson focus: authentication flow with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=KJgsSFOSQv0"
+  },
+  {
+    "pool": "react",
+    "title": "Deployment and hosting",
+    "description": "Lesson focus: deployment and hosting with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=FazgJVnrVuI"
+  },
+  {
+    "pool": "react",
+    "title": "Interview review",
+    "description": "Lesson focus: interview review with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=tbC5k2Y3r8g"
+  },
+  {
+    "pool": "node",
+    "title": "Node runtime foundations",
+    "description": "Lesson focus: node runtime foundations with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Oe421EPjeBE"
+  },
+  {
+    "pool": "node",
+    "title": "Modules and package management",
+    "description": "Lesson focus: modules and package management with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=RLtyhwFtXQA"
+  },
+  {
+    "pool": "node",
+    "title": "HTTP server basics",
+    "description": "Lesson focus: http server basics with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=f2EqECiTBL8"
+  },
+  {
+    "pool": "node",
+    "title": "Express fundamentals",
+    "description": "Lesson focus: express fundamentals with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=TlB_eWDSMt4"
+  },
+  {
+    "pool": "node",
+    "title": "Routing patterns",
+    "description": "Lesson focus: routing patterns with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=1NrHkjlWVhM"
+  },
+  {
+    "pool": "node",
+    "title": "Middleware architecture",
+    "description": "Lesson focus: middleware architecture with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=7nafaH9SddU"
+  },
+  {
+    "pool": "node",
+    "title": "REST API design",
+    "description": "Lesson focus: rest api design with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=F5mRW0jo-U4"
+  },
+  {
+    "pool": "node",
+    "title": "Validation and errors",
+    "description": "Lesson focus: validation and errors with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=NoWRq5Q2bX8"
+  },
+  {
+    "pool": "node",
+    "title": "Authentication with JWT",
+    "description": "Lesson focus: authentication with jwt with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=7zXz0mY8eYg"
+  },
+  {
+    "pool": "node",
+    "title": "Working with databases",
+    "description": "Lesson focus: working with databases with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=0oXYLzuucwE"
+  },
+  {
+    "pool": "node",
+    "title": "Prisma and ORM basics",
+    "description": "Lesson focus: prisma and orm basics with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=6P7M3K2L1J0"
+  },
+  {
+    "pool": "node",
+    "title": "File uploads and storage",
+    "description": "Lesson focus: file uploads and storage with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=8K2J5L9X3M1"
+  },
+  {
+    "pool": "node",
+    "title": "Background jobs",
+    "description": "Lesson focus: background jobs with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=3Y4K5M6P7Q8"
+  },
+  {
+    "pool": "node",
+    "title": "Caching strategies",
+    "description": "Lesson focus: caching strategies with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=7X8n9K0p1J2"
+  },
+  {
+    "pool": "node",
+    "title": "Testing backend APIs",
+    "description": "Lesson focus: testing backend apis with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=2Q1d7P3m4X5"
+  },
+  {
+    "pool": "node",
+    "title": "Security best practices",
+    "description": "Lesson focus: security best practices with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=5P6f0L2p9X8"
+  },
+  {
+    "pool": "node",
+    "title": "Deployment pipelines",
+    "description": "Lesson focus: deployment pipelines with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=9L7h3K0p2Jg"
+  },
+  {
+    "pool": "node",
+    "title": "Observability basics",
+    "description": "Lesson focus: observability basics with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=6K5d0E8j8M4"
+  },
+  {
+    "pool": "node",
+    "title": "Scaling patterns",
+    "description": "Lesson focus: scaling patterns with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Yz2bX2f0p3g"
+  },
+  {
+    "pool": "node",
+    "title": "Production project review",
+    "description": "Lesson focus: production project review with a course-ready explanation and guided practice.",
+    "youtubeUrl": "https://www.youtube.com/watch?v=0e0lTz6d8Kk"
+  }
+]

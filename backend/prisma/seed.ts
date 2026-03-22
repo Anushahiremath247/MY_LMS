@@ -1,5 +1,6 @@
-import { PrismaClient, type Difficulty, type ResourceType } from "@prisma/client";
+import { PrismaClient, type CourseAccessType, type Difficulty, type PaymentMethod, type ResourceType, type SubscriptionBillingCycle } from "@prisma/client";
 import bcrypt from "bcryptjs";
+import { syncCourseCatalog } from "./course-seed-utils.js";
 
 const prisma = new PrismaClient();
 
@@ -61,6 +62,11 @@ const subjects = [
     duration: "14h 30m",
     rating: 4.9,
     category: "Programming",
+    level: "Beginner",
+    accessType: "free" as CourseAccessType,
+    price: 0,
+    listPrice: 0,
+    previewLessonsCount: 5,
     lessonsCount: 5,
     sections: [
       {
@@ -94,6 +100,11 @@ const subjects = [
     duration: "10h 10m",
     rating: 4.8,
     category: "Frontend",
+    level: "Intermediate",
+    accessType: "paid" as CourseAccessType,
+    price: 3499,
+    listPrice: 4999,
+    previewLessonsCount: 1,
     lessonsCount: 3,
     sections: [
       {
@@ -119,6 +130,12 @@ const subjects = [
     duration: "9h 45m",
     rating: 4.7,
     category: "Backend",
+    level: "Advanced",
+    accessType: "subscription" as CourseAccessType,
+    price: 0,
+    listPrice: 0,
+    previewLessonsCount: 1,
+    subscriptionPlanCode: "pro",
     lessonsCount: 2,
     sections: [
       {
@@ -130,6 +147,39 @@ const subjects = [
         ]
       }
     ]
+  }
+];
+
+const subscriptionPlans = [
+  {
+    code: "starter",
+    name: "Starter",
+    tagline: "For learners building steady momentum",
+    description: "Unlock subscription-only paths, guided notes, and lighter study tools.",
+    priceMonthly: 799,
+    priceYearly: 6999,
+    features: "Subscription course access,AI tutor support,Progress sync across devices",
+    isRecommended: false
+  },
+  {
+    code: "pro",
+    name: "Pro",
+    tagline: "Best for focused upskilling",
+    description: "Includes Starter benefits plus premium study workflows and certificates.",
+    priceMonthly: 1499,
+    priceYearly: 12999,
+    features: "Everything in Starter,Certificate-ready paths,Priority premium recommendations",
+    isRecommended: true
+  },
+  {
+    code: "studio",
+    name: "Studio",
+    tagline: "For serious career transitions",
+    description: "A richer membership with deeper premium paths and personalized learning support.",
+    priceMonthly: 2299,
+    priceYearly: 19999,
+    features: "Everything in Pro,Advanced system design tracks,Extended receipts and history",
+    isRecommended: false
   }
 ];
 
@@ -191,50 +241,7 @@ async function main() {
     }
   });
 
-  for (const subject of subjects) {
-    const existingSubject = await prisma.subject.findUnique({
-      where: { slug: subject.slug },
-      include: {
-        sections: {
-          include: {
-            videos: true
-          }
-        }
-      }
-    });
-
-    if (!existingSubject) {
-      await prisma.subject.create({
-        data: {
-          slug: subject.slug,
-          title: subject.title,
-          shortDescription: subject.shortDescription,
-          description: subject.description,
-          thumbnail: subject.thumbnail,
-          instructor: subject.instructor,
-          duration: subject.duration,
-          rating: subject.rating,
-          category: subject.category,
-          lessonsCount: subject.lessonsCount,
-          sections: {
-            create: subject.sections.map((section) => ({
-              title: section.title,
-              orderIndex: section.orderIndex,
-              videos: {
-                create: section.videos.map(([title, description, youtubeId], index) => ({
-                  title,
-                  description,
-                  youtubeId,
-                  durationSeconds: 900 + index * 120,
-                  orderIndex: index + 1
-                }))
-              }
-            }))
-          }
-        }
-      });
-    }
-  }
+  const courseSeedSummary = await syncCourseCatalog(prisma);
 
   const allSubjects = await prisma.subject.findMany({
     include: {
@@ -245,6 +252,14 @@ async function main() {
       }
     }
   });
+
+  for (const plan of subscriptionPlans) {
+    await prisma.subscriptionPlan.upsert({
+      where: { code: plan.code },
+      update: plan,
+      create: plan
+    });
+  }
 
   for (const subject of allSubjects.slice(0, 2)) {
     await prisma.enrollment.upsert({
@@ -286,6 +301,104 @@ async function main() {
     }
   }
 
+  const paidCourse = allSubjects.find((subject) => subject.accessType === "paid");
+  if (paidCourse) {
+    const order = await prisma.order.upsert({
+      where: { reference: "SEED_ORDER_PAID" },
+      update: {},
+      create: {
+        userId: demoUser.id,
+        subjectId: paidCourse.id,
+        amount: paidCourse.price,
+        status: "paid",
+        reference: "SEED_ORDER_PAID"
+      }
+    });
+
+    const payment = await prisma.payment.upsert({
+      where: { reference: "SEED_PAYMENT_PAID" },
+      update: {},
+      create: {
+        userId: demoUser.id,
+        orderId: order.id,
+        amount: paidCourse.price,
+        status: "succeeded",
+        method: "upi" as PaymentMethod,
+        reference: "SEED_PAYMENT_PAID",
+        type: "course_purchase"
+      }
+    });
+
+    await prisma.purchasedCourse.upsert({
+      where: {
+        userId_subjectId: {
+          userId: demoUser.id,
+          subjectId: paidCourse.id
+        }
+      },
+      update: {
+        orderId: order.id,
+        paymentId: payment.id
+      },
+      create: {
+        userId: demoUser.id,
+        subjectId: paidCourse.id,
+        orderId: order.id,
+        paymentId: payment.id
+      }
+    });
+  }
+
+  const proPlan = await prisma.subscriptionPlan.findUnique({ where: { code: "pro" } });
+  if (proPlan) {
+    const subOrder = await prisma.order.upsert({
+      where: { reference: "SEED_ORDER_SUB" },
+      update: {},
+      create: {
+        userId: demoUser.id,
+        subscriptionPlanId: proPlan.id,
+        amount: proPlan.priceMonthly,
+        status: "paid",
+        reference: "SEED_ORDER_SUB"
+      }
+    });
+
+    const subPayment = await prisma.payment.upsert({
+      where: { reference: "SEED_PAYMENT_SUB" },
+      update: {},
+      create: {
+        userId: demoUser.id,
+        orderId: subOrder.id,
+        amount: proPlan.priceMonthly,
+        status: "succeeded",
+        method: "card" as PaymentMethod,
+        reference: "SEED_PAYMENT_SUB",
+        type: "subscription"
+      }
+    });
+
+    await prisma.userSubscription.upsert({
+      where: {
+        id: "seed-pro-subscription"
+      },
+      update: {
+        paymentId: subPayment.id,
+        status: "active",
+        billingCycle: "monthly" as SubscriptionBillingCycle,
+        expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+      },
+      create: {
+        id: "seed-pro-subscription",
+        userId: demoUser.id,
+        planId: proPlan.id,
+        paymentId: subPayment.id,
+        billingCycle: "monthly" as SubscriptionBillingCycle,
+        status: "active",
+        expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+      }
+    });
+  }
+
   const mandatoryResources = [
     ...exactVideoLinks.map((url, index) => ({
       title: `Featured Video Resource ${index + 1}`,
@@ -319,6 +432,7 @@ async function main() {
       {
         seeded: true,
         subjects: allSubjects.length,
+        courseSeedSummary,
         exactVideoLinks: exactVideoLinks.map(parseYoutubeId),
         totalResources
       },

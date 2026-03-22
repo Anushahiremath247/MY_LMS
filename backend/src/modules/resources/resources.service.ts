@@ -21,7 +21,14 @@ export const listResources = async (query: { category?: string; search?: string 
           ]
         : undefined
     },
-    orderBy: [{ category: "asc" }, { title: "asc" }]
+    orderBy: [{ category: "asc" }, { title: "asc" }],
+    select: {
+      id: true,
+      title: true,
+      category: true,
+      youtubeUrl: true,
+      type: true,
+      difficulty: true
+    }
   });
 };
-

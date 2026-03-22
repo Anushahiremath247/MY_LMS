@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap");
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -13,45 +11,27 @@ html {
 }
 
 body {
-  @apply bg-surface bg-glow text-ink font-sans antialiased;
+  @apply bg-surface text-ink font-sans antialiased;
   min-height: 100vh;
-  background-attachment: fixed;
+  overflow-x: hidden;
   background-image:
-    radial-gradient(circle at top center, rgba(255, 255, 255, 0.85), transparent 26%),
-    linear-gradient(180deg, #edf8ff 0%, #dff1ff 44%, #d2ebff 100%);
+    linear-gradient(rgba(176, 201, 226, 0.28) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(176, 201, 226, 0.28) 1px, transparent 1px),
+    radial-gradient(circle at top center, rgba(255, 255, 255, 0.94), transparent 26%),
+    radial-gradient(circle at 18% 18%, rgba(121, 203, 255, 0.16), transparent 24%),
+    radial-gradient(circle at 82% 14%, rgba(31, 99, 232, 0.09), transparent 20%),
+    linear-gradient(180deg, #f8fbff 0%, #edf6ff 48%, #e8f2ff 100%);
+  background-size: 46px 46px, 46px 46px, auto, auto, auto, auto;
+  background-position: center, center, center top, left top, right top, center;
 }
 
 * {
   @apply border-line;
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background-image:
-    linear-gradient(rgba(146, 188, 221, 0.35) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(146, 188, 221, 0.35) 1px, transparent 1px);
-  background-size: 46px 46px;
-  opacity: 0.7;
-}
-
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(circle at 18% 24%, rgba(255, 255, 255, 0.65), transparent 18%),
-    radial-gradient(circle at 85% 18%, rgba(121, 203, 255, 0.24), transparent 20%),
-    radial-gradient(circle at 82% 82%, rgba(31, 99, 232, 0.12), transparent 24%);
-  opacity: 0.9;
-}
-
 .glass-panel {
-  @apply border border-white/70 backdrop-blur-xl shadow-glass;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.22));
+  @apply border border-slate-200/90 bg-white/90 shadow-[0_10px_24px_rgba(15,23,42,0.06)];
+  backdrop-filter: blur(4px);
 }
 
 .section-shell {
@@ -59,26 +39,25 @@ body::after {
 }
 
 .bubble-card {
-  @apply relative overflow-hidden rounded-[2.75rem] border border-white/75 backdrop-blur-xl shadow-glass;
-  background: linear-gradient(180deg, rgba(240, 249, 255, 0.88), rgba(214, 235, 255, 0.78));
+  @apply relative overflow-hidden rounded-[2.4rem] border border-slate-200 bg-white shadow-[0_14px_32px_rgba(15,23,42,0.07)];
 }
 
 .bubble-card::before {
   content: "";
   position: absolute;
   inset: 1px 1px auto 1px;
-  height: 38%;
-  border-radius: 2.5rem 2.5rem 2rem 2rem;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.66), rgba(255, 255, 255, 0.08));
+  height: 18%;
+  border-radius: 2.2rem 2.2rem 1.7rem 1.7rem;
+  background: linear-gradient(180deg, rgba(248, 250, 252, 0.88), rgba(248, 250, 252, 0));
   pointer-events: none;
 }
 
 .bubble-bar {
-  @apply relative overflow-hidden rounded-full border border-[#2e7af7]/20 bg-primary text-white shadow-glass;
+  @apply relative overflow-hidden rounded-full border border-[#2e7af7]/20 bg-primary text-white shadow-[0_12px_24px_rgba(37,99,235,0.2)];
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.18),
-    inset 0 -8px 18px rgba(10, 48, 121, 0.18),
-    0 16px 28px rgba(31, 99, 232, 0.3);
+    inset 0 -6px 14px rgba(10, 48, 121, 0.1),
+    0 12px 24px rgba(31, 99, 232, 0.18);
 }
 
 .bubble-panel {
@@ -87,8 +66,8 @@ body::after {
   background: linear-gradient(180deg, #3f7df8 0%, #1f63e8 72%, #1b56cf 100%);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.18),
-    inset 0 -18px 34px rgba(10, 48, 121, 0.16),
-    0 24px 50px rgba(31, 99, 232, 0.28);
+    inset 0 -12px 24px rgba(10, 48, 121, 0.1),
+    0 18px 36px rgba(31, 99, 232, 0.2);
 }
 
 .bubble-panel::before {
@@ -102,11 +81,11 @@ body::after {
 }
 
 .glass-orb {
-  @apply rounded-full border border-white/55 backdrop-blur-xl;
+  @apply rounded-full border border-white/55 backdrop-blur-sm;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0.15));
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.7),
-    0 8px 24px rgba(101, 169, 255, 0.24);
+    0 6px 16px rgba(101, 169, 255, 0.16);
 }
 
 .hero-kicker {
@@ -115,37 +94,55 @@ body::after {
 
 .bubble-title {
   @apply font-display font-extrabold tracking-[-0.05em] text-primary;
-  text-shadow: 0 10px 25px rgba(31, 99, 232, 0.14);
+  text-shadow: 0 4px 14px rgba(31, 99, 232, 0.08);
 }
 
 .soft-strip {
-  @apply rounded-full border border-white/60 backdrop-blur-xl;
-  background: rgba(167, 205, 235, 0.34);
+  @apply rounded-full border border-slate-200 bg-white/80;
+  backdrop-filter: blur(4px);
 }
 
 .button-ripple {
   position: relative;
   overflow: hidden;
+  will-change: transform;
 }
 
 .button-ripple::after {
   content: "";
   position: absolute;
-  width: 0;
-  height: 0;
+  inset: -35%;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.22);
-  transform: translate(-50%, -50%);
-  left: var(--x, 50%);
-  top: var(--y, 50%);
-  transition: width 0.4s ease, height 0.4s ease, opacity 0.4s ease;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.08) 36%, rgba(255, 255, 255, 0) 70%);
+  transform: scale(0.55);
+  transition: transform 0.35s ease, opacity 0.35s ease;
   opacity: 0;
+  pointer-events: none;
 }
 
 .button-ripple:hover::after {
-  width: 240px;
-  height: 240px;
+  transform: scale(1);
   opacity: 1;
+}
+
+.pressable {
+  transition-property: transform, box-shadow, border-color, background-color, color, opacity;
+  transition-duration: 180ms;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.pressable:hover {
+  transform: translateY(-1px);
+}
+
+.pressable:active {
+  transform: translateY(0) scale(0.97);
+}
+
+.content-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 520px;
 }
 
 .text-balance {
@@ -154,4 +151,19 @@ body::after {
 
 ::selection {
   background: rgba(56, 103, 255, 0.18);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
 }

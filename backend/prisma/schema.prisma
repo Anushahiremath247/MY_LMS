@@ -29,6 +29,47 @@ enum CertificateStatus {
   in_progress
 }
 
+enum CourseAccessType {
+  free
+  paid
+  subscription
+}
+
+enum PaymentStatus {
+  pending
+  succeeded
+  failed
+}
+
+enum PaymentMethod {
+  upi
+  card
+  bank_transfer
+}
+
+enum PaymentType {
+  course_purchase
+  subscription
+}
+
+enum OrderStatus {
+  pending
+  paid
+  failed
+  canceled
+}
+
+enum SubscriptionBillingCycle {
+  monthly
+  yearly
+}
+
+enum UserSubscriptionStatus {
+  active
+  expired
+  canceled
+}
+
 model User {
   id            String          @id @default(cuid())
   email         String          @unique
@@ -49,6 +90,11 @@ model User {
   certificates  Certificate[]
   activityLogs  ActivityLog[]
   resetTokens   PasswordResetToken[]
+  orders        Order[]
+  payments      Payment[]
+  subscriptions UserSubscription[]
+  purchases     PurchasedCourse[]
+  watchHistory  WatchHistory[]
 }
 
 model Subject {
@@ -62,6 +108,12 @@ model Subject {
   duration       String
   rating         Float         @default(4.8)
   category       String
+  level          String        @default("Beginner")
+  accessType     CourseAccessType @default(free)
+  price          Int           @default(0)
+  listPrice      Int           @default(0)
+  previewLessonsCount Int      @default(0)
+  subscriptionPlanCode String?
   lessonsCount   Int
   published      Boolean       @default(true)
   createdAt      DateTime      @default(now())
@@ -69,6 +121,13 @@ model Subject {
   sections       Section[]
   enrollments    Enrollment[]
   certificates   Certificate[]
+  orders         Order[]
+  purchases      PurchasedCourse[]
+  watchHistory   WatchHistory[]
+
+  @@index([published, createdAt])
+  @@index([category])
+  @@index([accessType])
 }
 
 model Section {
@@ -78,6 +137,8 @@ model Section {
   orderIndex Int
   subject    Subject  @relation(fields: [subjectId], references: [id], onDelete: Cascade)
   videos     Video[]
+
+  @@index([subjectId, orderIndex])
 }
 
 model Video {
@@ -86,11 +147,18 @@ model Video {
   title           String
   description     String
   youtubeId       String
+  youtubeUrl      String
+  embedUrl        String
+  thumbnailUrl    String
   durationSeconds Int
   orderIndex      Int
   isPreview       Boolean         @default(false)
   section         Section         @relation(fields: [sectionId], references: [id], onDelete: Cascade)
   progress        VideoProgress[]
+  watchHistory    WatchHistory[]
+
+  @@index([sectionId, orderIndex])
+  @@index([youtubeId])
 }
 
 model Enrollment {
@@ -102,6 +170,7 @@ model Enrollment {
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, subjectId])
+  @@index([subjectId])
 }
 
 model VideoProgress {
@@ -116,6 +185,8 @@ model VideoProgress {
   video               Video     @relation(fields: [videoId], references: [id], onDelete: Cascade)
 
   @@unique([userId, videoId])
+  @@index([userId, isCompleted])
+  @@index([videoId])
 }
 
 model RefreshToken {
@@ -126,6 +197,124 @@ model RefreshToken {
   revokedAt  DateTime?
   createdAt  DateTime  @default(now())
   user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, expiresAt])
+}
+
+model SubscriptionPlan {
+  id                String                 @id @default(cuid())
+  code              String                 @unique
+  name              String
+  tagline           String
+  description       String
+  priceMonthly      Int
+  priceYearly       Int
+  features          String
+  isRecommended     Boolean                @default(false)
+  createdAt         DateTime               @default(now())
+  updatedAt         DateTime               @updatedAt
+  orders            Order[]
+  userSubscriptions UserSubscription[]
+
+  @@index([code])
+}
+
+model Order {
+  id                 String        @id @default(cuid())
+  userId             String
+  subjectId          String?
+  subscriptionPlanId String?
+  status             OrderStatus   @default(pending)
+  amount             Int
+  currency           String        @default("INR")
+  reference          String        @unique
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+  user               User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  subject            Subject?      @relation(fields: [subjectId], references: [id], onDelete: SetNull)
+  subscriptionPlan   SubscriptionPlan? @relation(fields: [subscriptionPlanId], references: [id], onDelete: SetNull)
+  payments           Payment[]
+  purchases          PurchasedCourse[]
+
+  @@index([userId, createdAt])
+  @@index([subjectId])
+  @@index([subscriptionPlanId])
+}
+
+model Payment {
+  id          String        @id @default(cuid())
+  userId      String
+  orderId     String
+  type        PaymentType
+  amount      Int
+  currency    String        @default("INR")
+  status      PaymentStatus @default(pending)
+  method      PaymentMethod
+  reference   String        @unique
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  order       Order         @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  purchases   PurchasedCourse[]
+  subscriptions UserSubscription[]
+
+  @@index([userId, createdAt])
+  @@index([orderId])
+  @@index([status])
+}
+
+model UserSubscription {
+  id           String                 @id @default(cuid())
+  userId       String
+  planId       String
+  paymentId    String?
+  billingCycle SubscriptionBillingCycle
+  status       UserSubscriptionStatus @default(active)
+  startedAt    DateTime               @default(now())
+  expiresAt    DateTime
+  canceledAt   DateTime?
+  createdAt    DateTime               @default(now())
+  updatedAt    DateTime               @updatedAt
+  user         User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  plan         SubscriptionPlan       @relation(fields: [planId], references: [id], onDelete: Cascade)
+  payment      Payment?               @relation(fields: [paymentId], references: [id], onDelete: SetNull)
+
+  @@index([userId, status, expiresAt])
+  @@index([planId])
+}
+
+model PurchasedCourse {
+  id         String   @id @default(cuid())
+  userId     String
+  subjectId  String
+  orderId    String
+  paymentId  String
+  createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  subject    Subject  @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  order      Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  payment    Payment  @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, subjectId])
+  @@index([userId, createdAt])
+  @@index([subjectId])
+}
+
+model WatchHistory {
+  id              String    @id @default(cuid())
+  userId          String
+  subjectId       String
+  videoId         String
+  progressSeconds Int       @default(0)
+  completed       Boolean   @default(false)
+  watchedAt       DateTime  @default(now())
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  subject         Subject   @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  video           Video     @relation(fields: [videoId], references: [id], onDelete: Cascade)
+
+  @@index([userId, watchedAt])
+  @@index([subjectId])
+  @@index([videoId])
 }
 
 model LearningResource {
@@ -136,6 +325,9 @@ model LearningResource {
   type       ResourceType
   difficulty Difficulty
   createdAt  DateTime     @default(now())
+
+  @@index([category])
+  @@index([difficulty])
 }
 
 model Profile {
@@ -195,6 +387,8 @@ model ActivityLog {
   userAgent   String?
   createdAt   DateTime @default(now())
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
 }
 
 model PasswordResetToken {
@@ -205,4 +399,6 @@ model PasswordResetToken {
   usedAt    DateTime?
   createdAt DateTime  @default(now())
   user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, expiresAt])
 }

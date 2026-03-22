@@ -1,4 +1,4 @@
-import type { Course, CourseSection, Lesson, Resource, Testimonial } from "@/types";
+import type { Course, CourseSection, Lesson, Resource, SubscriptionPlan, Testimonial } from "@/types";
 
 type LessonSeed = {
   title: string;
@@ -71,6 +71,37 @@ export const testimonials: Testimonial[] = [
   }
 ];
 
+export const subscriptionPlans: SubscriptionPlan[] = [
+  {
+    id: "starter",
+    name: "Starter",
+    tagline: "For learners building steady momentum",
+    description: "Unlock subscription-only paths, guided notes, and lighter study tools.",
+    priceMonthly: 799,
+    priceYearly: 6999,
+    features: ["Subscription course access", "AI tutor support", "Progress sync across devices"]
+  },
+  {
+    id: "pro",
+    name: "Pro",
+    tagline: "Best for focused upskilling",
+    description: "Includes all Starter benefits plus premium study workflows and certificates.",
+    priceMonthly: 1499,
+    priceYearly: 12999,
+    features: ["Everything in Starter", "Certificate-ready paths", "Priority premium recommendations"],
+    recommended: true
+  },
+  {
+    id: "studio",
+    name: "Studio",
+    tagline: "For serious career transitions",
+    description: "A richer membership with deeper premium paths and personalized learning support.",
+    priceMonthly: 2299,
+    priceYearly: 19999,
+    features: ["Everything in Pro", "Advanced system design tracks", "Extended watch history and receipts"]
+  }
+];
+
 const courseSeeds: CourseSeed[] = [
   {
     id: "python-mastery",
@@ -83,6 +114,11 @@ const courseSeeds: CourseSeed[] = [
     duration: "14h 30m",
     rating: 4.9,
     category: "Programming",
+    level: "Beginner",
+    accessType: "free",
+    price: 0,
+    listPrice: 0,
+    previewLessonsCount: 6,
     thumbnail:
       "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=1200&q=80",
     progress: 72,
@@ -145,6 +181,11 @@ const courseSeeds: CourseSeed[] = [
     duration: "10h 10m",
     rating: 4.8,
     category: "Frontend",
+    level: "Intermediate",
+    accessType: "paid",
+    price: 3499,
+    listPrice: 4999,
+    previewLessonsCount: 2,
     thumbnail:
       "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80",
     progress: 34,
@@ -206,6 +247,12 @@ const courseSeeds: CourseSeed[] = [
     duration: "9h 45m",
     rating: 4.7,
     category: "Backend",
+    level: "Advanced",
+    accessType: "subscription",
+    price: 0,
+    listPrice: 0,
+    subscriptionPlanIds: ["pro", "studio"],
+    previewLessonsCount: 1,
     thumbnail:
       "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80",
     progress: 18,
@@ -267,6 +314,11 @@ const courseSeeds: CourseSeed[] = [
     duration: "11h 05m",
     rating: 4.9,
     category: "AI / ML",
+    level: "Intermediate",
+    accessType: "paid",
+    price: 4299,
+    listPrice: 5999,
+    previewLessonsCount: 2,
     thumbnail:
       "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1200&q=80",
     progress: 56,
@@ -329,6 +381,12 @@ const courseSeeds: CourseSeed[] = [
     duration: "8h 20m",
     rating: 4.8,
     category: "Cloud",
+    level: "Intermediate",
+    accessType: "subscription",
+    price: 0,
+    listPrice: 0,
+    subscriptionPlanIds: ["pro", "studio"],
+    previewLessonsCount: 1,
     thumbnail:
       "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80",
     isEnrolled: false,
@@ -386,6 +444,11 @@ const courseSeeds: CourseSeed[] = [
     duration: "7h 50m",
     rating: 4.8,
     category: "UI / UX",
+    level: "Beginner",
+    accessType: "free",
+    price: 0,
+    listPrice: 0,
+    previewLessonsCount: 6,
     thumbnail:
       "https://images.unsplash.com/photo-1522542550221-31fd19575a2d?auto=format&fit=crop&w=1200&q=80",
     isEnrolled: false,
@@ -434,7 +497,74 @@ const courseSeeds: CourseSeed[] = [
   }
 ];
 
-export const courses: Course[] = courseSeeds.map(buildCourse);
+const catalogAngles = [
+  "Fundamentals",
+  "Projects",
+  "Career",
+  "Practice",
+  "Systems",
+  "Interview",
+  "Applied",
+  "Portfolio",
+  "Toolkit",
+  "Roadmap",
+  "Automation",
+  "Essentials"
+] as const;
+
+const catalogFormats = [
+  "Sprint",
+  "Studio",
+  "Lab",
+  "Workshop",
+  "Track",
+  "Playbook",
+  "Deep Dive",
+  "Blueprint",
+  "Masterclass",
+  "Accelerator",
+  "Focus Path",
+  "Intensive"
+] as const;
+
+const instructorRoster = [
+  "Mira Lawson",
+  "Jordan Pike",
+  "Nadia Cruz",
+  "Elena Ward",
+  "Reese Harper",
+  "Maya Chen",
+  "Avery Brooks",
+  "Noah Bennett",
+  "Sophia Rivera",
+  "Leo Hart"
+] as const;
+
+const generatedCourseSeeds: CourseSeed[] = courseSeeds.flatMap((seed, seedIndex) =>
+  Array.from({ length: 84 }, (_, variantIndex) => {
+    const serial = String(variantIndex + 1).padStart(2, "0");
+    const angle = catalogAngles[(variantIndex + seedIndex) % catalogAngles.length];
+    const format = catalogFormats[(variantIndex * 2 + seedIndex) % catalogFormats.length];
+    const minutes = String((variantIndex * 7 + seedIndex * 11) % 60).padStart(2, "0");
+    const rating = Number((4.5 + ((variantIndex + seedIndex) % 5) * 0.1).toFixed(1));
+
+    return {
+      ...seed,
+      id: `${seed.id}-${serial}`,
+      slug: `${seed.slug}-${serial}`,
+      title: `${seed.title} ${angle} ${format}`,
+      shortDescription: `${seed.shortDescription} This edition focuses on ${angle.toLowerCase()} with a calmer ${format.toLowerCase()} pace.`,
+      description: `${seed.description} This catalog variation puts extra emphasis on ${angle.toLowerCase()} through a ${format.toLowerCase()} structure that keeps the next step obvious.`,
+      instructor: instructorRoster[(variantIndex + seedIndex) % instructorRoster.length],
+      duration: `${8 + ((variantIndex + seedIndex) % 9)}h ${minutes}m`,
+      rating,
+      progress: undefined,
+      isEnrolled: false
+    };
+  })
+);
+
+export const courses: Course[] = [...courseSeeds, ...generatedCourseSeeds].map(buildCourse);
 
 const directResourceSeeds: Omit<Resource, "id">[] = [
   {

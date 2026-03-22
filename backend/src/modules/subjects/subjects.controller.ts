@@ -11,7 +11,24 @@ import {
 } from "./subjects.service.js";
 
 export const getSubjects = asyncHandler(async (request: Request, response: Response) => {
-  const subjects = await listSubjects(request.user?.sub);
+  const page = Number(request.query.page ?? 1);
+  const limit = Number(request.query.limit ?? 12);
+  const category = typeof request.query.category === "string" ? request.query.category : undefined;
+  const search = typeof request.query.search === "string" ? request.query.search : undefined;
+  const enrolledOnly = request.query.enrolledOnly === "true";
+  const subjects = await listSubjects({
+    userId: request.user?.sub,
+    page,
+    limit,
+    category,
+    search,
+    enrolledOnly
+  });
+
+  if (!request.user?.sub) {
+    response.setHeader("Cache-Control", "public, max-age=60, s-maxage=60, stale-while-revalidate=300");
+  }
+
   response.status(StatusCodes.OK).json(subjects);
 });
 

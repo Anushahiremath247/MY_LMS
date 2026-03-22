@@ -1,15 +1,24 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight, LayoutDashboard, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import type { Course, Lesson } from "@/types";
-import { AIChatPanel } from "./ai-chat-panel";
+import { getCourseAccessState } from "@/lib/course-access";
+import { useAuthStore } from "@/store/auth-store";
+import { useCommerceStore } from "@/store/commerce-store";
+import { CourseCommerceActions } from "./course-commerce-actions";
 import { Logo } from "./logo";
 import { SidebarLessonItem } from "./sidebar-lesson-item";
 import { Button } from "./ui/button";
 import { ProgressBar } from "./ui/progress-bar";
 import { VideoPlayer } from "./video-player";
+
+const AIChatPanel = dynamic(
+  () => import("./ai-chat-panel").then((module) => module.AIChatPanel),
+  { ssr: false }
+);
 
 type LessonEntry = Lesson & {
   sectionId: string;
@@ -25,9 +34,19 @@ const flattenLessons = (course: Course): LessonEntry[] =>
     }))
   );
 
-export const LearningWorkspace = ({ course }: { course: Course }) => {
+const getDefaultLessonId = (lessons: LessonEntry[], initialLessonId?: string) =>
+  lessons.find((lesson) => lesson.id === initialLessonId && !lesson.locked)?.id ??
+  lessons.find((lesson) => !lesson.locked)?.id ??
+  lessons[0]?.id ??
+  "";
+
+export const LearningWorkspace = ({ course, initialLessonId }: { course: Course; initialLessonId?: string }) => {
+  const user = useAuthStore((state) => state.user);
+  const account = useCommerceStore((state) => (user ? state.accounts[user.id] : undefined));
+  const addWatchHistory = useCommerceStore((state) => state.addWatchHistory);
+  const access = getCourseAccessState(course, account);
   const allLessons = useMemo(() => flattenLessons(course), [course]);
-  const [currentLessonId, setCurrentLessonId] = useState(allLessons.find((lesson) => !lesson.locked)?.id ?? allLessons[0]?.id ?? "");
+  const [currentLessonId, setCurrentLessonId] = useState(getDefaultLessonId(allLessons, initialLessonId));
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [openSections, setOpenSections] = useState<Record<string, boolean>>(
     Object.fromEntries(course.sections.map((section, index) => [section.id, index < 2]))
@@ -41,12 +60,35 @@ export const LearningWorkspace = ({ course }: { course: Course }) => {
     (allLessons.filter((lesson) => lesson.completed).length / Math.max(allLessons.length, 1)) * 100
   );
 
+  useEffect(() => {
+    setCurrentLessonId((current) => {
+      if (current && allLessons.some((lesson) => lesson.id === current)) {
+        return current;
+      }
+
+      return getDefaultLessonId(allLessons, initialLessonId);
+    });
+  }, [allLessons, initialLessonId]);
+
+  useEffect(() => {
+    if (!user || !currentLesson || !access.canAccess) {
+      return;
+    }
+
+    addWatchHistory(user.id, {
+      courseId: course.id,
+      lessonId: currentLesson.id,
+      title: course.title,
+      subtitle: currentLesson.title
+    });
+  }, [access.canAccess, addWatchHistory, course.id, course.title, currentLesson, user]);
+
   if (!currentLesson) {
     return (
-    <main className="min-h-screen">
-      <header className="sticky top-0 z-40 bg-surface/75 backdrop-blur-xl">
-        <div className="section-shell flex h-20 items-center justify-between gap-4">
-          <Logo />
+      <main className="min-h-screen">
+        <header className="sticky top-0 z-40 border-b border-slate-200/70 bg-white/82 backdrop-blur-sm">
+          <div className="section-shell flex h-20 items-center justify-between gap-4">
+            <Logo />
             <Link href="/dashboard" className="text-sm font-medium text-slate-600 transition hover:text-ink">
               Back to dashboard
             </Link>
@@ -69,9 +111,44 @@ export const LearningWorkspace = ({ course }: { course: Course }) => {
     );
   }
 
+  if (!access.canAccess) {
+    return (
+      <main className="min-h-screen">
+        <header className="sticky top-0 z-40 border-b border-slate-200/70 bg-white/82 backdrop-blur-sm">
+          <div className="section-shell flex h-20 items-center justify-between gap-4">
+            <Logo />
+            <Link href={`/courses/${course.slug}`} className="text-sm font-medium text-slate-600 transition hover:text-ink">
+              Back to course details
+            </Link>
+          </div>
+        </header>
+        <section className="section-shell py-16">
+          <div className="mx-auto max-w-3xl rounded-[2.5rem] border border-slate-200 bg-white px-8 py-10 text-center shadow-[0_24px_55px_rgba(15,23,42,0.08)]">
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-primary/75">Course access required</p>
+            <h1 className="mt-4 font-display text-4xl font-bold tracking-[-0.05em] text-slate-900">
+              Unlock {course.title} to continue into the learning workspace.
+            </h1>
+            <p className="mt-4 text-base leading-8 text-slate-500">
+              {course.accessType === "free"
+                ? "Enroll for free to begin the full lesson path."
+                : course.accessType === "paid"
+                  ? "Purchase this course to access every lesson and progress tracking."
+                  : "Activate a subscription plan to open this membership-only course."}
+            </p>
+            <div className="mt-8 flex justify-center">
+              <div className="w-full max-w-md">
+                <CourseCommerceActions course={course} />
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    );
+  }
+
   return (
     <main className="min-h-screen">
-      <header className="sticky top-0 z-40 bg-surface/75 backdrop-blur-xl">
+      <header className="sticky top-0 z-40 border-b border-slate-200/70 bg-white/82 backdrop-blur-sm">
         <div className="section-shell flex h-20 items-center justify-between gap-4">
           <div className="flex items-center gap-4">
             <Logo />

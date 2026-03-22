@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -27,7 +28,10 @@ export const Navbar = () => {
 
   useEffect(() => {
     setMounted(true);
-  }, []);
+    navItems.forEach((item) => router.prefetch(item.href));
+    router.prefetch("/login");
+    router.prefetch("/register");
+  }, [router]);
 
   const handleLogout = async () => {
     await logoutUser(accessToken);
@@ -42,21 +46,21 @@ export const Navbar = () => {
   return (
     <header className="sticky top-0 z-40">
       <div className="section-shell py-5">
-        <div className="bubble-card px-4 py-4 sm:px-6">
+        <div className="rounded-[2rem] border border-slate-200 bg-white/90 px-4 py-4 shadow-[0_14px_28px_rgba(15,23,42,0.07)] sm:px-6">
           <div className="flex items-center justify-between gap-4">
             <Logo />
             <nav className="hidden items-center md:flex">
-              <div className="bubble-bar flex items-center gap-2 px-2 py-2">
+              <div className="flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 p-2">
                 {navItems.map((item) => {
                   const active = isActive(item.href);
                   return (
                     <Link
                       key={item.href}
                       href={item.href}
-                      className={`flex h-14 items-center justify-center rounded-full px-4 text-sm font-medium transition ${
+                      className={`pressable flex h-14 items-center justify-center rounded-full px-4 text-sm font-medium transition ${
                         active
-                          ? "glass-orb min-w-[132px] gap-2.5 text-white"
-                          : "min-w-[56px] text-sky-100/88 hover:text-white"
+                          ? "min-w-[132px] gap-2.5 bg-primary text-white shadow-[0_14px_28px_rgba(37,99,235,0.24)]"
+                          : "min-w-[56px] text-slate-500 hover:bg-white hover:text-slate-900"
                       }`}
                       title={item.label}
                     >
@@ -70,11 +74,12 @@ export const Navbar = () => {
             <div className="hidden items-center gap-3 md:flex">
               {mounted && user ? (
                 <>
-                  <Link href="/profile" className="glass-panel flex items-center gap-3 rounded-full px-3 py-2">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                  <Link href="/profile" className="glass-panel pressable flex items-center gap-3 rounded-full px-3 py-2">
+                    <Image
                       src={user.avatar || `https://api.dicebear.com/9.x/thumbs/svg?seed=${encodeURIComponent(user.name)}`}
                       alt={user.name}
+                      width={40}
+                      height={40}
                       className="h-10 w-10 rounded-full bg-slate-100"
                     />
                     <div className="hidden text-left sm:block">
@@ -84,7 +89,7 @@ export const Navbar = () => {
                   </Link>
                   <button
                     onClick={handleLogout}
-                    className="glass-panel inline-flex h-12 w-12 items-center justify-center rounded-full text-ink transition hover:-translate-y-0.5"
+                    className="glass-panel pressable inline-flex h-12 w-12 items-center justify-center rounded-full text-ink transition"
                     aria-label="Sign out"
                   >
                     <LogOut className="h-4 w-4" />
@@ -104,7 +109,7 @@ export const Navbar = () => {
             <button
               type="button"
               onClick={() => setMobileOpen((value) => !value)}
-              className="glass-panel inline-flex h-12 w-12 items-center justify-center rounded-full text-ink md:hidden"
+              className="glass-panel pressable inline-flex h-12 w-12 items-center justify-center rounded-full text-ink md:hidden"
             >
               {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
@@ -112,7 +117,7 @@ export const Navbar = () => {
 
           {mobileOpen ? (
             <div className="mt-4 space-y-4 md:hidden">
-              <nav className="bubble-bar grid grid-cols-2 gap-2 p-2">
+              <nav className="grid grid-cols-2 gap-2 rounded-[1.5rem] border border-slate-200 bg-slate-50 p-2">
                 {navItems.map((item) => {
                   const active = isActive(item.href);
                   return (
@@ -120,8 +125,8 @@ export const Navbar = () => {
                       key={item.href}
                       href={item.href}
                       onClick={() => setMobileOpen(false)}
-                      className={`flex items-center justify-center gap-2 rounded-full px-4 py-3 text-sm font-medium transition ${
-                        active ? "glass-orb text-white" : "text-sky-100/88"
+                      className={`pressable flex items-center justify-center gap-2 rounded-full px-4 py-3 text-sm font-medium transition ${
+                        active ? "bg-primary text-white" : "text-slate-600"
                       }`}
                     >
                       <item.icon className="h-4 w-4" />
@@ -135,12 +140,13 @@ export const Navbar = () => {
                   <Link
                     href="/profile"
                     onClick={() => setMobileOpen(false)}
-                    className="flex items-center gap-3 rounded-[1.5rem] px-1"
+                    className="pressable flex items-center gap-3 rounded-[1.5rem] px-1"
                   >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <Image
                       src={user.avatar || `https://api.dicebear.com/9.x/thumbs/svg?seed=${encodeURIComponent(user.name)}`}
                       alt={user.name}
+                      width={48}
+                      height={48}
                       className="h-12 w-12 rounded-full bg-slate-100"
                     />
                     <div>

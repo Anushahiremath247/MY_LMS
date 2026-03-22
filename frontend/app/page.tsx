@@ -2,9 +2,11 @@ import Link from "next/link";
 import {
   ArrowRight,
   BookOpen,
+  Bookmark,
   BrainCircuit,
   ChartSpline,
   CheckCircle2,
+  Crown,
   Sparkles,
   UserRound,
   Video
@@ -12,8 +14,10 @@ import {
 import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
 import { CourseCard } from "@/components/course-card";
+import { SubscriptionPlansSection } from "@/components/subscription-plans-section";
 import { Button } from "@/components/ui/button";
-import { getCourses } from "@/lib/api";
+import { Reveal } from "@/components/ui/reveal";
+import { getCourseCatalogSummary, getCoursesPage, getSubscriptionPlans } from "@/lib/api";
 import { resources, testimonials } from "@/lib/demo-data";
 
 const features = [
@@ -46,84 +50,106 @@ const quickActions = [
 ];
 
 export default async function HomePage() {
-  const courses = await getCourses();
-  const enrolledCount = courses.filter((course) => course.isEnrolled).length;
-  const totalLessons = courses.reduce((sum, course) => sum + course.lessonsCount, 0);
+  const [freeCatalog, premiumCatalog, subscriptionCatalog, courseSummary, plans] = await Promise.all([
+    getCoursesPage({ page: 1, limit: 3, accessType: "free" }),
+    getCoursesPage({ page: 1, limit: 3, accessType: "paid" }),
+    getCoursesPage({ page: 1, limit: 3, accessType: "subscription" }),
+    getCourseCatalogSummary(),
+    getSubscriptionPlans()
+  ]);
 
   return (
     <main>
       <Navbar />
 
       <section className="section-shell py-10 sm:py-14">
-        <div className="bubble-card px-6 py-10 sm:px-10 sm:py-14">
-          <div className="relative z-10">
-            <p className="hero-kicker">How to learn with</p>
-            <h1 className="bubble-title mt-4 text-center text-5xl sm:text-7xl lg:text-[5.75rem]">
-              AI Powered Learning Platform
+        <Reveal className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
+          <div className="rounded-[2.5rem] border border-slate-200 bg-white px-8 py-10 shadow-[0_24px_55px_rgba(15,23,42,0.08)] sm:px-10 sm:py-12">
+            <div className="inline-flex items-center gap-2 rounded-full bg-primary/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+              <Sparkles className="h-4 w-4" />
+              Calm learning, serious progress
+            </div>
+            <h1 className="mt-6 font-display text-5xl font-bold tracking-[-0.06em] text-slate-950 sm:text-6xl lg:text-7xl">
+              A premium learning system for free, paid, and subscription paths.
             </h1>
-            <p className="mx-auto mt-6 max-w-3xl text-center text-base leading-8 text-slate-600 sm:text-lg">
-              Lazy Learning turns courses, progress, AI guidance, and resources into one calm bubble-style
-              workspace that feels easy to navigate and hard to abandon.
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">
+              Browse professional courses, unlock premium tracks, manage your membership, and move through
+              structured lessons with AI support and cleaner focus.
             </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Button asChild>
+                <Link href="/courses">
+                  Explore courses
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+              <Button variant="secondary" asChild>
+                <Link href="/dashboard">Open dashboard</Link>
+              </Button>
+            </div>
+            <div className="mt-10 grid gap-4 sm:grid-cols-3">
+              {[
+                { label: "Courses", value: courseSummary.totalCourses },
+                { label: "Free paths", value: courseSummary.freeCourses },
+                { label: "Premium catalog", value: courseSummary.paidCourses + courseSummary.subscriptionCourses }
+              ].map((stat) => (
+                <div key={stat.label} className="rounded-[1.5rem] border border-slate-200 bg-slate-50 px-5 py-5">
+                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">{stat.label}</p>
+                  <p className="mt-3 text-4xl font-bold tracking-[-0.04em] text-slate-900">{stat.value}</p>
+                </div>
+              ))}
+            </div>
+          </div>
 
-            <div className="mt-10 flex justify-center">
-              <div className="bubble-bar flex flex-wrap items-center justify-center gap-3 p-3">
-                {quickActions.map((action, index) => (
+          <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
+            <div className="bubble-card px-6 py-7">
+              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary/75">Access types</p>
+              <div className="mt-5 space-y-4">
+                {[
+                  { icon: Bookmark, title: "Free courses", text: "Enroll instantly and begin learning right away." },
+                  { icon: Crown, title: "Premium courses", text: "Buy once to unlock full-depth masterclasses." },
+                  { icon: Sparkles, title: "Subscription catalog", text: "Activate membership for curated premium tracks." }
+                ].map((item) => (
+                  <div key={item.title} className="rounded-[1.35rem] border border-slate-200 bg-white px-4 py-4">
+                    <div className="flex items-center gap-3">
+                      <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                        <item.icon className="h-4 w-4" />
+                      </span>
+                      <div>
+                        <p className="font-semibold text-slate-900">{item.title}</p>
+                        <p className="mt-1 text-sm text-slate-500">{item.text}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="bubble-card px-6 py-7">
+              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary/75">Quick access</p>
+              <div className="mt-5 flex flex-wrap gap-3">
+                {quickActions.map((action) => (
                   <Link
                     key={action.href}
                     href={action.href}
-                    className={`inline-flex min-w-[150px] items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition ${
-                      index === 0 ? "glass-orb text-white" : "text-sky-100/90 hover:text-white"
-                    }`}
+                    className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 transition hover:border-primary/40 hover:text-primary"
                   >
                     <action.icon className="h-4 w-4" />
                     {action.label}
                   </Link>
                 ))}
               </div>
-            </div>
-
-            <div className="mt-10 grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
-              <div className="soft-strip flex flex-wrap items-center justify-between gap-4 px-5 py-4">
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink/55">Lazy Learning</p>
-                  <p className="mt-1 text-sm font-medium text-ink">Guided paths, AI tutor, and clean progress.</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink/55">Study assets</p>
-                  <p className="mt-1 text-sm font-medium text-ink">{resources.length}+ curated links</p>
-                </div>
+              <div className="mt-6 rounded-[1.5rem] bg-slate-950 p-5 text-white">
+                <p className="text-sm text-white/65">Study assets</p>
+                <p className="mt-2 text-3xl font-bold">{resources.length}+</p>
+                <p className="mt-2 text-sm text-white/70">Curated YouTube resources and structured lessons ready to browse.</p>
               </div>
-              <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-3">
-                {[
-                  { label: "Courses", value: courses.length },
-                  { label: "Enrolled", value: enrolledCount },
-                  { label: "Lessons", value: totalLessons }
-                ].map((stat) => (
-                  <div key={stat.label} className="bubble-card px-5 py-5 text-center">
-                    <p className="relative z-10 text-xs font-semibold uppercase tracking-[0.22em] text-ink/55">
-                      {stat.label}
-                    </p>
-                    <p className="relative z-10 mt-3 font-display text-4xl font-bold text-primary">{stat.value}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="mt-8 flex justify-center gap-3">
-              {Array.from({ length: 7 }, (_, index) => (
-                <span
-                  key={index}
-                  className={`h-3 w-3 rounded-full ${index === 0 ? "bg-white shadow-soft" : "bg-white/55"}`}
-                />
-              ))}
             </div>
           </div>
-        </div>
+        </Reveal>
       </section>
 
       <section className="section-shell py-8 sm:py-10">
-        <div className="grid gap-5 xl:grid-cols-4">
+        <Reveal className="grid gap-5 xl:grid-cols-4" delay={0.04}>
           {features.map((feature) => (
             <div key={feature.title} className="bubble-card px-6 py-7">
               <div className="relative z-10">
@@ -135,35 +161,66 @@ export default async function HomePage() {
               </div>
             </div>
           ))}
-        </div>
+        </Reveal>
       </section>
 
       <section className="section-shell py-12 sm:py-16">
-        <div className="bubble-card px-6 py-8 sm:px-8 sm:py-10">
-          <div className="relative z-10">
-            <div className="flex flex-wrap items-end justify-between gap-5">
+        <Reveal className="space-y-14" delay={0.06}>
+          <div>
+            <div className="mb-6 flex items-end justify-between gap-5">
               <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.24em] text-primary/75">Popular Courses</p>
-                <h2 className="bubble-title mt-3 text-4xl sm:text-5xl">Most loved learning paths</h2>
+                <p className="text-sm font-semibold uppercase tracking-[0.24em] text-primary/75">Free courses</p>
+                <h2 className="font-display text-4xl font-bold tracking-[-0.05em] text-slate-950">Start learning without friction</h2>
               </div>
               <Button variant="secondary" asChild>
-                <Link href="/courses">
-                  Explore Courses
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
+                <Link href="/courses">Browse catalog</Link>
               </Button>
             </div>
-            <div className="mt-8 grid gap-6 lg:grid-cols-2 xl:grid-cols-3">
-              {courses.slice(0, 3).map((course) => (
+            <div className="content-auto grid gap-6 lg:grid-cols-2 xl:grid-cols-3">
+              {freeCatalog.courses.map((course) => (
                 <CourseCard key={course.id} course={course} />
               ))}
             </div>
           </div>
-        </div>
+
+          <div>
+            <div className="mb-6 flex items-end justify-between gap-5">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-[0.24em] text-primary/75">Premium courses</p>
+                <h2 className="font-display text-4xl font-bold tracking-[-0.05em] text-slate-950">Go deeper with purchase-ready masterclasses</h2>
+              </div>
+            </div>
+            <div className="content-auto grid gap-6 lg:grid-cols-2 xl:grid-cols-3">
+              {premiumCatalog.courses.map((course) => (
+                <CourseCard key={course.id} course={course} />
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <div className="mb-6 flex items-end justify-between gap-5">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-[0.24em] text-primary/75">Subscription library</p>
+                <h2 className="font-display text-4xl font-bold tracking-[-0.05em] text-slate-950">Membership-only courses for continuous growth</h2>
+              </div>
+            </div>
+            <div className="content-auto grid gap-6 lg:grid-cols-2 xl:grid-cols-3">
+              {subscriptionCatalog.courses.map((course) => (
+                <CourseCard key={course.id} course={course} />
+              ))}
+            </div>
+          </div>
+        </Reveal>
+      </section>
+
+      <section className="section-shell py-6 sm:py-10">
+        <Reveal delay={0.08}>
+          <SubscriptionPlansSection plans={plans} />
+        </Reveal>
       </section>
 
       <section className="section-shell py-4 sm:py-8">
-        <div className="grid gap-5 lg:grid-cols-3">
+        <Reveal className="grid gap-5 lg:grid-cols-3" delay={0.1}>
           {testimonials.map((testimonial) => (
             <div key={testimonial.id} className="bubble-card px-6 py-7">
               <div className="relative z-10">
@@ -179,7 +236,7 @@ export default async function HomePage() {
               </div>
             </div>
           ))}
-        </div>
+        </Reveal>
       </section>
 
       <Footer />

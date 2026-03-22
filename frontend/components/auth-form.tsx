@@ -10,7 +10,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { loginUser, registerUser } from "@/lib/auth";
 import { useAuthStore } from "@/store/auth-store";
 import { Button } from "./ui/button";
-import { Loader } from "./ui/loader";
 
 const buildSchema = (mode: "login" | "register") =>
   z.object({
@@ -102,7 +101,7 @@ export const AuthForm = ({ mode }: { mode: "login" | "register" }) => {
           />
           <button
             type="button"
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400"
+            className="pressable absolute right-4 top-1/2 -translate-y-1/2 text-slate-400"
             onClick={() => setShowPassword((value) => !value)}
           >
             {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
@@ -127,12 +126,17 @@ export const AuthForm = ({ mode }: { mode: "login" | "register" }) => {
           </Link>
         </p>
       )}
-      <Button className="h-14 w-full rounded-[1.25rem]" type="submit">
-        {isLoading ? <Loader /> : mode === "login" ? "Login" : "Create account"}
+      <Button
+        className="h-14 w-full rounded-[1.25rem]"
+        type="submit"
+        loading={isLoading}
+        loadingLabel={mode === "login" ? "Signing in..." : "Creating account..."}
+      >
+        {mode === "login" ? "Login" : "Create account"}
       </Button>
       <button
         type="button"
-        className="glass-panel flex h-14 w-full items-center justify-center rounded-[1.25rem] text-sm font-semibold text-slate-700 transition hover:-translate-y-0.5"
+        className="glass-panel pressable flex h-14 w-full items-center justify-center rounded-[1.25rem] text-sm font-semibold text-slate-700"
       >
         Continue with Google
       </button>

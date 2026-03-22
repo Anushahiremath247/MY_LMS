@@ -15,10 +15,10 @@ export const DashboardWelcome = () => {
     <>
       <p className="text-sm font-semibold uppercase tracking-[0.24em] text-primary/75">Dashboard</p>
       <h1 className="bubble-title mt-3 text-4xl sm:text-5xl">
-        {mounted && user ? `Welcome back, ${user.name}` : "Continue where your momentum is strongest"}
+        {mounted && user ? `Welcome back, ${user.name}` : "Continue your next best learning move"}
       </h1>
       <p className="mt-4 max-w-2xl text-lg leading-8 text-slate-600">
-        Resume active courses, watch your completion rise, and jump straight back into the next lesson.
+        Resume enrolled courses, unlock premium paths, and keep your free, paid, and subscription learning in one calm workspace.
       </p>
     </>
   );

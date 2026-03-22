@@ -61,7 +61,11 @@ export const buildInitialProfile = (user: AuthUser): UserProfile => {
     ],
     lastLoginAt: timestamp,
     accountStatus: "active",
-    passwordUpdatedAt: timestamp
+    passwordUpdatedAt: timestamp,
+    purchasedCourses: [],
+    paymentHistory: [],
+    activeSubscription: null,
+    watchHistory: []
   };
 };
 

@@ -5,6 +5,7 @@ import { useDeferredValue, useEffect, useMemo, useState } from "react";
 import { ExternalLink, Search } from "lucide-react";
 import type { Resource } from "@/types";
 import { Button } from "./ui/button";
+import { Reveal } from "./ui/reveal";
 
 const difficulties = ["All", "beginner", "intermediate", "advanced"] as const;
 
@@ -39,7 +40,7 @@ export const ResourceBrowser = ({ resources }: { resources: Resource[] }) => {
 
   return (
     <div className="space-y-8">
-      <div className="grid gap-5 lg:grid-cols-[1.1fr_0.9fr]">
+      <Reveal className="grid gap-5 lg:grid-cols-[1.1fr_0.9fr]">
         <div className="bubble-card px-6 py-7">
           <div className="relative z-10">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-primary/75">Resource vault</p>
@@ -61,9 +62,9 @@ export const ResourceBrowser = ({ resources }: { resources: Resource[] }) => {
             </div>
           ))}
         </div>
-      </div>
+      </Reveal>
 
-      <div className="bubble-card px-5 py-5">
+      <Reveal className="bubble-card px-5 py-5" delay={0.03}>
         <div className="grid gap-4 lg:grid-cols-[1fr_auto] lg:items-center">
           <label className="glass-panel flex h-14 items-center gap-3 rounded-full px-5">
             <Search className="h-4 w-4 text-slate-400" />
@@ -80,7 +81,7 @@ export const ResourceBrowser = ({ resources }: { resources: Resource[] }) => {
                 key={difficulty}
                 type="button"
                 onClick={() => setActiveDifficulty(difficulty)}
-                className={`rounded-full px-4 py-2.5 text-sm font-medium capitalize transition ${
+                className={`pressable rounded-full px-4 py-2.5 text-sm font-medium capitalize transition ${
                   difficulty === activeDifficulty
                     ? "bubble-bar text-white"
                     : "glass-panel text-slate-600 hover:text-ink"
@@ -97,7 +98,7 @@ export const ResourceBrowser = ({ resources }: { resources: Resource[] }) => {
               key={category}
               type="button"
               onClick={() => setActiveCategory(category)}
-              className={`rounded-full px-4 py-2.5 text-sm font-medium transition ${
+              className={`pressable rounded-full px-4 py-2.5 text-sm font-medium transition ${
                 category === activeCategory
                   ? "bubble-bar text-white"
                   : "glass-panel text-slate-600 hover:text-ink"
@@ -107,7 +108,7 @@ export const ResourceBrowser = ({ resources }: { resources: Resource[] }) => {
             </button>
           ))}
         </div>
-      </div>
+      </Reveal>
 
       <div className="flex items-center justify-between gap-4">
         <p className="text-sm text-slate-500">
@@ -125,7 +126,7 @@ export const ResourceBrowser = ({ resources }: { resources: Resource[] }) => {
         </Button>
       </div>
 
-      <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+      <div className="content-auto grid gap-5 md:grid-cols-2 xl:grid-cols-3">
         {filteredResources.map((resource) => (
           <article
             key={resource.id}

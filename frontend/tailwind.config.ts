@@ -25,8 +25,8 @@ const config: Config = {
         "4xl": "2.5rem"
       },
       fontFamily: {
-        sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
-        display: ["Poppins", "Inter", "ui-sans-serif", "system-ui", "sans-serif"]
+        sans: ["var(--font-inter)", "ui-sans-serif", "system-ui", "sans-serif"],
+        display: ["var(--font-poppins)", "var(--font-inter)", "ui-sans-serif", "system-ui", "sans-serif"]
       },
       keyframes: {
         floatUp: {

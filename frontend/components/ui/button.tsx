@@ -1,19 +1,21 @@
 "use client";
 
 import * as React from "react";
+import { m } from "framer-motion";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
+import { Loader } from "./loader";
 
 const buttonVariants = cva(
-  "button-ripple inline-flex items-center justify-center rounded-full px-6 py-3.5 text-sm font-semibold transition duration-300 focus:outline-none focus:ring-2 focus:ring-primary/30 disabled:cursor-not-allowed disabled:opacity-60",
+  "button-ripple pressable inline-flex items-center justify-center rounded-full px-6 py-3.5 text-sm font-semibold transition-[transform,box-shadow,background-color,color,border-color] duration-200 focus:outline-none focus:ring-2 focus:ring-primary/30 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 disabled:active:scale-100",
   {
     variants: {
       variant: {
         primary:
-          "bg-primary text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.28),0_18px_34px_rgba(31,99,232,0.32)] hover:-translate-y-1",
+          "bg-primary text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.24),0_14px_28px_rgba(37,99,235,0.2)] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.24),0_18px_34px_rgba(37,99,235,0.24)] active:bg-blue-700",
         secondary:
-          "border border-white/75 bg-white/28 text-ink shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_16px_30px_rgba(95,140,196,0.16)] backdrop-blur-xl hover:-translate-y-1",
-        ghost: "bg-transparent text-ink hover:bg-white/35"
+          "border border-slate-200 bg-white text-ink shadow-[0_10px_24px_rgba(15,23,42,0.07)] hover:shadow-[0_14px_28px_rgba(15,23,42,0.1)] active:bg-slate-50",
+        ghost: "bg-transparent text-ink hover:bg-white/60"
       }
     },
     defaultVariants: {
@@ -22,47 +24,54 @@ const buttonVariants = cva(
   }
 );
 
+type NativeButtonProps = Omit<
+  React.ButtonHTMLAttributes<HTMLButtonElement>,
+  "onDrag" | "onDragStart" | "onDragEnd" | "onAnimationStart" | "onAnimationEnd" | "onAnimationIteration"
+>;
+
 export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+  extends NativeButtonProps,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
+  loading?: boolean;
+  loadingLabel?: string;
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, onMouseMove, asChild, children, ...props }, ref) => {
+  ({ className, variant, asChild, children, loading = false, loadingLabel, disabled, ...props }, ref) => {
     const classes = cn(buttonVariants({ variant }), className);
-    const handleMouseMove = (event: React.MouseEvent<HTMLElement>) => {
-      const rect = event.currentTarget.getBoundingClientRect();
-      event.currentTarget.style.setProperty("--x", `${event.clientX - rect.left}px`);
-      event.currentTarget.style.setProperty("--y", `${event.clientY - rect.top}px`);
-      onMouseMove?.(event as React.MouseEvent<HTMLButtonElement>);
-    };
+    const content = loading ? (
+      <Loader label={loadingLabel} tone={variant === "primary" ? "light" : "default"} />
+    ) : (
+      children
+    );
+    const isDisabled = disabled || loading;
 
     if (asChild && React.isValidElement(children)) {
       const child = children as React.ReactElement<{
         className?: string;
-        onMouseMove?: (event: React.MouseEvent<HTMLElement>) => void;
+        "aria-disabled"?: boolean;
       }>;
 
       return React.cloneElement(child, {
         ...(props as Record<string, unknown>),
         className: cn(classes, child.props.className),
-        onMouseMove: (event: React.MouseEvent<HTMLElement>) => {
-          handleMouseMove(event);
-          child.props.onMouseMove?.(event);
-        }
+        "aria-disabled": isDisabled
       });
     }
 
     return (
-      <button
+      <m.button
         ref={ref}
         className={classes}
-        onMouseMove={handleMouseMove}
+        whileHover={isDisabled ? undefined : { scale: 1.015, y: -1 }}
+        whileTap={isDisabled ? undefined : { scale: 0.95, y: 0 }}
+        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+        disabled={isDisabled}
         {...props}
       >
-        {children}
-      </button>
+        {content}
+      </m.button>
     );
   }
 );

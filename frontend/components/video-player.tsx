@@ -5,10 +5,10 @@ export const VideoPlayer = ({ youtubeId, title }: { youtubeId: string; title: st
         className="h-full w-full"
         src={`https://www.youtube.com/embed/${youtubeId}`}
         title={title}
+        loading="lazy"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
       />
     </div>
   </div>
 );
-
