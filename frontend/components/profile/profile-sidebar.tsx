@@ -21,7 +21,7 @@ export const ProfileSidebar = () => {
 
   return (
     <aside className="bubble-card px-5 py-5">
-      <div className="bubble-bar relative z-10 rounded-[2rem] p-5 text-white">
+      <div className="bubble-panel relative z-10 overflow-visible rounded-[2rem] p-5 text-white">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={profile?.avatar}

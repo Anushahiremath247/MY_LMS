@@ -43,16 +43,20 @@ export default async function DashboardPage() {
               </Link>
             </div>
           </div>
-          <div className="bubble-bar rounded-[2.5rem] p-8 text-white">
-            <p className="text-sm text-white/70">Overall completion</p>
-            <p className="mt-2 font-display text-5xl font-bold">{averageCompletion}%</p>
-            <div className="mt-6">
-              <ProgressBar value={averageCompletion} />
+          <div className="bubble-panel min-h-[360px] overflow-visible p-8 text-white">
+            <div className="relative z-10">
+              <p className="text-sm text-white/78">Overall completion</p>
+              <p className="mt-2 font-display text-5xl font-bold">{averageCompletion}%</p>
             </div>
-            <div className="glass-orb mt-8 rounded-[2rem] p-5">
-              <p className="text-xs uppercase tracking-[0.2em] text-white/60">Focused next step</p>
-              <p className="mt-2 text-lg font-semibold">{continueCourse?.title ?? "Choose a fresh course path"}</p>
-              <p className="mt-2 text-sm leading-7 text-white/70">
+            <div className="relative z-10 mt-6">
+              <ProgressBar value={averageCompletion} tone="light" />
+            </div>
+            <div className="glass-orb relative z-10 mt-8 rounded-[2rem] p-5">
+              <p className="text-xs uppercase tracking-[0.2em] text-white/72">Focused next step</p>
+              <p className="mt-2 text-lg font-semibold text-white">
+                {continueCourse?.title ?? "Choose a fresh course path"}
+              </p>
+              <p className="mt-2 text-sm leading-7 text-white/82">
                 Keep your momentum by returning to the course with the strongest active progress.
               </p>
             </div>
