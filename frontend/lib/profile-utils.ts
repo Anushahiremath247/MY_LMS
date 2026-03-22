@@ -1,4 +1,5 @@
 import type { AuthUser, UserProfile } from "@/types";
+import { resolveAvatarSrc } from "./image-fallbacks";
 
 const completionFields = (profile: UserProfile) => [
   profile.avatar,
@@ -27,8 +28,7 @@ export const buildInitialProfile = (user: AuthUser): UserProfile => {
     phone: "",
     bio: "Building momentum through focused, structured learning.",
     skills: ["Learning Systems", "Product Thinking", "Self-paced Growth"],
-    avatar:
-      user.avatar || `https://api.dicebear.com/9.x/thumbs/svg?seed=${encodeURIComponent(user.name)}`,
+    avatar: resolveAvatarSrc(user.avatar),
     role: user.role ?? "student",
     privacy: {
       profileVisibility: "public",

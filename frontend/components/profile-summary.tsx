@@ -3,9 +3,11 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import type { Course } from "@/types";
+import { resolveAvatarSrc } from "@/lib/image-fallbacks";
 import { useAuthStore } from "@/store/auth-store";
 import { CourseCard } from "./course-card";
 import { Button } from "./ui/button";
+import { ImageWithFallback } from "./ui/image-with-fallback";
 
 export const ProfileSummary = ({ courses }: { courses: Course[] }) => {
   const [mounted, setMounted] = useState(false);
@@ -57,9 +59,9 @@ export const ProfileSummary = ({ courses }: { courses: Course[] }) => {
   return (
     <div className="grid gap-6 lg:grid-cols-[340px_1fr]">
       <aside className="glass-panel rounded-4xl p-8">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={user.avatar || `https://api.dicebear.com/9.x/thumbs/svg?seed=${encodeURIComponent(user.name)}`}
+        <ImageWithFallback
+          src={resolveAvatarSrc(user.avatar)}
+          fallbackSrc="/panda-logo.svg"
           alt="Profile avatar"
           width={92}
           height={92}

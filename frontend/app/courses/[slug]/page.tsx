@@ -1,10 +1,11 @@
 import Link from "next/link";
-import Image from "next/image";
 import { CheckCircle2, Clock3, Crown, Lock, PlayCircle, Star } from "lucide-react";
 import { CourseCard } from "@/components/course-card";
 import { CourseCommerceActions } from "@/components/course-commerce-actions";
 import { Navbar } from "@/components/navbar";
+import { ImageWithFallback } from "@/components/ui/image-with-fallback";
 import { formatPrice } from "@/lib/course-access";
+import { getCourseFallbackThumbnail } from "@/lib/image-fallbacks";
 import { getCourse, getCoursesPage } from "@/lib/api";
 
 export default async function CourseDetailPage({
@@ -34,7 +35,15 @@ export default async function CourseDetailPage({
           <div className="space-y-8">
             <div className="overflow-hidden rounded-[2.75rem] border border-slate-200 bg-white shadow-[0_24px_55px_rgba(15,23,42,0.08)]">
               <div className="relative h-[360px] overflow-hidden">
-                <Image src={course.thumbnail} alt={course.title} fill priority className="object-cover" sizes="100vw" />
+                <ImageWithFallback
+                  src={course.thumbnail}
+                  fallbackSrc={getCourseFallbackThumbnail(course.category)}
+                  alt={course.title}
+                  fill
+                  priority
+                  className="object-cover"
+                  sizes="100vw"
+                />
                 <div className="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-950/45 to-slate-950/10" />
                 <div className="absolute inset-x-0 bottom-0 p-8 sm:p-10">
                   <div className="flex flex-wrap items-center gap-3 text-sm text-white/85">
@@ -113,8 +122,9 @@ export default async function CourseDetailPage({
                           <div key={lesson.id} className="flex flex-col gap-4 rounded-[1.25rem] border border-slate-200 bg-white px-4 py-4 md:flex-row md:items-center md:justify-between">
                             <div className="flex min-w-0 items-start gap-4">
                               <div className="relative h-20 w-32 overflow-hidden rounded-[1.1rem] border border-slate-200 bg-slate-100">
-                                <Image
+                                <ImageWithFallback
                                   src={lesson.thumbnailUrl ?? course.thumbnail}
+                                  fallbackSrc={getCourseFallbackThumbnail(course.category)}
                                   alt={lesson.title}
                                   fill
                                   sizes="128px"

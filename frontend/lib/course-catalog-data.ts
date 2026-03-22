@@ -1,6 +1,7 @@
 import type { Course, CourseSection, Lesson } from "@/types";
 import seedCourses from "@/data/seed_courses.json";
 import seedVideos from "@/data/seed_videos.json";
+import { getCourseFallbackThumbnail } from "./image-fallbacks";
 
 type CourseAccessType = "free" | "paid" | "subscription";
 type CourseLevel = Course["level"];
@@ -128,7 +129,7 @@ const buildLessons = (courseSeed: CourseSeed, videoPool: VideoSeed[]) => {
 
   return {
     sections,
-    thumbnail: selectedVideos[0]?.thumbnailUrl ?? "https://img.youtube.com/vi/rfscVS0vtbw/0.jpg"
+    thumbnail: getCourseFallbackThumbnail(courseSeed.category)
   };
 };
 

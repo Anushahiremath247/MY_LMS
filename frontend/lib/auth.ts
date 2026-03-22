@@ -1,4 +1,5 @@
 import type { AuthSession, AuthUser } from "@/types";
+import { DEFAULT_AVATAR_SRC } from "./image-fallbacks";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000/api";
 
@@ -17,7 +18,7 @@ const buildFallbackUser = (input: { name?: string; email: string }): AuthUser =>
     id: `local-${input.email}`,
     name: fallbackName,
     email: input.email,
-    avatar: `https://api.dicebear.com/9.x/thumbs/svg?seed=${encodeURIComponent(fallbackName)}`,
+    avatar: DEFAULT_AVATAR_SRC,
     role: "student"
   };
 };

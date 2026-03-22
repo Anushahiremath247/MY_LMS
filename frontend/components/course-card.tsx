@@ -1,14 +1,15 @@
 "use client";
 
-import Image from "next/image";
 import { m } from "framer-motion";
 import { memo, useMemo } from "react";
 import { Clock3, PlayCircle, Star } from "lucide-react";
 import type { Course, CourseListItem } from "@/types";
 import { formatPrice, getCourseAccessState } from "@/lib/course-access";
+import { getCourseFallbackThumbnail } from "@/lib/image-fallbacks";
 import { useAuthStore } from "@/store/auth-store";
 import { useCommerceStore } from "@/store/commerce-store";
 import { CourseCommerceActions } from "./course-commerce-actions";
+import { ImageWithFallback } from "./ui/image-with-fallback";
 import { ProgressBar } from "./ui/progress-bar";
 
 export const CourseCard = memo(({ course }: { course: CourseListItem | Course }) => (
@@ -29,8 +30,9 @@ const CourseCardInner = ({ course }: { course: CourseListItem | Course }) => {
       className="group flex h-full flex-col overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-[0_12px_30px_rgba(15,23,42,0.07)] transition-[box-shadow,border-color] duration-200 hover:border-slate-300 hover:shadow-[0_18px_36px_rgba(15,23,42,0.1)]"
     >
       <div className="relative h-56 overflow-hidden">
-        <Image
+        <ImageWithFallback
           src={course.thumbnail}
+          fallbackSrc={getCourseFallbackThumbnail(course.category)}
           alt={course.title}
           fill
           sizes="(min-width: 1280px) 30vw, (min-width: 1024px) 45vw, 100vw"

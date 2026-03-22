@@ -3,7 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Bell, Eye, LockKeyhole, PencilLine, Settings, ShieldCheck, UserRound } from "lucide-react";
+import { resolveAvatarSrc } from "@/lib/image-fallbacks";
 import { useProfileStore } from "@/store/profile-store";
+import { ImageWithFallback } from "../ui/image-with-fallback";
 
 const navItems = [
   { href: "/profile", label: "Profile", icon: UserRound },
@@ -22,10 +24,12 @@ export const ProfileSidebar = () => {
   return (
     <aside className="bubble-card px-5 py-5">
       <div className="bubble-panel relative z-10 overflow-visible rounded-[2rem] p-5 text-white">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={profile?.avatar}
+        <ImageWithFallback
+          src={resolveAvatarSrc(profile?.avatar)}
+          fallbackSrc="/panda-logo.svg"
           alt={profile?.fullName ?? "Profile avatar"}
+          width={64}
+          height={64}
           className="glass-orb h-16 w-16 rounded-[1.5rem] object-cover"
         />
         <p className="mt-4 font-display text-2xl font-semibold">{profile?.fullName ?? "Learner"}</p>

@@ -1,12 +1,13 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { BookOpen, LayoutDashboard, LogOut, Menu, Sparkles, UserRound, X } from "lucide-react";
+import { resolveAvatarSrc } from "@/lib/image-fallbacks";
 import { Logo } from "./logo";
 import { Button } from "./ui/button";
+import { ImageWithFallback } from "./ui/image-with-fallback";
 import { logoutUser } from "@/lib/auth";
 import { useAuthStore } from "@/store/auth-store";
 
@@ -75,8 +76,9 @@ export const Navbar = () => {
               {mounted && user ? (
                 <>
                   <Link href="/profile" className="glass-panel pressable flex items-center gap-3 rounded-full px-3 py-2">
-                    <Image
-                      src={user.avatar || `https://api.dicebear.com/9.x/thumbs/svg?seed=${encodeURIComponent(user.name)}`}
+                    <ImageWithFallback
+                      src={resolveAvatarSrc(user.avatar)}
+                      fallbackSrc="/panda-logo.svg"
                       alt={user.name}
                       width={40}
                       height={40}
@@ -142,8 +144,9 @@ export const Navbar = () => {
                     onClick={() => setMobileOpen(false)}
                     className="pressable flex items-center gap-3 rounded-[1.5rem] px-1"
                   >
-                    <Image
-                      src={user.avatar || `https://api.dicebear.com/9.x/thumbs/svg?seed=${encodeURIComponent(user.name)}`}
+                    <ImageWithFallback
+                      src={resolveAvatarSrc(user.avatar)}
+                      fallbackSrc="/panda-logo.svg"
                       alt={user.name}
                       width={48}
                       height={48}

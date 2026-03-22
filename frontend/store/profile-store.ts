@@ -3,6 +3,7 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import type { AuthUser, NotificationSettings, PrivacySettings, UserProfile } from "@/types";
+import { resolveAvatarSrc } from "@/lib/image-fallbacks";
 import { buildInitialProfile } from "@/lib/profile-utils";
 
 type ProfileState = {
@@ -37,7 +38,7 @@ export const useProfileStore = create<ProfileState>()(
             ...current,
             fullName: current.fullName || user.name,
             email: current.email || user.email,
-            avatar: current.avatar || user.avatar || buildInitialProfile(user).avatar,
+            avatar: resolveAvatarSrc(current.avatar || user.avatar || buildInitialProfile(user).avatar),
             role: user.role ?? current.role
           }
         });

@@ -2,8 +2,10 @@
 
 import { Mail, UserRound } from "lucide-react";
 import type { Course } from "@/types";
+import { resolveAvatarSrc } from "@/lib/image-fallbacks";
 import { calculateProfileCompletion, timeAgoLabel } from "@/lib/profile-utils";
 import { useProfileStore } from "@/store/profile-store";
+import { ImageWithFallback } from "../ui/image-with-fallback";
 import { ProgressBar } from "../ui/progress-bar";
 
 export const ProfileCard = ({ courses }: { courses: Course[] }) => {
@@ -23,10 +25,12 @@ export const ProfileCard = ({ courses }: { courses: Course[] }) => {
   return (
     <div className="grid gap-6 xl:grid-cols-[320px_minmax(0,1fr)] 2xl:grid-cols-[360px_minmax(0,1fr)]">
       <aside className="bubble-card px-8 py-8">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={profile.avatar}
+        <ImageWithFallback
+          src={resolveAvatarSrc(profile.avatar)}
+          fallbackSrc="/panda-logo.svg"
           alt={profile.fullName}
+          width={96}
+          height={96}
           className="glass-panel h-24 w-24 rounded-[1.75rem] bg-slate-100 object-cover"
         />
         <div className="mt-5 flex items-center gap-2 text-primary">
