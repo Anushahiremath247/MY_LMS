@@ -56,21 +56,27 @@ export const ProfileCard = ({ courses }: { courses: Course[] }) => {
       </aside>
 
       <div className="space-y-6">
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <div className="grid gap-4 md:grid-cols-2 2xl:grid-cols-4">
           {[
-            { label: "Enrolled Courses", value: enrolledCourses.length, icon: BookCopy },
-            { label: "Progress Summary", value: `${averageProgress}%`, icon: Sparkles },
-            { label: "Certificates", value: certificates, icon: Award },
-            { label: "Last Login", value: timeAgoLabel(profile.lastLoginAt), icon: UserRound }
+            { label: "Enrolled Courses", value: enrolledCourses.length, icon: BookCopy, valueClassName: "text-5xl" },
+            { label: "Progress Summary", value: `${averageProgress}%`, icon: Sparkles, valueClassName: "text-5xl" },
+            { label: "Certificates", value: certificates, icon: Award, valueClassName: "text-5xl" },
+            { label: "Last Login", value: timeAgoLabel(profile.lastLoginAt), icon: UserRound, valueClassName: "text-[2.8rem] sm:text-5xl" }
           ].map((stat) => (
-            <div key={stat.label} className="bubble-card px-5 py-5">
-              <div className="relative z-10 flex items-center justify-between">
-                <p className="text-sm text-slate-500">{stat.label}</p>
-                <span className="bubble-bar flex h-10 w-10 items-center justify-center rounded-2xl text-white">
-                  <stat.icon className="h-4 w-4" />
-                </span>
+            <div key={stat.label} className="bubble-card min-h-[172px] px-6 py-6">
+              <div className="relative z-10 flex h-full flex-col">
+                <div className="flex items-start justify-between gap-4">
+                  <p className="max-w-[10rem] text-lg leading-8 text-slate-500">{stat.label}</p>
+                  <span className="bubble-bar flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl text-white">
+                    <stat.icon className="h-4 w-4" />
+                  </span>
+                </div>
+                <p
+                  className={`mt-auto whitespace-nowrap font-display font-bold leading-none tracking-[-0.05em] text-primary ${stat.valueClassName}`}
+                >
+                  {stat.value}
+                </p>
               </div>
-              <p className="relative z-10 mt-3 font-display text-3xl font-bold text-primary">{stat.value}</p>
             </div>
           ))}
         </div>
