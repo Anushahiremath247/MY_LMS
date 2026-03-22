@@ -3,6 +3,39 @@ import type { AuthSession, AuthUser } from "@/types";
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000/api";
 const DEFAULT_REDIRECT = "/dashboard";
 
+const buildFallbackUser = (input: { name?: string; email: string }): AuthUser => {
+  const fallbackName =
+    input.name?.trim() ||
+    input.email
+      .split("@")[0]
+      .split(/[._-]/)
+      .filter(Boolean)
+      .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+      .join(" ") ||
+    "Lazy Learning Student";
+
+  return {
+    id: `local-${input.email}`,
+    name: fallbackName,
+    email: input.email,
+    avatar: "/panda-logo.svg",
+    role: "student"
+  };
+};
+
+const isBrowser = typeof window !== "undefined";
+
+export const isAuthApiConfigured = () => {
+  if (!isBrowser) {
+    return Boolean(process.env.NEXT_PUBLIC_API_URL);
+  }
+
+  const onLocalhost = ["localhost", "127.0.0.1"].includes(window.location.hostname);
+  const usingLocalFallbackApi = API_URL.startsWith("http://localhost:4000") || API_URL.startsWith("http://127.0.0.1:4000");
+
+  return !usingLocalFallbackApi || onLocalhost;
+};
+
 const parseErrorMessage = async (response: Response) => {
   const payload = (await response.json().catch(() => null)) as { message?: string } | null;
   return payload?.message || "Authentication failed";
@@ -30,6 +63,13 @@ const requestAuth = async (
 };
 
 export const loginUser = async (body: { email: string; password: string }): Promise<AuthSession> => {
+  if (!isAuthApiConfigured()) {
+    return {
+      accessToken: `local-token-${body.email}`,
+      user: buildFallbackUser(body)
+    };
+  }
+
   return requestAuth("/auth/login", body);
 };
 
@@ -37,9 +77,22 @@ export const registerUser = async (body: {
   name: string;
   email: string;
   password: string;
-}): Promise<AuthSession> => requestAuth("/auth/register", body);
+}): Promise<AuthSession> => {
+  if (!isAuthApiConfigured()) {
+    return {
+      accessToken: `local-token-${body.email}`,
+      user: buildFallbackUser(body)
+    };
+  }
+
+  return requestAuth("/auth/register", body);
+};
 
 export const getCurrentUser = async (accessToken: string): Promise<AuthUser> => {
+  if (!isAuthApiConfigured()) {
+    return buildFallbackUser({ email: accessToken.replace(/^local-token-/, "") || "learner@example.com" });
+  }
+
   const response = await fetch(`${API_URL}/auth/me`, {
     method: "GET",
     headers: {
@@ -56,6 +109,10 @@ export const getCurrentUser = async (accessToken: string): Promise<AuthUser> => 
 };
 
 export const refreshSession = async (): Promise<AuthSession> => {
+  if (!isAuthApiConfigured()) {
+    throw new Error("Auth API is not configured");
+  }
+
   const response = await fetch(`${API_URL}/auth/refresh`, {
     method: "POST",
     credentials: "include"
@@ -69,6 +126,10 @@ export const refreshSession = async (): Promise<AuthSession> => {
 };
 
 export const logoutUser = async (accessToken?: string | null) => {
+  if (!isAuthApiConfigured()) {
+    return;
+  }
+
   try {
     await fetch(`${API_URL}/auth/logout`, {
       method: "POST",
@@ -105,6 +166,10 @@ export const normalizeRedirectPath = (value?: string | null) => {
 export const startSocialLogin = (provider: "google" | "github", redirectTo?: string | null) => {
   if (typeof window === "undefined") {
     return;
+  }
+
+  if (!isAuthApiConfigured()) {
+    throw new Error(`${provider === "google" ? "Google" : "GitHub"} login needs a deployed backend API URL first.`);
   }
 
   const next = normalizeRedirectPath(redirectTo);

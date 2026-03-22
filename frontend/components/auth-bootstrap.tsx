@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { getCurrentUser, refreshSession } from "@/lib/auth";
+import { getCurrentUser, isAuthApiConfigured, refreshSession } from "@/lib/auth";
 import { useAuthStore } from "@/store/auth-store";
 
 export const AuthBootstrap = () => {
@@ -24,6 +24,10 @@ export const AuthBootstrap = () => {
       setCheckingSession(true);
 
       try {
+        if (!isAuthApiConfigured()) {
+          return;
+        }
+
         if (accessToken) {
           try {
             const user = await getCurrentUser(accessToken);

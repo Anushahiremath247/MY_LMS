@@ -93,7 +93,11 @@ export const AuthForm = ({ mode }: { mode: "login" | "register" }) => {
 
   const handleSocialLogin = (provider: "google" | "github") => {
     setServerError(null);
-    startSocialLogin(provider, redirectTo);
+    try {
+      startSocialLogin(provider, redirectTo);
+    } catch (error) {
+      setServerError(error instanceof Error ? error.message : "Social login is unavailable right now.");
+    }
   };
 
   return (
