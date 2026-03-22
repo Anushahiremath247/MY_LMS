@@ -1,14 +1,26 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export const Logo = () => (
-  <Link href="/" className="flex items-center gap-3">
-    <span className="glass-panel flex h-11 w-11 items-center justify-center rounded-2xl">
-      <Image src="/panda-logo.svg" alt="Lazy Learning logo" width={30} height={30} />
-    </span>
-    <div>
-      <p className="font-display text-lg font-semibold tracking-tight text-ink">Lazy Learning</p>
-      <p className="text-xs text-slate-500">Calm learning, serious progress</p>
-    </div>
+type LogoProps = {
+  size?: "compact" | "default" | "hero";
+  className?: string;
+};
+
+const sizeClasses: Record<NonNullable<LogoProps["size"]>, string> = {
+  compact: "w-[170px] sm:w-[190px]",
+  default: "w-[190px] sm:w-[230px]",
+  hero: "w-[240px] sm:w-[320px]"
+};
+
+export const Logo = ({ size = "default", className = "" }: LogoProps) => (
+  <Link href="/" className={`inline-flex items-center ${className}`.trim()} aria-label="Lazy Learning home">
+    <Image
+      src="/lazy-learning-logo.svg"
+      alt="Lazy Learning"
+      width={1240}
+      height={360}
+      priority
+      className={`h-auto ${sizeClasses[size]}`}
+    />
   </Link>
 );
