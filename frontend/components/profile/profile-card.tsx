@@ -21,7 +21,7 @@ export const ProfileCard = ({ courses }: { courses: Course[] }) => {
   const certificates = enrolledCourses.filter((course) => (course.progress ?? 0) >= 70).length;
 
   return (
-    <div className="grid gap-6 xl:grid-cols-[360px_1fr]">
+    <div className="grid gap-6 xl:grid-cols-[320px_minmax(0,1fr)] 2xl:grid-cols-[360px_minmax(0,1fr)]">
       <aside className="bubble-card px-8 py-8">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -56,23 +56,25 @@ export const ProfileCard = ({ courses }: { courses: Course[] }) => {
       </aside>
 
       <div className="space-y-6">
-        <div className="grid gap-4 md:grid-cols-2 2xl:grid-cols-4">
+        <div className="grid gap-4 sm:grid-cols-2 2xl:grid-cols-4">
           {[
-            { label: "Enrolled Courses", value: enrolledCourses.length, icon: BookCopy, valueClassName: "text-5xl" },
-            { label: "Progress Summary", value: `${averageProgress}%`, icon: Sparkles, valueClassName: "text-5xl" },
-            { label: "Certificates", value: certificates, icon: Award, valueClassName: "text-5xl" },
-            { label: "Last Login", value: timeAgoLabel(profile.lastLoginAt), icon: UserRound, valueClassName: "text-[2.8rem] sm:text-5xl" }
+            { label: "Enrolled Courses", value: enrolledCourses.length, icon: BookCopy, valueClassName: "text-[2.8rem] sm:text-5xl" },
+            { label: "Progress Summary", value: `${averageProgress}%`, icon: Sparkles, valueClassName: "text-[2.8rem] sm:text-5xl" },
+            { label: "Certificates", value: certificates, icon: Award, valueClassName: "text-[2.8rem] sm:text-5xl" },
+            { label: "Last Login", value: timeAgoLabel(profile.lastLoginAt), icon: UserRound, valueClassName: "text-[2.2rem] sm:text-[2.8rem]" }
           ].map((stat) => (
-            <div key={stat.label} className="bubble-card min-h-[172px] px-6 py-6">
+            <div key={stat.label} className="bubble-card min-h-[190px] px-6 py-6">
               <div className="relative z-10 flex h-full flex-col">
                 <div className="flex items-start justify-between gap-4">
-                  <p className="max-w-[10rem] text-lg leading-8 text-slate-500">{stat.label}</p>
+                  <p className="max-w-[12rem] text-base leading-7 text-slate-500 sm:text-lg">
+                    {stat.label}
+                  </p>
                   <span className="bubble-bar flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl text-white">
                     <stat.icon className="h-4 w-4" />
                   </span>
                 </div>
                 <p
-                  className={`mt-auto whitespace-nowrap font-display font-bold leading-none tracking-[-0.05em] text-primary ${stat.valueClassName}`}
+                  className={`mt-auto font-display font-bold leading-[0.9] tracking-[-0.05em] text-primary ${stat.valueClassName}`}
                 >
                   {stat.value}
                 </p>
