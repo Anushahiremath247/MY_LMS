@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Logo } from "./logo";
 
 export const AuthShell = ({
@@ -12,7 +11,7 @@ export const AuthShell = ({
 }) => (
   <div className="grid min-h-screen lg:grid-cols-[1.1fr_0.9fr]">
     <div className="relative hidden overflow-hidden p-10 lg:block">
-      <div className="relative flex h-full flex-col justify-between">
+      <div className="relative flex h-full flex-col justify-center gap-12">
         <div className="self-start">
           <Logo size="hero" />
         </div>
@@ -24,9 +23,6 @@ export const AuthShell = ({
           <p className="relative z-10 mt-6 text-base leading-7 text-slate-600">
             Structured lessons, AI guidance, clean progress tracking, and a premium study flow inspired by modern learning products.
           </p>
-        </div>
-        <div className="glass-panel relative mx-auto flex h-36 w-36 items-center justify-center rounded-[2.5rem]">
-          <Image src="/panda-logo.svg" alt="Lazy Learning panda" width={120} height={120} />
         </div>
       </div>
     </div>

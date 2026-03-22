@@ -19,15 +19,15 @@ const iconClasses: Record<NonNullable<LogoProps["size"]>, string> = {
 };
 
 const titleClasses: Record<NonNullable<LogoProps["size"]>, string> = {
-  compact: "text-lg",
+  compact: "text-base sm:text-lg",
   default: "text-xl",
-  hero: "text-3xl"
+  hero: "text-[1.7rem] sm:text-3xl"
 };
 
 const subtitleClasses: Record<NonNullable<LogoProps["size"]>, string> = {
-  compact: "text-[8px] sm:text-[9px]",
-  default: "text-[8px] sm:text-[9px]",
-  hero: "text-[10px] sm:text-[11px]"
+  compact: "text-[7px] sm:text-[8px]",
+  default: "text-[7px] sm:text-[8px]",
+  hero: "text-[8px] sm:text-[10px]"
 };
 
 export const Logo = ({ size = "default", className = "" }: LogoProps) => (
@@ -40,7 +40,7 @@ export const Logo = ({ size = "default", className = "" }: LogoProps) => (
         Lazy Learning
       </span>
       <span
-        className={`mt-1 whitespace-nowrap font-medium uppercase tracking-[0.12em] text-primary/80 ${subtitleClasses[size]}`}
+        className={`mt-1 max-w-full font-medium uppercase tracking-[0.08em] text-primary/80 ${subtitleClasses[size]}`}
       >
         CALM LEARNING, SERIOUS PROGRESS
       </span>
