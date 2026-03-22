@@ -8,7 +8,7 @@ export default function ProfileLayout({ children }: { children: React.ReactNode 
       <Navbar />
       <section className="section-shell py-12">
         <ProfileGuard>
-          <div className="grid gap-6 xl:grid-cols-[280px_1fr]">
+          <div className="grid gap-6 xl:grid-cols-[300px_1fr]">
             <ProfileSidebar />
             <div>{children}</div>
           </div>

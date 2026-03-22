@@ -43,17 +43,17 @@ export const LearningWorkspace = ({ course }: { course: Course }) => {
 
   if (!currentLesson) {
     return (
-      <main className="min-h-screen bg-slate-50">
-        <header className="sticky top-0 z-40 border-b border-white/80 bg-white/80 backdrop-blur-xl">
-          <div className="section-shell flex h-20 items-center justify-between gap-4">
-            <Logo />
+    <main className="min-h-screen">
+      <header className="sticky top-0 z-40 bg-surface/75 backdrop-blur-xl">
+        <div className="section-shell flex h-20 items-center justify-between gap-4">
+          <Logo />
             <Link href="/dashboard" className="text-sm font-medium text-slate-600 transition hover:text-ink">
               Back to dashboard
             </Link>
           </div>
         </header>
         <section className="section-shell py-16">
-          <div className="rounded-[2.25rem] border border-white/70 bg-white/85 p-10 text-center shadow-glass backdrop-blur-xl">
+          <div className="bubble-card px-10 py-10 text-center">
             <h1 className="font-display text-4xl font-semibold text-ink">No lessons available yet</h1>
             <p className="mt-4 text-base leading-8 text-slate-500">
               This course outline is still being prepared. Check the course library for another active path in the meantime.
@@ -70,8 +70,8 @@ export const LearningWorkspace = ({ course }: { course: Course }) => {
   }
 
   return (
-    <main className="min-h-screen bg-slate-50">
-      <header className="sticky top-0 z-40 border-b border-white/80 bg-white/80 backdrop-blur-xl">
+    <main className="min-h-screen">
+      <header className="sticky top-0 z-40 bg-surface/75 backdrop-blur-xl">
         <div className="section-shell flex h-20 items-center justify-between gap-4">
           <div className="flex items-center gap-4">
             <Logo />
@@ -93,7 +93,7 @@ export const LearningWorkspace = ({ course }: { course: Course }) => {
 
       <section className="section-shell py-8">
         <div className={`grid gap-6 ${sidebarCollapsed ? "xl:grid-cols-[92px_1fr]" : "xl:grid-cols-[340px_1fr]"}`}>
-          <aside className="rounded-[2.25rem] border border-white/70 bg-white/85 p-5 shadow-glass backdrop-blur-xl">
+          <aside className="bubble-card px-5 py-5">
             <div className="mb-5 flex items-start justify-between gap-3">
               {sidebarCollapsed ? (
                 <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary">
@@ -183,7 +183,7 @@ export const LearningWorkspace = ({ course }: { course: Course }) => {
           <div className="space-y-6">
             <div className="grid gap-5 lg:grid-cols-[1fr_300px]">
               <VideoPlayer youtubeId={currentLesson.youtubeId} title={currentLesson.title} />
-              <div className="rounded-[2.25rem] border border-white/70 bg-white/85 p-6 shadow-glass backdrop-blur-xl">
+              <div className="bubble-card px-6 py-6">
                 <p className="text-sm font-semibold uppercase tracking-[0.24em] text-primary">Current lesson</p>
                 <h1 className="mt-3 font-display text-3xl font-semibold text-ink">{currentLesson.title}</h1>
                 <p className="mt-3 text-sm leading-7 text-slate-500">{currentLesson.description}</p>
@@ -206,7 +206,7 @@ export const LearningWorkspace = ({ course }: { course: Course }) => {
               </div>
             </div>
 
-            <div className="rounded-[2.25rem] border border-white/70 bg-white/85 p-8 shadow-glass backdrop-blur-xl">
+            <div className="bubble-card px-8 py-8">
               <div className="flex flex-wrap items-center justify-between gap-4">
                 <div>
                   <p className="text-sm uppercase tracking-[0.24em] text-primary">Now playing</p>

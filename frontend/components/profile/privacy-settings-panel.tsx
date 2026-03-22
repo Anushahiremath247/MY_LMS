@@ -29,11 +29,11 @@ export const PrivacySettingsPanel = () => {
   };
 
   return (
-    <section id="privacy" className="rounded-[2rem] border border-white/70 bg-white/85 p-8 shadow-soft backdrop-blur-xl">
-      <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">Privacy</p>
-      <h2 className="mt-3 font-display text-3xl font-semibold text-ink">Control what others can see</h2>
+    <section id="privacy" className="bubble-card px-8 py-8">
+      <p className="relative z-10 text-sm font-semibold uppercase tracking-[0.2em] text-primary/75">Privacy</p>
+      <h2 className="bubble-title relative z-10 mt-3 text-3xl">Control what others can see</h2>
       <div className="mt-6 grid gap-4">
-        <div className="rounded-[1.5rem] border border-slate-200 bg-white p-4 shadow-soft">
+        <div className="glass-panel relative z-10 rounded-[1.5rem] p-4">
           <p className="font-medium text-ink">Profile visibility</p>
           <div className="mt-4 flex flex-wrap gap-3">
             {(["public", "private"] as const).map((value) => (
@@ -43,8 +43,8 @@ export const PrivacySettingsPanel = () => {
                 onClick={() => handleUpdate({ profileVisibility: value })}
                 className={`rounded-full px-4 py-2 text-sm font-medium capitalize transition ${
                   profile.privacy.profileVisibility === value
-                    ? "bg-primary text-white shadow-glass"
-                    : "border border-slate-200 bg-white text-slate-600"
+                    ? "bubble-bar text-white"
+                    : "glass-panel text-slate-600"
                 }`}
               >
                 {value}

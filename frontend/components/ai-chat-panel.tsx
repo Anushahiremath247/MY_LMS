@@ -106,15 +106,15 @@ export const AIChatPanel = ({
   return (
     <div className="fixed bottom-6 right-6 z-50 hidden w-[360px] xl:block">
       {isOpen ? (
-        <div className="glass-panel rounded-4xl p-4 animate-slide-in">
+        <div className="bubble-card animate-slide-in px-4 py-4">
           <div className="mb-4 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+              <span className="bubble-bar flex h-11 w-11 items-center justify-center rounded-2xl text-white">
                 <Bot className="h-5 w-5" />
               </span>
               <div>
                 <p className="font-semibold">AI Tutor</p>
-                <p className="text-xs text-slate-500">Lesson-aware guidance</p>
+                <p className="text-xs text-primary/70">Lesson-aware guidance</p>
               </div>
             </div>
             <button className="text-xs text-slate-500" onClick={() => setIsOpen(false)}>
@@ -127,15 +127,15 @@ export const AIChatPanel = ({
                 key={message.id}
                 className={`max-w-[85%] whitespace-pre-wrap rounded-3xl px-4 py-3 text-sm leading-6 ${
                   message.role === "assistant"
-                    ? "bg-white text-slate-700 shadow-soft"
-                    : "ml-auto bg-primary text-white"
+                    ? "glass-panel text-slate-700"
+                    : "bubble-bar ml-auto text-white"
                 }`}
               >
                 {message.content}
               </div>
             ))}
             {isTyping ? (
-              <div className="flex items-center gap-2 rounded-3xl bg-white px-4 py-3 text-sm text-slate-500 shadow-soft">
+              <div className="glass-panel flex items-center gap-2 rounded-3xl px-4 py-3 text-sm text-slate-500">
                 <Sparkles className="h-4 w-4 text-primary" />
                 Typing...
               </div>
@@ -153,7 +153,7 @@ export const AIChatPanel = ({
                 }
               }}
               placeholder="Ask about this lesson..."
-              className="h-12 flex-1 rounded-full border border-slate-200 bg-white px-4 text-sm outline-none transition focus:border-primary/50 focus:ring-4 focus:ring-primary/10"
+              className="glass-panel h-12 flex-1 rounded-full px-4 text-sm outline-none transition focus:border-primary/50 focus:ring-4 focus:ring-primary/10"
             />
             <Button className="h-12 w-12 rounded-full px-0" onClick={() => void sendMessage()} disabled={isTyping}>
               <SendHorizonal className="h-4 w-4" />

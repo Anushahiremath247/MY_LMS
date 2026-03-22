@@ -76,9 +76,9 @@ export const SecuritySettingsPanel = () => {
   return (
     <>
       <div className="grid gap-6 xl:grid-cols-[1.05fr_0.95fr]">
-        <section className="rounded-[2rem] border border-white/70 bg-white/85 p-8 shadow-soft backdrop-blur-xl">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">Password</p>
-          <h1 className="mt-3 font-display text-3xl font-semibold text-ink">Security and session controls</h1>
+        <section className="bubble-card px-8 py-8">
+          <p className="relative z-10 text-sm font-semibold uppercase tracking-[0.2em] text-primary/75">Password</p>
+          <h1 className="bubble-title relative z-10 mt-3 text-3xl">Security and session controls</h1>
           <form className="mt-6 space-y-4" onSubmit={onSubmit}>
             <div>
               <label className="mb-2 block text-sm font-medium text-slate-600">Current password</label>
@@ -113,11 +113,11 @@ export const SecuritySettingsPanel = () => {
           </form>
         </section>
 
-        <section className="rounded-[2rem] border border-white/70 bg-white/85 p-8 shadow-soft backdrop-blur-xl">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">Sessions</p>
+        <section className="bubble-card px-8 py-8">
+          <p className="relative z-10 text-sm font-semibold uppercase tracking-[0.2em] text-primary/75">Sessions</p>
           <div className="mt-6 space-y-4">
             {profile.sessions.map((session) => (
-              <div key={session.id} className="rounded-[1.5rem] border border-slate-200 bg-white p-4 shadow-soft">
+              <div key={session.id} className="glass-panel rounded-[1.5rem] p-4">
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <div>
                     <p className="font-medium text-ink">{session.label}</p>

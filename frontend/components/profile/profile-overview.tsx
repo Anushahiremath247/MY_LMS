@@ -19,8 +19,8 @@ export const ProfileOverview = ({ courses }: { courses: Course[] }) => {
       <ProfileCard courses={courses} />
       <div className="grid gap-6 xl:grid-cols-[1.05fr_0.95fr]">
         <ActivityList items={profile.activity.slice(0, 4)} />
-        <div className="rounded-[2rem] border border-white/70 bg-white/85 p-8 shadow-soft backdrop-blur-xl">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">Recent courses</p>
+        <div className="bubble-card px-8 py-8">
+          <p className="relative z-10 text-sm font-semibold uppercase tracking-[0.2em] text-primary/75">Recent courses</p>
           <div className="mt-6 grid gap-5">
             {enrolledCourses.slice(0, 2).map((course) => (
               <CourseCard key={course.id} course={course} />

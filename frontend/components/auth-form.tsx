@@ -77,7 +77,7 @@ export const AuthForm = ({ mode }: { mode: "login" | "register" }) => {
           <input
             {...register("name")}
             placeholder="Aarav Sharma"
-            className="h-14 w-full rounded-[1.25rem] border border-slate-200 bg-white px-4 outline-none transition focus:border-primary/50 focus:ring-4 focus:ring-primary/10"
+            className="glass-panel h-14 w-full rounded-[1.25rem] px-4 outline-none transition focus:border-primary/50 focus:ring-4 focus:ring-primary/10"
           />
           {errors.name ? <p className="text-sm text-rose-500">{errors.name.message}</p> : null}
         </div>
@@ -87,7 +87,7 @@ export const AuthForm = ({ mode }: { mode: "login" | "register" }) => {
         <input
           {...register("email")}
           placeholder="you@example.com"
-          className="h-14 w-full rounded-[1.25rem] border border-slate-200 bg-white px-4 outline-none transition focus:border-primary/50 focus:ring-4 focus:ring-primary/10"
+          className="glass-panel h-14 w-full rounded-[1.25rem] px-4 outline-none transition focus:border-primary/50 focus:ring-4 focus:ring-primary/10"
         />
         {errors.email ? <p className="text-sm text-rose-500">{errors.email.message}</p> : null}
       </div>
@@ -98,7 +98,7 @@ export const AuthForm = ({ mode }: { mode: "login" | "register" }) => {
             type={showPassword ? "text" : "password"}
             {...register("password")}
             placeholder="Enter your password"
-            className="h-14 w-full rounded-[1.25rem] border border-slate-200 bg-white px-4 pr-12 outline-none transition focus:border-primary/50 focus:ring-4 focus:ring-primary/10"
+            className="glass-panel h-14 w-full rounded-[1.25rem] px-4 pr-12 outline-none transition focus:border-primary/50 focus:ring-4 focus:ring-primary/10"
           />
           <button
             type="button"
@@ -132,7 +132,7 @@ export const AuthForm = ({ mode }: { mode: "login" | "register" }) => {
       </Button>
       <button
         type="button"
-        className="flex h-14 w-full items-center justify-center rounded-[1.25rem] border border-slate-200 bg-white text-sm font-semibold text-slate-700 shadow-soft transition hover:-translate-y-0.5"
+        className="glass-panel flex h-14 w-full items-center justify-center rounded-[1.25rem] text-sm font-semibold text-slate-700 transition hover:-translate-y-0.5"
       >
         Continue with Google
       </button>

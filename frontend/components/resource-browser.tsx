@@ -40,14 +40,14 @@ export const ResourceBrowser = ({ resources }: { resources: Resource[] }) => {
   return (
     <div className="space-y-8">
       <div className="grid gap-5 lg:grid-cols-[1.1fr_0.9fr]">
-        <div className="rounded-[2rem] border border-white/70 bg-white/85 p-6 shadow-glass backdrop-blur-xl">
-          <p className="text-sm font-semibold uppercase tracking-[0.24em] text-primary">Resource vault</p>
-          <h1 className="mt-3 font-display text-4xl font-semibold text-ink sm:text-5xl">
-            Curated YouTube learning links for every stage
-          </h1>
-          <p className="mt-4 max-w-2xl text-base leading-8 text-slate-500">
-            Browse structured videos, playlist searches, and quick study routes without leaving the Lazy Learning flow.
-          </p>
+        <div className="bubble-card px-6 py-7">
+          <div className="relative z-10">
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-primary/75">Resource vault</p>
+            <h1 className="bubble-title mt-3 text-4xl sm:text-5xl">Curated YouTube learning links for every stage</h1>
+            <p className="mt-4 max-w-2xl text-base leading-8 text-slate-600">
+              Browse structured videos, playlist searches, and quick study routes without leaving the Lazy Learning flow.
+            </p>
+          </div>
         </div>
         <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
           {[
@@ -55,17 +55,17 @@ export const ResourceBrowser = ({ resources }: { resources: Resource[] }) => {
             { label: "Categories", value: categories.length - 1 },
             { label: "Beginner friendly", value: resources.filter((resource) => resource.difficulty === "beginner").length }
           ].map((stat) => (
-            <div key={stat.label} className="rounded-[2rem] border border-white/70 bg-white/80 p-6 shadow-soft backdrop-blur-xl">
-              <p className="text-sm text-slate-500">{stat.label}</p>
-              <p className="mt-2 font-display text-4xl font-semibold text-ink">{stat.value}</p>
+            <div key={stat.label} className="bubble-card px-6 py-6 text-center">
+              <p className="relative z-10 text-xs font-semibold uppercase tracking-[0.2em] text-ink/55">{stat.label}</p>
+              <p className="relative z-10 mt-3 font-display text-4xl font-bold text-primary">{stat.value}</p>
             </div>
           ))}
         </div>
       </div>
 
-      <div className="rounded-[2rem] border border-white/70 bg-white/78 p-5 shadow-glass backdrop-blur-xl">
+      <div className="bubble-card px-5 py-5">
         <div className="grid gap-4 lg:grid-cols-[1fr_auto] lg:items-center">
-          <label className="flex h-14 items-center gap-3 rounded-full border border-slate-200 bg-white px-5 shadow-soft">
+          <label className="glass-panel flex h-14 items-center gap-3 rounded-full px-5">
             <Search className="h-4 w-4 text-slate-400" />
             <input
               value={query}
@@ -82,8 +82,8 @@ export const ResourceBrowser = ({ resources }: { resources: Resource[] }) => {
                 onClick={() => setActiveDifficulty(difficulty)}
                 className={`rounded-full px-4 py-2.5 text-sm font-medium capitalize transition ${
                   difficulty === activeDifficulty
-                    ? "bg-primary text-white shadow-glass"
-                    : "border border-slate-200 bg-white text-slate-600 hover:border-primary/20 hover:text-ink"
+                    ? "bubble-bar text-white"
+                    : "glass-panel text-slate-600 hover:text-ink"
                 }`}
               >
                 {difficulty}
@@ -99,8 +99,8 @@ export const ResourceBrowser = ({ resources }: { resources: Resource[] }) => {
               onClick={() => setActiveCategory(category)}
               className={`rounded-full px-4 py-2.5 text-sm font-medium transition ${
                 category === activeCategory
-                  ? "bg-slate-900 text-white shadow-soft"
-                  : "border border-slate-200 bg-white text-slate-600 hover:border-primary/20 hover:text-ink"
+                  ? "bubble-bar text-white"
+                  : "glass-panel text-slate-600 hover:text-ink"
               }`}
             >
               {category}
@@ -129,17 +129,17 @@ export const ResourceBrowser = ({ resources }: { resources: Resource[] }) => {
         {filteredResources.map((resource) => (
           <article
             key={resource.id}
-            className="group rounded-[2rem] border border-white/70 bg-white/85 p-6 shadow-soft backdrop-blur-xl transition duration-300 hover:-translate-y-1.5 hover:shadow-glass"
+            className="bubble-card group px-6 py-6 transition duration-300 hover:-translate-y-1.5"
           >
-            <div className="flex items-center justify-between gap-3">
-              <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+            <div className="relative z-10 flex items-center justify-between gap-3">
+              <span className="rounded-full bg-white/45 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
                 {resource.category}
               </span>
-              <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium capitalize text-slate-600">
+              <span className="glass-panel rounded-full px-3 py-1 text-xs font-medium capitalize text-slate-600">
                 {resource.difficulty}
               </span>
             </div>
-            <h2 className="mt-5 font-display text-2xl font-semibold text-ink">{resource.title}</h2>
+            <h2 className="relative z-10 mt-5 font-display text-2xl font-bold text-primary">{resource.title}</h2>
             <p className="mt-3 text-sm text-slate-500">
               Type: <span className="font-medium capitalize text-slate-700">{resource.type}</span>
             </p>

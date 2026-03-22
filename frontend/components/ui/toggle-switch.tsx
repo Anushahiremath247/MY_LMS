@@ -8,7 +8,7 @@ type ToggleSwitchProps = {
 };
 
 export const ToggleSwitch = ({ checked, onChange, label, description }: ToggleSwitchProps) => (
-  <div className="flex items-start justify-between gap-4 rounded-[1.5rem] border border-slate-200 bg-white p-4 shadow-soft">
+  <div className="glass-panel flex items-start justify-between gap-4 rounded-[1.5rem] p-4">
     <div>
       <p className="font-medium text-ink">{label}</p>
       {description ? <p className="mt-1 text-sm leading-6 text-slate-500">{description}</p> : null}
@@ -19,7 +19,7 @@ export const ToggleSwitch = ({ checked, onChange, label, description }: ToggleSw
       aria-checked={checked}
       onClick={() => onChange(!checked)}
       className={`relative mt-1 inline-flex h-7 w-12 shrink-0 rounded-full transition ${
-        checked ? "bg-primary" : "bg-slate-200"
+        checked ? "bubble-bar bg-primary" : "bg-slate-200"
       }`}
     >
       <span

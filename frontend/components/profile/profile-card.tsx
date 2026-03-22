@@ -22,18 +22,18 @@ export const ProfileCard = ({ courses }: { courses: Course[] }) => {
 
   return (
     <div className="grid gap-6 xl:grid-cols-[360px_1fr]">
-      <aside className="rounded-[2rem] border border-white/70 bg-white/85 p-8 shadow-glass backdrop-blur-xl">
+      <aside className="bubble-card px-8 py-8">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={profile.avatar}
           alt={profile.fullName}
-          className="h-24 w-24 rounded-[1.75rem] bg-slate-100 object-cover"
+          className="glass-panel h-24 w-24 rounded-[1.75rem] bg-slate-100 object-cover"
         />
         <div className="mt-5 flex items-center gap-2 text-primary">
           <UserRound className="h-4 w-4" />
           <span className="text-sm font-semibold uppercase tracking-[0.2em]">{profile.role}</span>
         </div>
-        <h1 className="mt-3 font-display text-4xl font-semibold text-ink">{profile.fullName}</h1>
+        <h1 className="bubble-title mt-3 text-4xl">{profile.fullName}</h1>
         <p className="mt-2 flex items-center gap-2 text-sm text-slate-500">
           <Mail className="h-4 w-4" />
           {profile.email}
@@ -63,21 +63,21 @@ export const ProfileCard = ({ courses }: { courses: Course[] }) => {
             { label: "Certificates", value: certificates, icon: Award },
             { label: "Last Login", value: timeAgoLabel(profile.lastLoginAt), icon: UserRound }
           ].map((stat) => (
-            <div key={stat.label} className="rounded-[1.75rem] border border-white/70 bg-white/85 p-5 shadow-soft backdrop-blur-xl">
-              <div className="flex items-center justify-between">
+            <div key={stat.label} className="bubble-card px-5 py-5">
+              <div className="relative z-10 flex items-center justify-between">
                 <p className="text-sm text-slate-500">{stat.label}</p>
-                <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                <span className="bubble-bar flex h-10 w-10 items-center justify-center rounded-2xl text-white">
                   <stat.icon className="h-4 w-4" />
                 </span>
               </div>
-              <p className="mt-3 font-display text-3xl font-semibold text-ink">{stat.value}</p>
+              <p className="relative z-10 mt-3 font-display text-3xl font-bold text-primary">{stat.value}</p>
             </div>
           ))}
         </div>
 
-        <div className="rounded-[2rem] border border-white/70 bg-white/85 p-8 shadow-soft backdrop-blur-xl">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">Learning summary</p>
-          <h2 className="mt-3 font-display text-3xl font-semibold text-ink">A cleaner view of your progress</h2>
+        <div className="bubble-card px-8 py-8">
+          <p className="relative z-10 text-sm font-semibold uppercase tracking-[0.2em] text-primary/75">Learning summary</p>
+          <h2 className="bubble-title relative z-10 mt-3 text-3xl">A cleaner view of your progress</h2>
           <p className="mt-3 max-w-3xl text-base leading-8 text-slate-500">
             You are tracking well across your active paths. Keep your momentum by revisiting the course with the highest current completion and pushing one lesson further.
           </p>

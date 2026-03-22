@@ -39,8 +39,8 @@ export const ProfileGuard = ({ children }: { children: React.ReactNode }) => {
 
   if (!user) {
     return (
-      <div className="rounded-[2rem] border border-white/70 bg-white/85 p-8 shadow-glass backdrop-blur-xl">
-        <h1 className="font-display text-4xl font-semibold text-ink">Sign in to manage your profile</h1>
+      <div className="bubble-card px-8 py-8">
+        <h1 className="bubble-title text-4xl">Sign in to manage your profile</h1>
         <p className="mt-4 max-w-2xl text-base leading-8 text-slate-500">
           Profile details, security settings, and learning history are protected. Sign in to continue.
         </p>

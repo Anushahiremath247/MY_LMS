@@ -9,20 +9,20 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        surface: "#f6f8fc",
-        ink: "#10233f",
-        primary: "#3867ff",
-        secondary: "#14b8a6",
-        muted: "#64748b",
-        panel: "#ffffff",
-        line: "#dbe4f0"
+        surface: "#dff1ff",
+        ink: "#0c1625",
+        primary: "#1f63e8",
+        secondary: "#79cbff",
+        muted: "#5f7a96",
+        panel: "#eef8ff",
+        line: "#bfd9ee"
       },
       boxShadow: {
-        soft: "0 20px 60px rgba(15, 23, 42, 0.08)",
-        glass: "0 16px 40px rgba(56, 103, 255, 0.12)"
+        soft: "0 18px 45px rgba(31, 99, 232, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.72)",
+        glass: "0 24px 70px rgba(31, 99, 232, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.72)"
       },
       borderRadius: {
-        "4xl": "2rem"
+        "4xl": "2.5rem"
       },
       fontFamily: {
         sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
@@ -49,7 +49,7 @@ const config: Config = {
       },
       backgroundImage: {
         glow:
-          "radial-gradient(circle at top left, rgba(56, 103, 255, 0.12), transparent 40%), radial-gradient(circle at bottom right, rgba(20, 184, 166, 0.15), transparent 35%)"
+          "radial-gradient(circle at top center, rgba(255, 255, 255, 0.72), transparent 34%), radial-gradient(circle at left center, rgba(121, 203, 255, 0.2), transparent 26%), radial-gradient(circle at bottom right, rgba(31, 99, 232, 0.14), transparent 34%)"
       }
     }
   },
@@ -57,4 +57,3 @@ const config: Config = {
 };
 
 export default config;
-

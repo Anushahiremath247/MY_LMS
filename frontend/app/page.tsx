@@ -1,5 +1,14 @@
 import Link from "next/link";
-import { ArrowRight, BrainCircuit, ChartSpline, CheckCircle2, Sparkles, Video } from "lucide-react";
+import {
+  ArrowRight,
+  BookOpen,
+  BrainCircuit,
+  ChartSpline,
+  CheckCircle2,
+  Sparkles,
+  UserRound,
+  Video
+} from "lucide-react";
 import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
 import { CourseCard } from "@/components/course-card";
@@ -10,39 +19,30 @@ import { resources, testimonials } from "@/lib/demo-data";
 const features = [
   {
     title: "Structured video learning",
-    description: "Move lesson by lesson with a clear roadmap instead of scattered tabs.",
+    description: "Move lesson by lesson with one clean next step instead of scattered open tabs.",
     icon: Video
   },
   {
     title: "AI tutor assistant",
-    description: "Ask for summaries, clarification, or bite-sized guidance while you learn.",
+    description: "Ask for summaries, explanations, and follow-up help without leaving the lesson flow.",
     icon: BrainCircuit
   },
   {
     title: "Progress tracking",
-    description: "Stay motivated with visible milestones and percentage-based course completion.",
+    description: "See completion clearly with lightweight stats, progress bars, and steady momentum cues.",
     icon: ChartSpline
   },
   {
     title: "Smart recommendations",
-    description: "Discover what to study next based on your current path and learning goals.",
+    description: "Surface the best next course, topic, or resource from your current learning path.",
     icon: Sparkles
   }
 ];
 
-const productFlow = [
-  {
-    title: "Discover",
-    copy: "Find a clean course path instead of collecting dozens of random tabs."
-  },
-  {
-    title: "Learn",
-    copy: "Watch the lesson, ask the AI tutor, and move through one clear next step."
-  },
-  {
-    title: "Progress",
-    copy: "Track completion, keep your streak alive, and return exactly where you left off."
-  }
+const quickActions = [
+  { href: "/courses", label: "Courses", icon: BookOpen },
+  { href: "/dashboard", label: "Dashboard", icon: ChartSpline },
+  { href: "/profile", label: "Profile", icon: UserRound }
 ];
 
 export default async function HomePage() {
@@ -53,135 +53,135 @@ export default async function HomePage() {
   return (
     <main>
       <Navbar />
-      <section className="section-shell py-20 sm:py-28">
-        <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr]">
-          <div className="space-y-8">
-            <span className="inline-flex rounded-full border border-primary/15 bg-primary/10 px-4 py-2 text-sm font-medium text-primary">
-              AI-guided courses, calm interface, sharper momentum
-            </span>
-            <div className="space-y-5">
-              <h1 className="font-display text-5xl font-semibold tracking-tight text-ink sm:text-7xl text-balance">
-                AI Powered Learning Platform
-              </h1>
-              <p className="max-w-2xl text-lg leading-8 text-slate-500">
-                Learn through structured videos, a lesson-aware AI tutor, visible progress tracking, and curated paths designed to feel clean, professional, and easy to finish.
-              </p>
+
+      <section className="section-shell py-10 sm:py-14">
+        <div className="bubble-card px-6 py-10 sm:px-10 sm:py-14">
+          <div className="relative z-10">
+            <p className="hero-kicker">How to learn with</p>
+            <h1 className="bubble-title mt-4 text-center text-5xl sm:text-7xl lg:text-[5.75rem]">
+              AI Powered Learning Platform
+            </h1>
+            <p className="mx-auto mt-6 max-w-3xl text-center text-base leading-8 text-slate-600 sm:text-lg">
+              Lazy Learning turns courses, progress, AI guidance, and resources into one calm bubble-style
+              workspace that feels easy to navigate and hard to abandon.
+            </p>
+
+            <div className="mt-10 flex justify-center">
+              <div className="bubble-bar flex flex-wrap items-center justify-center gap-3 p-3">
+                {quickActions.map((action, index) => (
+                  <Link
+                    key={action.href}
+                    href={action.href}
+                    className={`inline-flex min-w-[150px] items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition ${
+                      index === 0 ? "glass-orb text-white" : "text-sky-100/90 hover:text-white"
+                    }`}
+                  >
+                    <action.icon className="h-4 w-4" />
+                    {action.label}
+                  </Link>
+                ))}
+              </div>
             </div>
-            <div className="flex flex-wrap gap-4">
-              <Button asChild>
-                <Link href="/courses">Explore Courses</Link>
-              </Button>
+
+            <div className="mt-10 grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
+              <div className="soft-strip flex flex-wrap items-center justify-between gap-4 px-5 py-4">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink/55">Lazy Learning</p>
+                  <p className="mt-1 text-sm font-medium text-ink">Guided paths, AI tutor, and clean progress.</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink/55">Study assets</p>
+                  <p className="mt-1 text-sm font-medium text-ink">{resources.length}+ curated links</p>
+                </div>
+              </div>
+              <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-3">
+                {[
+                  { label: "Courses", value: courses.length },
+                  { label: "Enrolled", value: enrolledCount },
+                  { label: "Lessons", value: totalLessons }
+                ].map((stat) => (
+                  <div key={stat.label} className="bubble-card px-5 py-5 text-center">
+                    <p className="relative z-10 text-xs font-semibold uppercase tracking-[0.22em] text-ink/55">
+                      {stat.label}
+                    </p>
+                    <p className="relative z-10 mt-3 font-display text-4xl font-bold text-primary">{stat.value}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-8 flex justify-center gap-3">
+              {Array.from({ length: 7 }, (_, index) => (
+                <span
+                  key={index}
+                  className={`h-3 w-3 rounded-full ${index === 0 ? "bg-white shadow-soft" : "bg-white/55"}`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section-shell py-8 sm:py-10">
+        <div className="grid gap-5 xl:grid-cols-4">
+          {features.map((feature) => (
+            <div key={feature.title} className="bubble-card px-6 py-7">
+              <div className="relative z-10">
+                <div className="bubble-bar inline-flex h-14 w-14 items-center justify-center">
+                  <feature.icon className="h-5 w-5" />
+                </div>
+                <h2 className="mt-6 font-display text-2xl font-bold text-primary">{feature.title}</h2>
+                <p className="mt-3 text-sm leading-7 text-slate-600">{feature.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="section-shell py-12 sm:py-16">
+        <div className="bubble-card px-6 py-8 sm:px-8 sm:py-10">
+          <div className="relative z-10">
+            <div className="flex flex-wrap items-end justify-between gap-5">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-[0.24em] text-primary/75">Popular Courses</p>
+                <h2 className="bubble-title mt-3 text-4xl sm:text-5xl">Most loved learning paths</h2>
+              </div>
               <Button variant="secondary" asChild>
-                <Link href="/register">Get Started</Link>
+                <Link href="/courses">
+                  Explore Courses
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
               </Button>
             </div>
-            <div className="grid gap-3 sm:grid-cols-3">
-              {[
-                "Focused lesson flow with fewer distractions",
-                "AI tutor that stays inside the study experience",
-                "Modern dashboard built for steady momentum"
-              ].map((item) => (
-                <div key={item} className="flex items-start gap-3 rounded-[1.5rem] border border-white/70 bg-white/75 px-4 py-4 shadow-soft backdrop-blur">
-                  <CheckCircle2 className="mt-0.5 h-4 w-4 text-secondary" />
-                  <p className="text-sm leading-6 text-slate-600">{item}</p>
-                </div>
+            <div className="mt-8 grid gap-6 lg:grid-cols-2 xl:grid-cols-3">
+              {courses.slice(0, 3).map((course) => (
+                <CourseCard key={course.id} course={course} />
               ))}
             </div>
           </div>
-          <div className="relative overflow-hidden rounded-[2.5rem] border border-white/70 bg-white/85 p-6 shadow-glass backdrop-blur-xl sm:p-8">
-            <div className="absolute inset-x-10 top-0 h-40 rounded-full bg-primary/10 blur-3xl" />
-            <div className="relative grid gap-4">
-              <div className="rounded-[2rem] bg-slate-950 p-6 text-white shadow-soft">
-                <p className="text-sm text-white/65">Today&apos;s learning pulse</p>
-                <p className="mt-2 font-display text-4xl font-semibold">73% focus score</p>
-                <p className="mt-4 max-w-sm text-sm leading-7 text-white/70">
-                  Students move faster when the interface stays quiet and the next action stays obvious.
-                </p>
-              </div>
-              <div className="grid gap-4 sm:grid-cols-2">
-              {[
-                { label: "Curated resources", value: `${resources.length}+` },
-                { label: "Active paths", value: String(courses.length).padStart(2, "0") },
-                { label: "Enrolled learners", value: `${enrolledCount * 320}+` },
-                { label: "Structured lessons", value: `${totalLessons}+` }
-              ].map((item, index) => (
-                <div
-                  key={item.label}
-                  className="rounded-[1.75rem] bg-white p-6 shadow-soft animate-float-up"
-                  style={{ animationDelay: `${index * 120}ms` }}
-                >
-                  <p className="text-sm text-slate-500">{item.label}</p>
-                  <p className="mt-2 font-display text-4xl font-semibold text-ink">{item.value}</p>
-                </div>
-              ))}
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
-      <section className="section-shell py-8 sm:py-12">
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-          {features.map((feature, index) => (
-            <div
-              key={feature.title}
-              className="glass-panel rounded-4xl p-6 transition duration-300 hover:-translate-y-2"
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
-              <div className="mb-5 inline-flex rounded-2xl bg-primary/10 p-3 text-primary">
-                <feature.icon className="h-5 w-5" />
-              </div>
-              <h3 className="font-display text-2xl font-semibold">{feature.title}</h3>
-              <p className="mt-3 text-sm leading-7 text-slate-500">{feature.description}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="section-shell py-20">
-        <div className="mb-10 grid gap-6 rounded-[2.5rem] border border-white/70 bg-white/78 p-8 shadow-glass backdrop-blur-xl lg:grid-cols-3">
-          {productFlow.map((item) => (
-            <div key={item.title} className="rounded-[1.75rem] bg-white p-6 shadow-soft">
-              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-primary">{item.title}</p>
-              <p className="mt-4 text-base leading-8 text-slate-600">{item.copy}</p>
-            </div>
-          ))}
-        </div>
-
-        <div className="mb-10 flex items-end justify-between gap-6">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-primary">Popular courses</p>
-            <h2 className="mt-3 font-display text-4xl font-semibold">Structured paths students keep finishing</h2>
-          </div>
-          <Link href="/courses" className="inline-flex items-center gap-2 text-sm font-semibold text-primary">
-            View all
-            <ArrowRight className="h-4 w-4" />
-          </Link>
-        </div>
-        <div className="grid gap-6 lg:grid-cols-2 xl:grid-cols-3">
-          {courses.slice(0, 3).map((course) => (
-            <CourseCard key={course.id} course={course} />
-          ))}
-        </div>
-      </section>
-
-      <section className="section-shell py-20">
-        <div className="grid gap-6 lg:grid-cols-3">
+      <section className="section-shell py-4 sm:py-8">
+        <div className="grid gap-5 lg:grid-cols-3">
           {testimonials.map((testimonial) => (
-            <div
-              key={testimonial.id}
-              className="rounded-[2rem] border border-white/70 bg-white/85 p-8 shadow-soft backdrop-blur-xl [&>p:nth-of-type(2)]:hidden"
-            >
-              <p className="text-base leading-8 text-slate-600">{`"${testimonial.quote}"`}</p>
-              <p className="text-base leading-8 text-slate-600">“{testimonial.quote}”</p>
-              <div className="mt-8">
-                <p className="font-semibold text-ink">{testimonial.name}</p>
-                <p className="text-sm text-slate-500">{testimonial.role}</p>
+            <div key={testimonial.id} className="bubble-card px-6 py-7">
+              <div className="relative z-10">
+                <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-white/40 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary/75">
+                  <CheckCircle2 className="h-3.5 w-3.5" />
+                  Student voice
+                </div>
+                <p className="text-base leading-8 text-slate-700">{`"${testimonial.quote}"`}</p>
+                <div className="mt-8">
+                  <p className="font-display text-xl font-bold text-primary">{testimonial.name}</p>
+                  <p className="text-sm text-slate-500">{testimonial.role}</p>
+                </div>
               </div>
             </div>
           ))}
         </div>
       </section>
+
       <Footer />
     </main>
   );

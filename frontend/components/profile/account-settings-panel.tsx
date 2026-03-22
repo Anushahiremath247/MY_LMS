@@ -40,9 +40,9 @@ export const AccountSettingsPanel = () => {
   };
 
   return (
-    <section id="account" className="rounded-[2rem] border border-white/70 bg-white/85 p-8 shadow-soft backdrop-blur-xl">
-      <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">Account</p>
-      <h2 className="mt-3 font-display text-3xl font-semibold text-ink">Danger zone</h2>
+    <section id="account" className="bubble-card px-8 py-8">
+      <p className="relative z-10 text-sm font-semibold uppercase tracking-[0.2em] text-primary/75">Account</p>
+      <h2 className="bubble-title relative z-10 mt-3 text-3xl">Danger zone</h2>
       <p className="mt-3 max-w-2xl text-base leading-8 text-slate-500">
         Use these actions carefully. Deactivation keeps your data inactive; deletion clears your local account state entirely.
       </p>

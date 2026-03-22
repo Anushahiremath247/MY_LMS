@@ -29,9 +29,9 @@ export const NotificationSettingsPanel = () => {
   };
 
   return (
-    <section id="notifications" className="rounded-[2rem] border border-white/70 bg-white/85 p-8 shadow-soft backdrop-blur-xl">
-      <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">Notifications</p>
-      <h2 className="mt-3 font-display text-3xl font-semibold text-ink">Stay updated without the noise</h2>
+    <section id="notifications" className="bubble-card px-8 py-8">
+      <p className="relative z-10 text-sm font-semibold uppercase tracking-[0.2em] text-primary/75">Notifications</p>
+      <h2 className="bubble-title relative z-10 mt-3 text-3xl">Stay updated without the noise</h2>
       <div className="mt-6 grid gap-4">
         <ToggleSwitch
           checked={profile.notifications.emailNotifications}

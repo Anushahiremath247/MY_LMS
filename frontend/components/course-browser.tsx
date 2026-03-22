@@ -46,17 +46,17 @@ export const CourseBrowser = ({ courses }: { courses: Course[] }) => {
   return (
     <div className="space-y-8">
       <div className="grid gap-5 lg:grid-cols-[1.2fr_0.8fr]">
-        <div className="rounded-[2rem] border border-white/70 bg-white/85 p-6 shadow-glass backdrop-blur-xl">
-          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-primary/10 bg-primary/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-primary">
-            <SlidersHorizontal className="h-3.5 w-3.5" />
-            Explore with focus
+        <div className="bubble-card px-6 py-7">
+          <div className="relative z-10">
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-white/45 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-primary">
+              <SlidersHorizontal className="h-3.5 w-3.5" />
+              Explore with focus
+            </div>
+            <h1 className="bubble-title text-4xl sm:text-5xl">Subjects built for steady momentum</h1>
+            <p className="mt-4 max-w-2xl text-base leading-8 text-slate-600">
+              Search by topic, narrow by category, and jump into course paths with a cleaner sense of what to learn next.
+            </p>
           </div>
-          <h1 className="font-display text-4xl font-semibold text-ink sm:text-5xl">
-            Subjects built for steady momentum
-          </h1>
-          <p className="mt-4 max-w-2xl text-base leading-8 text-slate-500">
-            Search by topic, narrow by category, and jump into course paths with a cleaner sense of what to learn next.
-          </p>
         </div>
         <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
           {[
@@ -64,16 +64,16 @@ export const CourseBrowser = ({ courses }: { courses: Course[] }) => {
             { label: "Enrolled", value: courses.filter((course) => course.isEnrolled).length },
             { label: "Lessons", value: courses.reduce((sum, course) => sum + course.lessonsCount, 0) }
           ].map((stat) => (
-            <div key={stat.label} className="rounded-[2rem] border border-white/70 bg-white/80 p-6 shadow-soft backdrop-blur-xl">
-              <p className="text-sm text-slate-500">{stat.label}</p>
-              <p className="mt-2 font-display text-4xl font-semibold text-ink">{stat.value}</p>
+            <div key={stat.label} className="bubble-card px-6 py-6 text-center">
+              <p className="relative z-10 text-xs font-semibold uppercase tracking-[0.2em] text-ink/55">{stat.label}</p>
+              <p className="relative z-10 mt-3 font-display text-4xl font-bold text-primary">{stat.value}</p>
             </div>
           ))}
         </div>
       </div>
 
-      <div className="grid gap-4 rounded-[2rem] border border-white/70 bg-white/78 p-5 shadow-glass backdrop-blur-xl lg:grid-cols-[1fr_auto] lg:items-center">
-        <label className="flex h-14 items-center gap-3 rounded-full border border-slate-200 bg-white px-5 shadow-soft">
+      <div className="bubble-card grid gap-4 px-5 py-5 lg:grid-cols-[1fr_auto] lg:items-center">
+        <label className="glass-panel flex h-14 items-center gap-3 rounded-full px-5">
           <Search className="h-4 w-4 text-slate-400" />
           <input
             value={query}
@@ -92,8 +92,8 @@ export const CourseBrowser = ({ courses }: { courses: Course[] }) => {
                 onClick={() => setActiveCategory(category)}
                 className={`rounded-full px-4 py-2.5 text-sm font-medium transition ${
                   isActive
-                    ? "bg-primary text-white shadow-glass"
-                    : "border border-slate-200 bg-white text-slate-600 hover:border-primary/20 hover:text-ink"
+                    ? "bubble-bar text-white"
+                    : "glass-panel text-slate-600 hover:text-ink"
                 }`}
               >
                 {category}
@@ -121,8 +121,8 @@ export const CourseBrowser = ({ courses }: { courses: Course[] }) => {
           ))}
         </div>
       ) : (
-        <div className="rounded-[2rem] border border-dashed border-slate-300 bg-white/70 p-10 text-center shadow-soft">
-          <h2 className="font-display text-3xl font-semibold text-ink">No matching courses</h2>
+        <div className="bubble-card px-10 py-10 text-center">
+          <h2 className="relative z-10 font-display text-3xl font-semibold text-primary">No matching courses</h2>
           <p className="mt-3 text-sm leading-7 text-slate-500">
             Try a different keyword or switch the category filter to see more learning paths.
           </p>
@@ -152,8 +152,8 @@ export const CourseBrowser = ({ courses }: { courses: Course[] }) => {
             onClick={() => setPage(pageNumber)}
             className={`flex h-11 w-11 items-center justify-center rounded-full text-sm font-semibold transition ${
               pageNumber === page
-                ? "bg-primary text-white shadow-glass"
-                : "border border-slate-200 bg-white text-slate-600 hover:border-primary/20 hover:text-ink"
+                ? "bubble-bar text-white"
+                : "glass-panel text-slate-600 hover:text-ink"
             }`}
           >
             {pageNumber}

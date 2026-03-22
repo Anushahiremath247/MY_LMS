@@ -12,16 +12,16 @@ const iconMap = {
 } as const;
 
 export const ActivityList = ({ items }: { items: ActivityItem[] }) => (
-  <div className="rounded-[2rem] border border-white/70 bg-white/85 p-8 shadow-soft backdrop-blur-xl">
-    <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">Recent activity</p>
+  <div className="bubble-card px-8 py-8">
+    <p className="relative z-10 text-sm font-semibold uppercase tracking-[0.2em] text-primary/75">Recent activity</p>
     <div className="mt-6 space-y-4">
       {items.length ? (
         items.map((item) => {
           const Icon = iconMap[item.type];
 
           return (
-            <div key={item.id} className="flex gap-4 rounded-[1.5rem] border border-slate-200 bg-white p-4">
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+            <div key={item.id} className="glass-panel relative z-10 flex gap-4 rounded-[1.5rem] p-4">
+              <span className="bubble-bar flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl text-white">
                 <Icon className="h-4 w-4" />
               </span>
               <div>
@@ -35,7 +35,7 @@ export const ActivityList = ({ items }: { items: ActivityItem[] }) => (
           );
         })
       ) : (
-        <div className="rounded-[1.5rem] border border-dashed border-slate-300 bg-white p-6 text-sm text-slate-500">
+        <div className="glass-panel relative z-10 rounded-[1.5rem] p-6 text-sm text-slate-500">
           No recent activity yet. Start exploring a course to populate your history.
         </div>
       )}

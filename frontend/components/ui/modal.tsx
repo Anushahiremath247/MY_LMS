@@ -12,9 +12,9 @@ export const Modal = ({ open, title, onClose, children }: ModalProps) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/20 p-4 backdrop-blur-sm">
-      <div className="glass-panel w-full max-w-2xl rounded-4xl p-6 animate-slide-in">
+      <div className="bubble-card w-full max-w-2xl px-6 py-6 animate-slide-in">
         <div className="mb-4 flex items-center justify-between">
-          <h3 className="font-display text-xl font-semibold">{title}</h3>
+          <h3 className="bubble-title text-xl">{title}</h3>
           <button className="text-sm text-slate-500" onClick={onClose}>
             Close
           </button>
@@ -24,4 +24,3 @@ export const Modal = ({ open, title, onClose, children }: ModalProps) => {
     </div>
   );
 };
-

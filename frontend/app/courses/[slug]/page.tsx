@@ -17,21 +17,21 @@ export default async function CourseDetailPage({
       <section className="section-shell py-16">
         <div className="grid gap-8 lg:grid-cols-[1fr_320px]">
           <div className="space-y-8">
-            <div className="glass-panel rounded-4xl p-8">
-              <div className="flex flex-wrap items-center gap-4 text-sm text-slate-500">
-                <span className="rounded-full bg-primary/10 px-3 py-1 text-primary">{course.category}</span>
+            <div className="bubble-card px-8 py-8">
+              <div className="relative z-10 flex flex-wrap items-center gap-4 text-sm text-slate-500">
+                <span className="rounded-full bg-white/45 px-3 py-1 text-primary">{course.category}</span>
                 <span>{course.instructor}</span>
                 <span className="flex items-center gap-1">
-                  <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
+                  <Star className="h-4 w-4 fill-primary text-primary" />
                   {course.rating}
                 </span>
               </div>
-              <h1 className="mt-5 font-display text-5xl font-semibold text-balance">{course.title}</h1>
-              <p className="mt-4 max-w-3xl text-lg leading-8 text-slate-500">{course.description}</p>
+              <h1 className="bubble-title mt-5 text-5xl text-balance">{course.title}</h1>
+              <p className="mt-4 max-w-3xl text-lg leading-8 text-slate-600">{course.description}</p>
             </div>
 
-            <div className="glass-panel rounded-4xl p-8">
-              <h2 className="font-display text-3xl font-semibold">What you will learn</h2>
+            <div className="bubble-card px-8 py-8">
+              <h2 className="bubble-title text-3xl">What you will learn</h2>
               <ul className="mt-5 grid gap-4 sm:grid-cols-2">
                 {[
                   "Build strong fundamentals through structured videos",
@@ -47,18 +47,18 @@ export default async function CourseDetailPage({
               </ul>
             </div>
 
-            <div className="glass-panel rounded-4xl p-8">
-              <h2 className="font-display text-3xl font-semibold">Course Curriculum</h2>
+            <div className="bubble-card px-8 py-8">
+              <h2 className="bubble-title text-3xl">Course Curriculum</h2>
               <div className="mt-6 space-y-4">
                 {course.sections.map((section) => (
-                  <div key={section.id} className="rounded-[1.75rem] border border-slate-200 bg-white p-5">
+                  <div key={section.id} className="glass-panel rounded-[1.75rem] p-5">
                     <div className="flex items-center justify-between">
                       <h3 className="font-semibold text-ink">{section.title}</h3>
                       <ChevronDown className="h-4 w-4 text-slate-400" />
                     </div>
                     <div className="mt-4 space-y-3">
                       {section.videos.map((lesson) => (
-                        <div key={lesson.id} className="flex items-center justify-between rounded-2xl bg-slate-50 px-4 py-3">
+                        <div key={lesson.id} className="glass-panel flex items-center justify-between rounded-2xl px-4 py-3">
                           <div>
                             <p className="text-sm font-medium text-ink">{lesson.title}</p>
                             <p className="text-xs text-slate-500">{lesson.description}</p>
@@ -79,9 +79,9 @@ export default async function CourseDetailPage({
             </div>
           </div>
 
-          <aside className="glass-panel h-fit rounded-4xl p-6">
+          <aside className="bubble-card h-fit px-6 py-6">
             <p className="text-sm text-slate-500">{course.duration}</p>
-            <p className="mt-2 text-3xl font-display font-semibold">{course.lessonsCount} lesson path</p>
+            <p className="mt-2 text-3xl font-display font-semibold text-primary">{course.lessonsCount} lesson path</p>
             <Button className="mt-6 w-full" asChild>
               <Link href={`/learn/${course.id}`}>Start learning</Link>
             </Button>
