@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CheckCircle2, Clock3, Crown, Lock, PlayCircle, Star } from "lucide-react";
+import { AuthGuard } from "@/components/auth-guard";
 import { CourseCard } from "@/components/course-card";
 import { CourseCommerceActions } from "@/components/course-commerce-actions";
 import { Navbar } from "@/components/navbar";
@@ -28,10 +29,11 @@ export default async function CourseDetailPage({
   );
 
   return (
-    <main>
-      <Navbar />
-      <section className="section-shell py-16">
-        <div className="grid gap-8 lg:grid-cols-[1fr_340px]">
+    <AuthGuard>
+      <main>
+        <Navbar />
+        <section className="section-shell py-16">
+          <div className="grid gap-8 lg:grid-cols-[1fr_340px]">
           <div className="space-y-8">
             <div className="overflow-hidden rounded-[2.75rem] border border-slate-200 bg-white shadow-[0_24px_55px_rgba(15,23,42,0.08)]">
               <div className="relative h-[360px] overflow-hidden">
@@ -237,8 +239,9 @@ export default async function CourseDetailPage({
               </ul>
             </div>
           </aside>
-        </div>
-      </section>
-    </main>
+          </div>
+        </section>
+      </main>
+    </AuthGuard>
   );
 }

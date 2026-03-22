@@ -7,6 +7,8 @@ import {
   logout,
   logoutAll,
   me,
+  oauthCallback,
+  oauthStart,
   refresh,
   register,
   resetPasswordController
@@ -23,3 +25,5 @@ authRouter.post("/logout-all", requireAuth, logoutAll);
 authRouter.post("/forgot-password", validate(forgotPasswordSchema), forgotPassword);
 authRouter.post("/reset-password", validate(resetPasswordSchema), resetPasswordController);
 authRouter.get("/me", requireAuth, me);
+authRouter.get("/oauth/:provider", oauthStart);
+authRouter.get("/oauth/:provider/callback", oauthCallback);

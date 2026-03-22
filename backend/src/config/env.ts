@@ -14,7 +14,11 @@ const envSchema = z.object({
   COOKIE_DOMAIN: z.string().default("localhost"),
   OPENAI_API_KEY: z.string().optional().default(""),
   OPENAI_MODEL: z.string().optional().default("gpt-5-mini"),
-  HUGGINGFACE_API_KEY: z.string().optional().default("")
+  HUGGINGFACE_API_KEY: z.string().optional().default(""),
+  GOOGLE_CLIENT_ID: z.string().optional().default(""),
+  GOOGLE_CLIENT_SECRET: z.string().optional().default(""),
+  GITHUB_CLIENT_ID: z.string().optional().default(""),
+  GITHUB_CLIENT_SECRET: z.string().optional().default("")
 });
 
 export const env = envSchema.parse(process.env);

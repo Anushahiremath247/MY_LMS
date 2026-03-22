@@ -1,3 +1,4 @@
+import { AuthGuard } from "@/components/auth-guard";
 import { LearningWorkspace } from "@/components/learning-workspace";
 import { getCourseTree } from "@/lib/api";
 
@@ -10,5 +11,9 @@ export default async function LearnPage({
 }) {
   const course = await getCourseTree(params.subjectId);
 
-  return <LearningWorkspace course={course} initialLessonId={searchParams?.lesson} />;
+  return (
+    <AuthGuard>
+      <LearningWorkspace course={course} initialLessonId={searchParams?.lesson} />
+    </AuthGuard>
+  );
 }

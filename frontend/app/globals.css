@@ -4,6 +4,8 @@
 
 :root {
   color-scheme: light;
+  --font-inter: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-poppins: "Trebuchet MS", "Arial Rounded MT Bold", "Avenir Next", "Segoe UI", sans-serif;
 }
 
 html {

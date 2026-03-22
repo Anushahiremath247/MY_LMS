@@ -1,13 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { Eye, EyeOff } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Chrome, Eye, EyeOff, Github } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginUser, registerUser } from "@/lib/auth";
+import { loginUser, normalizeRedirectPath, registerUser, startSocialLogin } from "@/lib/auth";
 import { useAuthStore } from "@/store/auth-store";
 import { Button } from "./ui/button";
 
@@ -27,12 +27,35 @@ type AuthFormValues = {
   password: string;
 };
 
+const getAuthErrorMessage = (code: string | null) => {
+  switch (code) {
+    case "oauth_state_invalid":
+      return "Your social sign-in session expired. Please try again.";
+    case "oauth_callback_failed":
+      return "We couldn't finish your social login. Please try again.";
+    case "oauth_google_not_configured":
+      return "Google login is not configured yet. Add the Google client credentials and try again.";
+    case "oauth_github_not_configured":
+      return "GitHub login is not configured yet. Add the GitHub client credentials and try again.";
+    case "oauth_google_failed":
+      return "Google login failed. Please try again.";
+    case "oauth_github_failed":
+      return "GitHub login failed. Please try again.";
+    default:
+      return null;
+  }
+};
+
 export const AuthForm = ({ mode }: { mode: "login" | "register" }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
   const setSession = useAuthStore((state) => state.setSession);
+  const redirectTo = normalizeRedirectPath(searchParams.get("next"));
+  const queryError = getAuthErrorMessage(searchParams.get("error"));
+  const authLinkSuffix = redirectTo !== "/dashboard" ? `?next=${encodeURIComponent(redirectTo)}` : "";
   const {
     register,
     handleSubmit,
@@ -60,13 +83,18 @@ export const AuthForm = ({ mode }: { mode: "login" | "register" }) => {
 
       setSession(session);
       setIsLoading(false);
-      router.push("/dashboard");
+      router.push(redirectTo);
       router.refresh();
     } catch (error) {
       setIsLoading(false);
       setServerError(error instanceof Error ? error.message : "Unable to sign you in right now");
     }
   });
+
+  const handleSocialLogin = (provider: "google" | "github") => {
+    setServerError(null);
+    startSocialLogin(provider, redirectTo);
+  };
 
   return (
     <form className="space-y-5" onSubmit={onSubmit}>
@@ -111,7 +139,7 @@ export const AuthForm = ({ mode }: { mode: "login" | "register" }) => {
       </div>
       {mode === "login" ? (
         <div className="flex items-center justify-between text-sm">
-          <Link href="/register" className="text-primary">
+          <Link href={`/register${authLinkSuffix}`} className="text-primary">
             Create account
           </Link>
           <Link href="/forgot-password" className="text-slate-500">
@@ -121,7 +149,7 @@ export const AuthForm = ({ mode }: { mode: "login" | "register" }) => {
       ) : (
         <p className="text-sm text-slate-500">
           Already have an account?{" "}
-          <Link href="/login" className="font-semibold text-primary">
+          <Link href={`/login${authLinkSuffix}`} className="font-semibold text-primary">
             Sign in
           </Link>
         </p>
@@ -134,13 +162,25 @@ export const AuthForm = ({ mode }: { mode: "login" | "register" }) => {
       >
         {mode === "login" ? "Login" : "Create account"}
       </Button>
-      <button
-        type="button"
-        className="glass-panel pressable flex h-14 w-full items-center justify-center rounded-[1.25rem] text-sm font-semibold text-slate-700"
-      >
-        Continue with Google
-      </button>
-      {serverError ? <p className="text-sm text-rose-500">{serverError}</p> : null}
+      <div className="grid gap-3 sm:grid-cols-2">
+        <button
+          type="button"
+          onClick={() => handleSocialLogin("google")}
+          className="glass-panel pressable flex h-14 w-full items-center justify-center gap-2 rounded-[1.25rem] text-sm font-semibold text-slate-700"
+        >
+          <Chrome className="h-4 w-4" />
+          Continue with Google
+        </button>
+        <button
+          type="button"
+          onClick={() => handleSocialLogin("github")}
+          className="glass-panel pressable flex h-14 w-full items-center justify-center gap-2 rounded-[1.25rem] text-sm font-semibold text-slate-700"
+        >
+          <Github className="h-4 w-4" />
+          Continue with GitHub
+        </button>
+      </div>
+      {serverError || queryError ? <p className="text-sm text-rose-500">{serverError || queryError}</p> : null}
     </form>
   );
 };
